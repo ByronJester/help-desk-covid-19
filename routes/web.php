@@ -26,11 +26,13 @@ Route::prefix('home')->group(function () {
 });
 
 Route::prefix('report')->group(function () {
+	Route::post('/save-incident', [ReportController::class, 'savePlaceIncident']);
     Route::get('/', [ReportController::class, 'reportView'])->name('view.report');
-    Route::get('/view/{id}', [ReportController::class, 'viewPlace']);
+    Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident');
 });
 
 Route::prefix('users')->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/register', [UserController::class, 'register']);
+    Route::post('/logout', [UserController::class, 'logout']);
 });

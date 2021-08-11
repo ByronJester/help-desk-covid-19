@@ -125,7 +125,22 @@
 			loggedAcc() {
 				Inertia.post(this.$root.route + "/users/login", this.login,
 		          {
-		            
+		            onSuccess: () => {
+		            	this.$emit('update:openModal', false)
+
+		                this.register.first_name = null
+		                this.register.middle_name = null
+		                this.register.last_name = null
+		                this.register.phone = null
+		                this.register.email = null
+		                this.register.password = null
+		                this.register.confirm_password = null
+		                this.register.user_type ='citizen'
+		                this.register.perspective = 3
+
+		                this.openModal = false 
+		                this.is_login = false
+		              }
 		          });
 			},
 
@@ -133,6 +148,8 @@
 				Inertia.post(this.$root.route + "/users/register", this.register,
 		          {
 		            onSuccess: () => {
+		            	this.$emit('update:openModal', false)
+
 		                this.register.first_name = null
 		                this.register.middle_name = null
 		                this.register.last_name = null
