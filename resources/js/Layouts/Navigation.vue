@@ -45,6 +45,25 @@
               <i class="fa fa-user-circle"></i><span class="ml-2">Sign in</span>
             </a>
           </li>
+
+          <li class="nav-item mx-5" v-if="!!user">
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"@click="$emit('update:openModal', true)">
+                <i class="fa fa-user-circle"></i><span class="ml-2">{{ user.first_name}}</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                <li class="">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Profile</a>
+                </li>
+
+                <li class="">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" @click="logout()">Logout</a>
+                </li>
+                
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
 
@@ -70,6 +89,25 @@
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"@click="$emit('update:openModal', true)">
               <i class="fa fa-user-circle"></i><span class="ml-2">Sign in</span>
             </a>
+          </li>
+
+          <li class="nav-item mx-5" v-if="!!user">
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"@click="$emit('update:openModal', true)">
+                <i class="fa fa-user-circle"></i><span class="ml-2">{{ user.first_name}}</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                <li class="">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer">Profile</a>
+                </li>
+
+                <li class="">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer" @click="logout()">Logout</a>
+                </li>
+                
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
@@ -111,6 +149,15 @@
             onSuccess: () => { },
           },
         );
+      },
+
+      logout() {
+        Inertia.post(this.$root.route + "/users/logout", {},
+        {
+          onSuccess: () => {
+
+          }
+        });
       }
     },
 
@@ -121,5 +168,9 @@
 <style scoped>
   .--active {
     border-bottom: 5px solid white;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
   }
 </style>

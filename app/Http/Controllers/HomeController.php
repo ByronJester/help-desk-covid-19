@@ -14,8 +14,6 @@ class HomeController extends Controller
     {
         $user = null;
 
-        // Auth::logout();
-
         if(Auth::user()) {
         	$user = Auth::user();
         }

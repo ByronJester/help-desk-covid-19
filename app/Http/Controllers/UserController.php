@@ -23,9 +23,10 @@ class UserController extends Controller
     		$user = User::where('email', $request->email)->first();
     		Auth::login($user);
     		
-    		return redirect()->route('view.home');
+    		// return redirect()->route('view.home');
+            return redirect()->back();
     	} else {
-    		return response()->json(['message' => 'Error Login']);
+    		return redirect()->back();
     	}
     }
 
@@ -38,7 +39,16 @@ class UserController extends Controller
     	$create = User::forceCreate($data);
 
     	if($create) {
-    		return redirect('/home');
+            Auth::login($user);
+
+            return redirect()->back()->with('success', 'your message,here');
     	}
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect()->back();
     }
 } 
