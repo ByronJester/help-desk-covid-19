@@ -18,12 +18,25 @@ class ReportController extends Controller
         if(Auth::user()) {
         	$user = Auth::user();
         }
+
+        $recovered  = VirusCase::where('status', 'RECOVERED')->count();
+        $death      = VirusCase::where('status', 'DEATH')->count();
+        $quarantine = VirusCase::where('status', 'QUARANTINE')->count();
+        $male       = VirusCase::where('gender', 'MALE')->count();
+        $female     = VirusCase::where('gender', 'FEMALE')->count();
         
     	return Inertia::render('Report', 
     		[
                 'options'    => [
-                	'user' => $user,
-                    'places' => Place::orderBy('name')->get()
+                	'user'      => $user,
+                    'places'    => Place::orderBy('name')->get(),
+                    'records'   => [
+                        'recovered'     => $recovered,
+                        'death'         => $death,
+                        'quarantine'    => $quarantine,
+                        'male'          => $male,
+                        'female'        => $female,
+                    ]
                 ]
             ]
     	);
@@ -37,16 +50,38 @@ class ReportController extends Controller
             $user = Auth::user();
         }
 
+        $recovered  = VirusCase::where('status', 'RECOVERED')->where('place_id', $id)->count();
+        $death      = VirusCase::where('status', 'DEATH')->where('place_id', $id)->count();
+        $quarantine = VirusCase::where('status', 'QUARANTINE')->where('place_id', $id)->count();
+        $male       = VirusCase::where('gender', 'MALE')->where('place_id', $id)->count();
+        $female     = VirusCase::where('gender', 'FEMALE')->where('place_id', $id)->count();
+
         return Inertia::render('Reports/ViewPlace', 
             [
                 'options'    => [
                     'user'   => $user,
-                    'places' => Place::orderBy('name')->get(),
+                    'place'  => Place::where('id', $id)->first(),
                     'cases'  => VirusCase::orderBy('created_at', 'desc')->where('place_id', $id)->get(),
-                    'id'     => $id
+                    'records'   => [
+                        'recovered'     => $recovered,
+                        'death'         => $death,
+                        'quarantine'    => $quarantine,
+                        'male'          => $male,
+                        'female'        => $female,
+                    ]
                 ]
             ]
         );
+    }
+
+    public function savePlaceIncident(Request $request)
+    {
+        $create = VirusCase::updateOrCreate(
+            ['place_id' => $request->place_id, 'code' => $request->code],
+            $request->toArray()
+        );
+
+        return redirect()->route('view.place.incident', $request->place_id);
     }
     
 } 

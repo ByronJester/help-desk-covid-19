@@ -3,6 +3,7 @@ import Vue from 'vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import KProgress from 'k-progress';
 import VueCarousel from 'vue-carousel';
+import VueGraph from 'vue-graph'
 
 InertiaProgress.init({
   // The delay after which the progress bar will
@@ -25,6 +26,7 @@ InertiaProgress.init()
 
 Vue.component('k-progress', KProgress);
 Vue.use(VueCarousel);
+Vue.use(VueGraph)
 
 const el = document.getElementById('app')
 

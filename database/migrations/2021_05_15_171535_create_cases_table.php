@@ -16,7 +16,7 @@ class CreateCasesTable extends Migration
         Schema::create('virus_cases', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('place_id')->unsigned()->comment('Foreign key from table places');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->integer('age');
             $table->longText('symptom')->nullable();
             $table->string('gender')->comment("MALE, FEMALE");

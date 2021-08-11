@@ -5,10 +5,18 @@
 
 			<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
-			<PlacesCarousel :places.sync="options.places" :selected.sync="selected"/>
+			<div class="w-full mx-2">
+				<select class="border border-green-300 py-2 px-2" v-model="filter">
+				  <option value="1">Brangays</option>
+				  <option value="2">Total</option>
+				</select>
+			</div>
 
+			<PlacesCarousel :places.sync="options.places" :selected.sync="selected" v-if="filter == 1"/>
+
+			<ReportsCarousel :records="options.records" v-if="filter == 2"/>
 			
-		</div>
+		</div> 
 	</div>
 </template>
 
@@ -18,6 +26,7 @@
 	import Nav from "../Layouts/Navigation";
 	import Login from "./Users/Login";
 	import PlacesCarousel from "./Places/PlacesCarousel";
+	import ReportsCarousel from "./Reports/ReportsCarousel";
 
 	export default {
 		props: ['options'],
@@ -26,12 +35,14 @@
       	Slide,
 		    Login,
 		    Nav,
-		    PlacesCarousel
+		    PlacesCarousel,
+		    ReportsCarousel
 		},
 		data() {
 			return {
 				openModal: false,
-				selected: null
+				selected: null,
+				filter: 1
 			}
 		},
 
@@ -53,6 +64,10 @@
             onSuccess: () => { },
           },
         );
+			},
+
+			filter: function (v) {
+				
 			}
 		}
 	}
