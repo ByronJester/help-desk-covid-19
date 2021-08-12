@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'user_type'	=> 'admin',
         	'perspective' => 1,
+            'is_active'   => true,
         	'created_at' => Carbon::now(),
         	'updated_at' => Carbon::now(),
         ]);
@@ -35,6 +36,7 @@ class UserSeeder extends Seeder
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'user_type'	=> 'admin',
         	'perspective' => 2,
+            'is_active'   => true,
         	'created_at' => Carbon::now(),
         	'updated_at' => Carbon::now(),
         ]);
@@ -47,6 +49,7 @@ class UserSeeder extends Seeder
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'user_type'	=> 'citizen',
         	'perspective' => 3,
+            'is_active'   => true,
         	'created_at' => Carbon::now(),
         	'updated_at' => Carbon::now(),
         ]);

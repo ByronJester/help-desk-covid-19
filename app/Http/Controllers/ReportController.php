@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Place;
 use App\Models\VirusCase;
+use App\Http\Requests\VirusCase as SaveCase;
 
 class ReportController extends Controller
 {
@@ -74,11 +75,11 @@ class ReportController extends Controller
         );
     }
 
-    public function savePlaceIncident(Request $request)
+    public function savePlaceIncident(SaveCase $request)
     {
         $create = VirusCase::updateOrCreate(
-            ['place_id' => $request->place_id, 'code' => $request->code],
-            $request->toArray()
+            ['id' => $request->id],
+            $request->except(['id'])
         );
 
         return redirect()->route('view.place.incident', $request->place_id);

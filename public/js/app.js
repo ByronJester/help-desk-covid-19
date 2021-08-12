@@ -2090,7 +2090,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['cases', 'selected'],
+  props: ['cases', 'selected', "options"],
   data: function data() {
     return {
       perPage: 1,
@@ -2204,11 +2204,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['viewCase', 'form'],
   data: function data() {
-    return {};
+    return {
+      errors: null
+    };
   },
   methods: {
     save: function save() {
@@ -2217,8 +2225,16 @@ __webpack_require__.r(__webpack_exports__);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/report/save-incident", this.form, {
         onSuccess: function onSuccess() {
           _this.$emit('update:viewCase', false);
+        },
+        onError: function onError(err) {
+          _this.errors = err;
         }
       });
+    }
+  },
+  watch: {
+    viewCase: function viewCase(v) {
+      if (!v) this.errors = null;
     }
   }
 });
@@ -2502,7 +2518,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.records);
     this.status.num = Math.max(this.records.recovered, this.records.death, this.records.quarantine);
     this.gender.num = Math.max(this.records.male, this.records.death, this.records.female);
   }
@@ -2579,28 +2594,30 @@ __webpack_require__.r(__webpack_exports__);
       selected: null,
       viewCase: false,
       form: {
+        id: null,
         place_id: null,
         code: null,
         age: null,
         symptom: null,
-        gender: null,
+        gender: 'MALE',
         date: null,
         travel_history: null,
-        status: null
+        status: 'RECOVERED'
       }
     };
   },
   mounted: function mounted() {
     this.selected = null;
     this.form = {
+      id: null,
       place_id: this.options.place.id,
       code: null,
       age: null,
       symptom: null,
-      gender: null,
+      gender: 'MALE',
       date: null,
       travel_history: null,
-      status: null
+      status: 'RECOVERED'
     };
 
     if (!!this.options.user) {
@@ -2611,14 +2628,15 @@ __webpack_require__.r(__webpack_exports__);
     newCase: function newCase() {
       this.viewCase = true;
       this.form = {
+        id: null,
         place_id: this.options.place.id,
         code: null,
         age: null,
         symptom: null,
-        gender: null,
+        gender: 'MALE',
         date: null,
         travel_history: null,
-        status: null
+        status: 'RECOVERED'
       };
     }
   },
@@ -2626,6 +2644,7 @@ __webpack_require__.r(__webpack_exports__);
     selected: function selected(v) {
       if (!!v) this.viewCase = true;
       this.form = {
+        id: v.id,
         place_id: v.place_id,
         code: v.code,
         age: v.age,
@@ -2637,19 +2656,25 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     viewCase: function viewCase(v) {
+      this.openModal = false;
+
       if (!v) {
         this.selected = null;
         this.form = {
+          id: null,
           place_id: this.options.place.id,
           code: null,
           age: null,
           symptom: null,
-          gender: null,
+          gender: 'MALE',
           date: null,
           travel_history: null,
-          status: null
+          status: 'RECOVERED'
         };
       }
+    },
+    'options.user': function optionsUser(v) {
+      if (!v) this.viewCase = false;
     }
   }
 });
@@ -2762,6 +2787,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['openModal'],
@@ -2780,39 +2824,70 @@ __webpack_require__.r(__webpack_exports__);
         email: null,
         password: null,
         confirm_password: null,
-        user_type: 'citizen',
-        perspective: 3
-      }
+        user_type: null,
+        perspective: 1,
+        is_active: false
+      },
+      loginError: null,
+      registerErrors: null
     };
   },
   mounted: function mounted() {},
+  watch: {
+    openModal: function openModal(v) {
+      if (!v) this.registerErrors = null;
+    }
+  },
   methods: {
     loggedAcc: function loggedAcc() {
       var _this = this;
 
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/users/login", this.login, {
-        onSuccess: function onSuccess() {
-          _this.$emit('update:openModal', false);
+        onSuccess: function onSuccess(res) {
+          if (!res.props.message) {
+            _this.$emit('update:openModal', false);
 
-          _this.register.first_name = null;
-          _this.register.middle_name = null;
-          _this.register.last_name = null;
-          _this.register.phone = null;
-          _this.register.email = null;
-          _this.register.password = null;
-          _this.register.confirm_password = null;
-          _this.register.user_type = 'citizen';
-          _this.register.perspective = 3;
-          _this.openModal = false;
-          _this.is_login = false;
+            _this.register.first_name = null;
+            _this.register.middle_name = null;
+            _this.register.last_name = null;
+            _this.register.phone = null;
+            _this.register.email = null;
+            _this.register.password = null;
+            _this.register.confirm_password = null;
+            _this.register.user_type = null;
+            _this.register.perspective = 1;
+            _this.openModal = false;
+            _this.is_login = false;
+          } else {
+            _this.loginError = res.props.message;
+          }
         }
       });
     },
     registerAcc: function registerAcc() {
       var _this2 = this;
 
+      switch (this.register.perspective) {
+        case 1:
+          this.register.user_type = 'personnel';
+          this.register.is_active = false;
+          break;
+
+        case 2:
+          this.register.user_type = 'personnel';
+          this.register.is_active = false;
+          break;
+
+        case 3:
+          this.register.user_type = 'citizen';
+          this.register.is_active = true;
+          break;
+
+        default:
+      }
+
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/users/register", this.register, {
-        onSuccess: function onSuccess() {
+        onSuccess: function onSuccess(res) {
           _this2.$emit('update:openModal', false);
 
           _this2.register.first_name = null;
@@ -2822,10 +2897,14 @@ __webpack_require__.r(__webpack_exports__);
           _this2.register.email = null;
           _this2.register.password = null;
           _this2.register.confirm_password = null;
-          _this2.register.user_type = 'citizen';
-          _this2.register.perspective = 3;
+          _this2.register.user_type = null;
+          _this2.register.perspective = 1;
           _this2.openModal = false;
           _this2.is_login = false;
+        },
+        onError: function onError(err) {
+          // console.log(err)
+          _this2.registerErrors = err;
         }
       });
     }
@@ -2872,6 +2951,23 @@ _inertiajs_progress__WEBPACK_IMPORTED_MODULE_1__.InertiaProgress.init();
 vue__WEBPACK_IMPORTED_MODULE_5__.default.component('k-progress', (k_progress__WEBPACK_IMPORTED_MODULE_2___default()));
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_carousel__WEBPACK_IMPORTED_MODULE_3___default()));
 vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue_graph__WEBPACK_IMPORTED_MODULE_4__.default);
+vue__WEBPACK_IMPORTED_MODULE_5__.default.mixin({
+  methods: {
+    validationError: function validationError(field, errors) {
+      if (errors) {
+        if (errors.hasOwnProperty(field)) {
+          return Array.isArray(errors[field]) ? errors[field][0] : errors[field];
+        }
+      }
+
+      return null;
+    },
+    isAuthorize: function isAuthorize(arg, user) {
+      if (!user) return false;
+      if (arg == 'save_case' && user.perspective == 1) return true;
+    }
+  }
+});
 var el = document.getElementById('app');
 new vue__WEBPACK_IMPORTED_MODULE_5__.default({
   data: {
@@ -34899,7 +34995,9 @@ var render = function() {
                           },
                           on: {
                             click: function($event) {
-                              return _vm.selectCase(c)
+                              _vm.isAuthorize("save_case", _vm.options.user)
+                                ? _vm.selectCase(c)
+                                : ""
                             }
                           }
                         },
@@ -35054,7 +35152,7 @@ var render = function() {
                     [
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v(" Patient")
@@ -35072,7 +35170,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "w-full border border-green-200 h-12 text-center",
+                              "w-full border border-green-200 h-10 text-center",
                             attrs: { type: "text", placeholder: "Patient" },
                             domProps: { value: _vm.form.code },
                             on: {
@@ -35083,13 +35181,20 @@ var render = function() {
                                 _vm.$set(_vm.form, "code", $event.target.value)
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(_vm.validationError("code", _vm.errors)) +
+                                " "
+                            )
+                          ])
                         ]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v(" Age")
@@ -35107,7 +35212,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "w-full border border-green-200 h-12 text-center px-2",
+                              "w-full border border-green-200 h-10 text-center px-2",
                             attrs: { type: "number", placeholder: "Age" },
                             domProps: { value: _vm.form.age },
                             on: {
@@ -35118,7 +35223,14 @@ var render = function() {
                                 _vm.$set(_vm.form, "age", $event.target.value)
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(_vm.validationError("age", _vm.errors)) +
+                                " "
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -35130,7 +35242,7 @@ var render = function() {
                     [
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v("Symptom")
@@ -35149,7 +35261,7 @@ var render = function() {
                             ],
                             staticClass:
                               "w-full border border-green-200 px-2 py-2",
-                            attrs: { rows: "3" },
+                            attrs: { rows: "2" },
                             domProps: { value: _vm.form.symptom },
                             on: {
                               input: function($event) {
@@ -35163,7 +35275,15 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.validationError("symptom", _vm.errors)
+                              ) + " "
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -35175,7 +35295,7 @@ var render = function() {
                     [
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v("Gender")
@@ -35224,13 +35344,21 @@ var render = function() {
                                 _vm._v("FEMALE")
                               ])
                             ]
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.validationError("gender", _vm.errors)
+                              ) + " "
+                            )
+                          ])
                         ]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v("Status")
@@ -35283,7 +35411,15 @@ var render = function() {
                                 _vm._v("QUARANTINE")
                               ])
                             ]
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.validationError("status", _vm.errors)
+                              ) + " "
+                            )
+                          ])
                         ]
                       )
                     ]
@@ -35295,7 +35431,7 @@ var render = function() {
                     [
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v(" Travel History")
@@ -35313,7 +35449,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "w-full border border-green-200 h-12 text-center",
+                              "w-full border border-green-200 h-10 text-center",
                             attrs: {
                               type: "text",
                               placeholder: "Travel History"
@@ -35331,13 +35467,24 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.validationError(
+                                  "travel_history",
+                                  _vm.errors
+                                )
+                              ) + " "
+                            )
+                          ])
                         ]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-5" },
+                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
                           _c("label", { staticClass: "font-bold" }, [
                             _vm._v(" Date")
@@ -35355,7 +35502,7 @@ var render = function() {
                               }
                             ],
                             staticClass:
-                              "w-full border border-green-200 h-12 text-center",
+                              "w-full border border-green-200 h-10 text-center",
                             attrs: { type: "date", placeholder: "Date" },
                             domProps: { value: _vm.form.date },
                             on: {
@@ -35366,18 +35513,25 @@ var render = function() {
                                 _vm.$set(_vm.form, "date", $event.target.value)
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-sm text-red-500" }, [
+                            _vm._v(
+                              _vm._s(_vm.validationError("date", _vm.errors)) +
+                                " "
+                            )
+                          ])
                         ]
                       )
                     ]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "w-full mt-2 md:mt-7 md:px-20" }, [
+                  _c("div", { staticClass: "w-full mt-2 md:my-4 md:px-20" }, [
                     _c(
                       "button",
                       {
                         staticClass:
-                          "w-full py-4 px-3 bg-green-500 text-center font-bold",
+                          "w-full py-2 px-3 bg-green-500 text-center font-bold text-white",
                         on: {
                           click: function($event) {
                             return _vm.save()
@@ -35629,7 +35783,7 @@ var render = function() {
             [
               _c("option", { attrs: { value: "1" } }, [_vm._v("Brangays")]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "2" } }, [_vm._v("Total")])
+              _c("option", { attrs: { value: "2" } }, [_vm._v("Reports")])
             ]
           )
         ]),
@@ -35813,7 +35967,7 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      !_vm.viewCase
+      !_vm.viewCase && !_vm.openModal
         ? _c(
             "div",
             [
@@ -35833,39 +35987,46 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "w-max mb-8 md:mb-16 ml-5" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "flex items-center bg-blue-500 text-white text-center font-bold px-4 py-3 mt-2",
-                    attrs: { role: "alert" }
-                  },
-                  [
+              _vm.isAuthorize("save_case", _vm.options.user)
+                ? _c("div", { staticClass: "w-max ml-5" }, [
                     _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "text-sm md:text-xl",
-                        on: {
-                          click: function($event) {
-                            return _vm.newCase()
-                          }
-                        }
+                        staticClass:
+                          "flex items-center bg-blue-500 text-white text-center font-bold px-4 py-3 mt-2",
+                        attrs: { role: "alert" }
                       },
                       [
-                        _c("i", { staticClass: "fa fa-plus-square" }),
-                        _vm._v(" "),
-                        _c("b", { staticClass: "ml-4 uppercase" }, [
-                          _vm._v(" New Covid Case")
-                        ])
+                        _c(
+                          "button",
+                          {
+                            staticClass: "text-sm md:text-xl",
+                            on: {
+                              click: function($event) {
+                                return _vm.newCase()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-plus-square" }),
+                            _vm._v(" "),
+                            _c("b", { staticClass: "ml-4 uppercase" }, [
+                              _vm._v(" New Covid Case")
+                            ])
+                          ]
+                        )
                       ]
                     )
-                  ]
-                )
-              ]),
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("CaseCarousel", {
-                attrs: { cases: _vm.options.cases, selected: _vm.selected },
+                staticClass: "mt-8 md:mt-16",
+                attrs: {
+                  cases: _vm.options.cases,
+                  selected: _vm.selected,
+                  options: _vm.options
+                },
                 on: {
                   "update:cases": function($event) {
                     return _vm.$set(_vm.options, "cases", $event)
@@ -36042,6 +36203,17 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
+                      _vm.loginError
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "w-full py-2 md:px-20 mt-2 text-sm text-red-500"
+                            },
+                            [_vm._v("* " + _vm._s(_vm.loginError))]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "div",
                         {
@@ -36147,7 +36319,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "first_name",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
@@ -36185,7 +36372,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "middle_name",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
@@ -36220,7 +36422,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "last_name",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ])
                         ]
                       ),
@@ -36266,7 +36483,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "phone",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
@@ -36304,7 +36536,94 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "email",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "w-full md:mx-2" }, [
+                            _c("label", { staticClass: "font-bold" }, [
+                              _vm._v(" User Type")
+                            ]),
+                            _c("br"),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.register.perspective,
+                                    expression: "register.perspective"
+                                  }
+                                ],
+                                staticClass:
+                                  "w-full border border-green-200 h-12 px-2 uppercase",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.register,
+                                      "perspective",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("Local Government")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Hospital")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "3" } }, [
+                                  _vm._v("Citizen")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "perspective",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ])
                         ]
                       ),
@@ -36350,7 +36669,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "password",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
@@ -36390,7 +36724,22 @@ var render = function() {
                                   )
                                 }
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-sm text-red-500" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.validationError(
+                                      "confirm_password",
+                                      _vm.registerErrors
+                                    )
+                                  ) + " "
+                                )
+                              ]
+                            )
                           ])
                         ]
                       ),

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\RegisterAccount;
 
 class UserController extends Controller
 {
@@ -19,19 +20,19 @@ class UserController extends Controller
     		'password' => $request->password,
     	];
 
+        $user = User::where('email', $request->email)->where('is_active', true)->first();
+
+        if(!$user) return redirect()->back()->with('message', 'Your account is not verified');
+
     	if(Auth::attempt($data)) {
-    		$user = User::where('email', $request->email)->first();
-    		Auth::login($user);
-    		
-    		// return redirect()->route('view.home');
             return redirect()->back();
     	} else {
-    		return redirect()->back();
+    		return redirect()->back()->with('message', 'Invalid Credentials');
     	}
     }
 
-    public function register(Request $request)
-    {
+    public function register(RegisterAccount $request)
+    {   
     	$data = $request->except(['confirm_password']);
 
     	$data['password'] = bcrypt($data['password']);
@@ -39,10 +40,12 @@ class UserController extends Controller
     	$create = User::forceCreate($data);
 
     	if($create) {
-            Auth::login($user);
-
-            return redirect()->back()->with('success', 'your message,here');
+            if(!!$create->is_active && $create->perspective == 3) {
+                Auth::login($user);
+            } 
     	}
+
+        return redirect()->back()->with('errors');
     }
 
     public function logout(Request $request)

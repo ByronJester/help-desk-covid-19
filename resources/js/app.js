@@ -26,7 +26,30 @@ InertiaProgress.init()
 
 Vue.component('k-progress', KProgress);
 Vue.use(VueCarousel);
-Vue.use(VueGraph)
+Vue.use(VueGraph);
+
+Vue.mixin({
+  methods: {
+    validationError(field, errors) {
+      if(errors) {
+        if(errors.hasOwnProperty(field)) {
+          return Array.isArray(errors[field]) ? errors[field][0] : errors[field];
+        }
+      }
+
+      return null;
+    },
+
+    isAuthorize(arg, user) {
+      if(!user) return false;
+      
+      if(arg == 'save_case' && user.perspective == 1) return true;
+
+
+    }
+  }
+})
+
 
 const el = document.getElementById('app')
 

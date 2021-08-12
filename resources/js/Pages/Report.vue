@@ -8,7 +8,7 @@
 			<div class="w-full mx-2">
 				<select class="border border-green-300 py-2 px-2" v-model="filter">
 				  <option value="1">Brangays</option>
-				  <option value="2">Total</option>
+				  <option value="2">Reports</option>
 				</select>
 			</div>
 
