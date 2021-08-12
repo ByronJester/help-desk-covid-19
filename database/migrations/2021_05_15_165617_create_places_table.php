@@ -17,7 +17,7 @@ class CreatePlacesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('contact');
-            $table->boolean('is_lock_down')->default(0);
+            $table->boolean('is_lock_down')->default(false);
 
             $table->softDeletes();
             $table->timestamps();

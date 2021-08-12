@@ -68,7 +68,6 @@
 		},
 
 		mounted() {
-			console.log(this.records)
 
 			this.status.num = Math.max(this.records.recovered, this.records.death, this.records.quarantine)
 

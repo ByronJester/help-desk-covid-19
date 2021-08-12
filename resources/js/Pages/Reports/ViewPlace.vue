@@ -4,14 +4,14 @@
 
 		<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
-		<div v-if="!viewCase">
+		<div v-if="!viewCase && !openModal">
 			<div class="w-max mb-2 ml-5">
 				<div class="bg-green-200 border-t border-b border-green-700 text-black px-4 py-3" role="alert">
 				  <p class="text-3xl md:text-7xl">{{ options.place.name }}</p>
 				</div>
 			</div>
 
-			<div class="w-max mb-8 md:mb-16 ml-5">
+			<div class="w-max ml-5" v-if="isAuthorize('save_case', options.user)">
 				<div class="flex items-center bg-blue-500 text-white text-center font-bold px-4 py-3 mt-2" role="alert">
 				  <button class="text-sm md:text-xl" @click="newCase()">
 				  	<i class="fa fa-plus-square"> </i> <b class="ml-4 uppercase"> New Covid Case</b>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 
-			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" />
+			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-8 md:mt-16"/>
 
 			<ReportsCarousel :records="options.records" class="mt-20"/>
 		</div>
@@ -53,14 +53,15 @@
 				selected: null,
 				viewCase: false,
 				form: {
+					id: null,
 					place_id: null,
 					code: null,
 					age: null,
 					symptom: null,
-					gender: null,
+					gender: 'MALE',
 					date: null,
 					travel_history: null,
-					status: null
+					status: 'RECOVERED'
 				}
 			}
 		},
@@ -69,14 +70,15 @@
 			this.selected = null
 
 			this.form = {
+				id: null,
 				place_id: this.options.place.id,
 				code: null,
 				age: null,
 				symptom: null,
-				gender: null,
+				gender: 'MALE',
 				date: null,
 				travel_history: null,
-				status: null
+				status: 'RECOVERED'
 			}
 
 			if(!!this.options.user) {
@@ -87,16 +89,17 @@
 		methods: {
 			newCase() {
 				this.viewCase = true
-
+				
 				this.form = {
+					id: null,
 					place_id: this.options.place.id,
 					code: null,
 					age: null,
 					symptom: null,
-					gender: null,
+					gender: 'MALE',
 					date: null,
 					travel_history: null,
-					status: null
+					status: 'RECOVERED'
 				}
 			}
 		},
@@ -106,6 +109,7 @@
 				if(!!v) this.viewCase = true;
 
 				this.form = {
+					id: v.id,
 					place_id: v.place_id,
 					code: v.code,
 					age: v.age,
@@ -118,21 +122,27 @@
 			},
 
 			viewCase: function (v) {
-
+				this.openModal = false
+				
 				if(!v) {
 					this.selected = null;
 
 					this.form = {
+						id: null,
 						place_id: this.options.place.id,
 						code: null,
 						age: null,
 						symptom: null,
-						gender: null,
+						gender: 'MALE',
 						date: null,
 						travel_history: null,
-						status: null
+						status: 'RECOVERED'
 					}
 				} 
+			},
+
+			'options.user': function (v) {
+				if(!v) this.viewCase = false
 			}
 		}
 

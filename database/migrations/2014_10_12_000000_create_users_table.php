@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('user_type');
             $table->integer('perspective')->comment("1 (LGU), 2 (HOSPITAL), 3 (Citizens)");
+            $table->boolean('is_active');
             $table->rememberToken();
 
             $table->softDeletes();
