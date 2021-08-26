@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 
 Route::prefix('home')->group(function () {
+    Route::post('/save-post', [HomeController::class, 'savePost']);
     Route::get('/', [HomeController::class, 'homeView'])->name('view.home');
 });
 

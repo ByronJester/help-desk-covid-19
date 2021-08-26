@@ -17,6 +17,21 @@
 				class="px-3 md:px-20"
 			/>
 
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
 			<PlacesCarousel :places.sync="options.places" :selected.sync="selected" 
 				v-if="filter == 2 && !openModal" 
 				class="px-3 md:px-20"

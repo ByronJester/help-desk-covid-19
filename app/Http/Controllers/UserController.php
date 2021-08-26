@@ -12,7 +12,6 @@ use App\Http\Requests\RegisterAccount;
 class UserController extends Controller
 {
 
-	#Login User
     public function login(Request $request)
     {
     	$data = [
@@ -20,14 +19,20 @@ class UserController extends Controller
     		'password' => $request->password,
     	];
 
-        $user = User::where('email', $request->email)->where('is_active', true)->first();
+        $user = User::where('email', $request->email)->first();
 
-        if(!$user) return redirect()->back()->with('message', 'Your account is not verified');
+        if(!$user) {
+            return redirect()->back()->with('message', 'No account found.');
+        }
+
+        if(!$user->is_active) {
+            return redirect()->back()->with('message', 'Your account is not verified.');
+        }
 
     	if(Auth::attempt($data)) {
             return redirect()->back();
     	} else {
-    		return redirect()->back()->with('message', 'Invalid Credentials');
+    		return redirect()->back()->with('message', 'Invalid Credentials.');
     	}
     }
 

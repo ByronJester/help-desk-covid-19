@@ -1959,6 +1959,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     value: {
@@ -2377,6 +2382,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _Layouts_Navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Layouts/Navigation */ "./resources/js/Layouts/Navigation.vue");
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
+/* harmony import */ var _Components_Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Toggle */ "./resources/js/Components/Toggle.vue");
 //
 //
 //
@@ -2418,6 +2424,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2425,11 +2460,17 @@ __webpack_require__.r(__webpack_exports__);
   props: ['options'],
   components: {
     Login: _Users_Login__WEBPACK_IMPORTED_MODULE_2__.default,
-    Nav: _Layouts_Navigation__WEBPACK_IMPORTED_MODULE_1__.default
+    Nav: _Layouts_Navigation__WEBPACK_IMPORTED_MODULE_1__.default,
+    Toggle: _Components_Toggle__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
-      openModal: false
+      openModal: false,
+      form: {
+        content: null,
+        images: []
+      },
+      formData: new FormData()
     };
   },
   mounted: function mounted() {
@@ -2437,7 +2478,36 @@ __webpack_require__.r(__webpack_exports__);
       this.openModal = false;
     }
   },
-  methods: {}
+  methods: {
+    uploadImage: function uploadImage(arg) {
+      this.$refs[arg].click();
+    },
+    imageChange: function imageChange(arg, e) {
+      var _this = this;
+
+      var image = e.target.files[0];
+      this.formData.append('images[]', image);
+      var reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this.form.images.push(e.target.result);
+      };
+    },
+    newPost: function newPost() {
+      var _this2 = this;
+
+      this.formData.append('content', this.form.content);
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/save-post", this.formData, {
+        onSuccess: function onSuccess(res) {
+          _this2.formData = new FormData();
+          _this2.form.content = null;
+          _this2.form.images = [];
+        },
+        onError: function onError(err) {}
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2530,6 +2600,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
 /* harmony import */ var _Places_PlacesCarousel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Places/PlacesCarousel */ "./resources/js/Pages/Places/PlacesCarousel.vue");
 /* harmony import */ var _Reports_ReportsCarousel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Reports/ReportsCarousel */ "./resources/js/Pages/Reports/ReportsCarousel.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3375,6 +3460,7 @@ vue__WEBPACK_IMPORTED_MODULE_5__.default.mixin({
       if (!user) return false;
       if (arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true;
       if (arg == 'users' && user.perspective == 1 && user.user_type == 'admin' || user.perspective == 2 && user.user_type == 'admin') return true;
+      if (arg == 'save_post' && user.perspective == 1 && user.user_type == 'admin' || user.perspective == 2 && user.user_type == 'admin') return true;
     }
   }
 });
@@ -3546,7 +3632,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.--home[data-v-6a63e488] {\n\t\theight: 100vh;\n\t\twidth: 100vw;\n}\n[data-v-6a63e488]::-webkit-scrollbar {\n\t    display: none;\n}\ntextarea[data-v-6a63e488] {\n    overflow: auto;\n    outline: none;\n    box-shadow: none;\n\n    resize: none; /*remove the resize handle on the bottom right*/\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.--home[data-v-6a63e488] {\n\t\theight: 100vh;\n\t\twidth: 100vw;\n}\ntextarea[data-v-6a63e488] {\n    overflow: auto;\n    outline: none;\n    box-shadow: none;\n\n    resize: none; /*remove the resize handle on the bottom right*/\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35312,20 +35398,29 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 duration-300 cursor-pointer",
-      class: { "bg-green-500": _vm.value },
-      attrs: { "aria-checked": _vm.value },
-      on: { click: _vm.toggle }
-    },
+    { staticClass: "inline-flex" },
     [
-      _c("div", {
-        staticClass:
-          "bg-white w-6 h-6 rounded-full shadow-md transform duration-300",
-        class: { "translate-x-6": _vm.value }
-      })
-    ]
+      _vm._t("default"),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "w-14 h-8 flex items-center bg-gray-300 rounded-full p-1 duration-300 cursor-pointer",
+          class: { "bg-green-500": _vm.value },
+          attrs: { "aria-checked": _vm.value },
+          on: { click: _vm.toggle }
+        },
+        [
+          _c("div", {
+            staticClass:
+              "bg-white w-6 h-6 rounded-full shadow-md transform duration-300",
+            class: { "translate-x-6": _vm.value }
+          })
+        ]
+      )
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -36502,127 +36597,242 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-screen" }, [
-    _c(
-      "div",
-      { staticClass: "--home" },
-      [
-        _c("Login", {
-          attrs: { openModal: _vm.openModal },
-          on: {
-            "update:openModal": function($event) {
-              _vm.openModal = $event
-            },
-            "update:open-modal": function($event) {
-              _vm.openModal = $event
-            }
+  return _c(
+    "div",
+    { staticClass: "w-screen" },
+    [
+      _c("Login", {
+        attrs: { openModal: _vm.openModal },
+        on: {
+          "update:openModal": function($event) {
+            _vm.openModal = $event
+          },
+          "update:open-modal": function($event) {
+            _vm.openModal = $event
           }
-        }),
-        _vm._v(" "),
-        _c("Nav", {
-          attrs: { user: _vm.options.user, openModal: _vm.openModal },
-          on: {
-            "update:user": function($event) {
-              return _vm.$set(_vm.options, "user", $event)
-            },
-            "update:openModal": function($event) {
-              _vm.openModal = $event
-            },
-            "update:open-modal": function($event) {
-              _vm.openModal = $event
-            }
+        }
+      }),
+      _vm._v(" "),
+      _c("Nav", {
+        attrs: { user: _vm.options.user, openModal: _vm.openModal },
+        on: {
+          "update:user": function($event) {
+            return _vm.$set(_vm.options, "user", $event)
+          },
+          "update:openModal": function($event) {
+            _vm.openModal = $event
+          },
+          "update:open-modal": function($event) {
+            _vm.openModal = $event
           }
-        }),
-        _vm._v(" "),
-        !_vm.openModal
-          ? _c(
-              "div",
-              { staticClass: "flex flex-col mt-10 mb-5 items-center" },
-              [
-                _c(
+        }
+      }),
+      _vm._v(" "),
+      !_vm.openModal
+        ? _c(
+            "div",
+            { staticClass: "flex flex-col mt-10 mb-5 items-center" },
+            [
+              _vm.isAuthorize("save_post", _vm.options.user)
+                ? _c(
+                    "div",
+                    { staticClass: "w-4/5 md:w-2/5 bg-gray-300 rounded" },
+                    [
+                      _c("div", { staticClass: "px-5 my-2 md:my-5" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "text-xs md:text-lg uppercase font-bold"
+                          },
+                          [_vm._v(" What's new announcement ?")]
+                        ),
+                        _c("br"),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.content,
+                              expression: "form.content"
+                            }
+                          ],
+                          staticClass:
+                            "text-xs md:text-lg rounded px-2 py-2 border border-green-500 w-full",
+                          attrs: { rows: "4" },
+                          domProps: { value: _vm.form.content },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "content", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          ref: "post_image",
+                          staticStyle: { display: "none" },
+                          attrs: {
+                            type: "file",
+                            accept: "image/png, image/jpeg"
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.imageChange("post_image", $event)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("i", {
+                          staticClass:
+                            "fa fa-image fa-lg md:fa-2x cursor-pointer",
+                          on: {
+                            click: function($event) {
+                              return _vm.uploadImage("post_image")
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _vm.form.images.length > 0
+                        ? _c(
+                            "div",
+                            { staticClass: "px-5 my-2" },
+                            [
+                              _c(
+                                "carousel",
+                                {
+                                  staticClass: "w-full",
+                                  attrs: {
+                                    navigationEnabled: false,
+                                    perPage: 1,
+                                    paginationEnabled: true
+                                  }
+                                },
+                                _vm._l(_vm.form.images, function(image, i) {
+                                  return _c(
+                                    "slide",
+                                    {
+                                      key: i,
+                                      staticStyle: { height: "250px" }
+                                    },
+                                    [
+                                      _c("img", {
+                                        staticClass: "w-full",
+                                        style: { height: "250px" },
+                                        attrs: { src: image, alt: "" }
+                                      })
+                                    ]
+                                  )
+                                }),
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "px-5 mb-2 mt-2 md:mb-5 md:mt-5" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "rounded bg-blue-700 py-2 md:py-4 font-bold text-xs md:text-lg w-full uppercase text-white",
+                              on: {
+                                click: function($event) {
+                                  return _vm.newPost()
+                                }
+                              }
+                            },
+                            [_vm._v("\n\t\t  \t\tPost\n\t\t  \t")]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.options.posts, function(post) {
+                return _c(
                   "div",
-                  { staticClass: "w-4/5 md:w-2/5 bg-gray-300 rounded" },
+                  { staticClass: "w-4/5 md:w-2/5 bg-gray-200 my-5 rounded" },
                   [
-                    _vm._m(0),
-                    _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "mx-5 my-2" },
+                      { staticClass: "py-3 px-3" },
                       [
-                        _c(
-                          "carousel",
-                          {
-                            attrs: {
-                              navigationEnabled: false,
-                              perPage: 1,
-                              paginationEnabled: true
-                            }
-                          },
-                          [
-                            _c(
-                              "slide",
+                        _c("p", { staticClass: "tex-lg font-bold my-2" }, [
+                          _vm._v(
+                            "\n\t\t  \t\t" +
+                              _vm._s(post.user.first_name) +
+                              " " +
+                              _vm._s(post.user.last_name) +
+                              "\n\t\t  \t"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "tex-base" }, [
+                          _vm._v(
+                            "\n\t\t  \t\t" + _vm._s(post.content) + "\n\t\t  \t"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        post.images.length > 0
+                          ? _c(
+                              "carousel",
                               {
-                                staticClass: "w-full bg-red-200",
-                                staticStyle: { height: "250px" }
+                                staticClass: "mt-3",
+                                attrs: {
+                                  navigationEnabled: false,
+                                  perPage: 1,
+                                  paginationEnabled: true
+                                }
                               },
-                              [_vm._v("\n\t\t\t    \t\tAAAAA\n\t\t\t      ")]
+                              _vm._l(post.images, function(image, i) {
+                                return _c(
+                                  "slide",
+                                  {
+                                    key: i,
+                                    staticClass: "w-full",
+                                    staticStyle: { height: "250px" }
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass: "w-full",
+                                      style: { height: "250px" },
+                                      attrs: {
+                                        src: "/images/posts/" + image.image,
+                                        alt: ""
+                                      }
+                                    })
+                                  ]
+                                )
+                              }),
+                              1
                             )
-                          ],
-                          1
-                        )
+                          : _vm._e()
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1)
+                    )
                   ]
-                ),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "w-4/5 md:w-2/5 bg-gray-200 my-5 rounded"
-                })
-              ]
-            )
-          : _vm._e()
-      ],
-      1
-    )
-  ])
+                )
+              })
+            ],
+            2
+          )
+        : _vm._e()
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mx-5 my-5" }, [
-      _c("label", { staticClass: "text-xs md:text-lg uppercase font-bold" }, [
-        _vm._v(" What's new announcement ? ")
-      ]),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "rounded px-2 py-2 border border-green-500 w-full",
-        attrs: { rows: "4" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mx-5 mb-5 mt-5" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "rounded bg-blue-700 py-4 font-bold text-xs md:text-lg w-full uppercase text-white"
-        },
-        [_vm._v("\n\t\t\t  \t\tPost\n\t\t\t  \t")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -36801,6 +37011,27 @@ var render = function() {
                 ]
               )
             ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.filter == 1 && !_vm.openModal
+          ? _c("ReportsCarousel", {
+              staticClass: "px-3 md:px-20",
+              attrs: { records: _vm.options.records }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.filter == 1 && !_vm.openModal
+          ? _c("ReportsCarousel", {
+              staticClass: "px-3 md:px-20",
+              attrs: { records: _vm.options.records }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.filter == 1 && !_vm.openModal
+          ? _c("ReportsCarousel", {
+              staticClass: "px-3 md:px-20",
+              attrs: { records: _vm.options.records }
+            })
           : _vm._e(),
         _vm._v(" "),
         _vm.filter == 1 && !_vm.openModal

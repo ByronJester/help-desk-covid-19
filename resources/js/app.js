@@ -45,8 +45,8 @@ Vue.mixin({
       
       if(arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true; 
       if(arg == 'users' && (user.perspective == 1 && user.user_type == 'admin') || (user.perspective == 2 && user.user_type == 'admin') ) return true; 
-
-    }
+      if(arg == 'save_post' && (user.perspective == 1 && user.user_type == 'admin') || (user.perspective == 2 && user.user_type == 'admin')) return true;
+    },
   }
 })
 
