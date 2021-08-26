@@ -2629,21 +2629,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -37011,27 +36996,6 @@ var render = function() {
                 ]
               )
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
           : _vm._e(),
         _vm._v(" "),
         _vm.filter == 1 && !_vm.openModal
