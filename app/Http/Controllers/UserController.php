@@ -12,7 +12,6 @@ use App\Http\Requests\RegisterAccount;
 class UserController extends Controller
 {
 
-	#Login User
     public function login(Request $request)
     {
     	$data = [
@@ -20,27 +19,42 @@ class UserController extends Controller
     		'password' => $request->password,
     	];
 
-        $user = User::where('email', $request->email)->where('is_active', true)->first();
+        $user = User::where('email', $request->email)->first();
 
-        if(!$user) return redirect()->back()->with('message', 'Your account is not verified');
+        if(!$user) {
+            return redirect()->back()->with('message', 'No account found.');
+        }
+
+        if(!$user->is_active) {
+            return redirect()->back()->with('message', 'Your account is not verified.');
+        }
 
     	if(Auth::attempt($data)) {
             return redirect()->back();
     	} else {
-    		return redirect()->back()->with('message', 'Invalid Credentials');
+    		return redirect()->back()->with('message', 'Invalid Credentials.');
     	}
     }
 
-    public function register(RegisterAccount $request)
-    {   
-    	$data = $request->except(['confirm_password']);
+    public function saveUser(RegisterAccount $request)
+    { 
+        $data = $request->toArray();
 
-    	$data['password'] = bcrypt($data['password']);
+        if($request->password && $request->confirm_password)  {
+            $data = $request->except(['confirm_password']);
 
-    	$create = User::forceCreate($data);
+            $data['password'] = bcrypt($data['password']);
+        }
 
-    	if($create) {
-            if(!!$create->is_active && $create->perspective == 3) {
+    	// $create = User::forceCreate($data);
+
+        $save = User::updateOrCreate(
+            ['id' => $request->id],
+            $data
+        );
+
+    	if($save) {
+            if(!!$save->is_active && $save->perspective == 3) {
                 Auth::login($user);
             } 
     	}
@@ -53,5 +67,42 @@ class UserController extends Controller
         Auth::logout();
 
         return redirect()->back();
+    }
+
+    public function usersView(Request $request)
+    {
+        $user = null;
+
+        if(Auth::user()) {
+            $user = Auth::user();
+        }
+        
+        return Inertia::render('Users',
+            [
+                'options'    => [
+                    'user'      => $user,
+                    'users'     => User::where('perspective', $user->perspective)->where('id', '!=', $user->id)->get()
+                ]
+            ]
+        );
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $auth = null;
+
+        if(Auth::user()) {
+            $auth = Auth::user();
+        }
+
+        return Inertia::render('Users/SaveUser',
+            [
+                'options'    => [
+                    'user'      => $user,
+                    'auth'      => $auth
+                ]
+            ]
+        );
     }
 } 

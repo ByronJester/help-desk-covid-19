@@ -1,10 +1,9 @@
 <template>
-  <div class="w-full">
-
-   <nav class="relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-800 mb-3">
-    <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
-      <div class="w-full relative flex justify-between lg:w-auto  px-4 lg:static lg:block lg:justify-start">
-        <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white cursor-pointer">
+  <div class="w-screen">
+   <nav class="relative flex flex-wrap items-center justify-start px-2 py-3 bg-green-800 mb-3">
+    <div class="container px-4 mx-auto flex flex-wrap items-center justify-start">
+      <div class="w-full relative flex lg:w-auto  px-4 lg:static lg:block">
+        <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white cursor-pointer" @click="changeActive('/home')">
           <span>
             <img
               :src="'/images/icon.jpg'"
@@ -14,7 +13,7 @@
             />
           </span>
         </a>
-        <button class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none" type="button" @click="showNav()">
+        <button class="mx-auto cursor-pointer text-xl px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none" type="button" @click="showNav()">
           <span class="block relative w-6 h-px rounded-sm bg-white"></span>
           <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
           <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
@@ -22,21 +21,30 @@
         </button>
       </div>
 
-      <div class="md:flex flex-grow items-center block md:hidden" id="example-navbar-warning" v-if="!!is_collapse">
+      <div class="md:flex flex-grow block md:hidden" id="example-navbar-warning" v-if="!!is_collapse">
         <ul class="flex flex-col lg:flex-row list-none ml-auto text-base md:text-lg">
+
           <li class="nav-item mx-5" :class="{'--active' : active == '/home'}">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/home')">
               <i class="fa fa-home"></i> <span class="ml-2" >Home</span>
             </a>
           </li>
+
           <li class="nav-item mx-5">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
               <i class="fa fa-tv"></i><span class="ml-2">Bayan News</span>
             </a>
           </li>
-          <li class="nav-item mx-5" :class="{'--active' : active == '/report'}">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/report')">
-              <i class="fa fa-copy"></i><span class="ml-2" >Reports</span>
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports'}">
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/reports')">
+              <i class="fa fa-copy"></i><span class="ml-2" >Reports</span> 
+            </a>
+          </li>
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/users'}" v-if="isAuthorize('users', user)"> 
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/users')">
+              <i class="fa fa-users"></i><span class="ml-2">Users</span>
             </a>
           </li>
 
@@ -48,7 +56,7 @@
 
           <li class="nav-item mx-5" v-if="!!user">
             <div class="dropdown inline-block relative">
-              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"@click="$emit('update:openModal', true)">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-user-circle"></i><span class="ml-2">{{ user.first_name}}</span>
               </a>
 
@@ -67,21 +75,30 @@
         </ul>
       </div>
 
-      <div class="md:flex flex-grow items-center hidden md:block" id="example-navbar-warning">
+      <div class="md:flex flex-grow hidden md:block" id="example-navbar-warning">
         <ul class="flex flex-col lg:flex-row list-none ml-auto text-base md:text-lg">
+
           <li class="nav-item mx-5" :class="{'--active' : active == '/home'}">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/home')">
               <i class="fa fa-home"></i> <span class="ml-2" >Home</span>
             </a>
           </li>
+
           <li class="nav-item mx-5">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
               <i class="fa fa-tv"></i><span class="ml-2">Bayan News</span>
             </a>
           </li>
-          <li class="nav-item mx-5" :class="{'--active' : active == '/report'}">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/report')">
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports'}">
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/reports')">
               <i class="fa fa-copy"></i><span class="ml-2" >Reports</span>
+            </a>
+          </li>
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/users'}" v-if="isAuthorize('users', user)">
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/users')">
+              <i class="fa fa-users"></i><span class="ml-2">Users</span>
             </a>
           </li>
 
@@ -93,7 +110,7 @@
 
           <li class="nav-item mx-5" v-if="!!user">
             <div class="dropdown inline-block relative">
-              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"@click="$emit('update:openModal', true)">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-user-circle"></i><span class="ml-2">{{ user.first_name}}</span>
               </a>
 
@@ -114,8 +131,8 @@
       
     </div>
   </nav>
+</div>
 
-  </div>
 </template>
 
 <script>
@@ -158,7 +175,7 @@
 
           }
         });
-      }
+      },
     },
 
 

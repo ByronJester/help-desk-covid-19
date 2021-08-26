@@ -1,23 +1,45 @@
 <template>
 	<div class="min-h-screen">
-		<div class="--report">
+		<div class="--report"> 
 			<Login :openModal.sync="openModal"/>
 
 			<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
-			<div class="w-full mx-2">
-				<select class="border border-green-300 py-2 px-2" v-model="filter">
-				  <option value="1">Brangays</option>
-				  <option value="2">Reports</option>
+			<div class="w-full" v-if="!openModal">
+				<select class="border border-green-300 py-2 px-2 mx-2" v-model="filter">
+					<option value="1">Reports</option>
+				  <option value="2">Brangays</option>
 				</select>
 			</div>
 
-			<PlacesCarousel :places.sync="options.places" :selected.sync="selected" v-if="filter == 1"/>
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
 
-			<ReportsCarousel :records="options.records" v-if="filter == 2"/>
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
+			<ReportsCarousel :records="options.records" 
+				v-if="filter == 1 && !openModal"
+				class="px-3 md:px-20"
+			/>
+
+			<PlacesCarousel :places.sync="options.places" :selected.sync="selected" 
+				v-if="filter == 2 && !openModal" 
+				class="px-3 md:px-20"
+			/>
 			
 		</div> 
 	</div>
+
 </template>
 
 <script>
@@ -59,7 +81,7 @@
 		watch: {
 			selected: function (v) {
 				Inertia.get(
-          this.$root.route + '/report/view/' + v.id, {},
+          this.$root.route + '/reports/view/' + v.id, {},
           {
             onSuccess: () => { },
           },

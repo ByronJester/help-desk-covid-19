@@ -69,14 +69,17 @@
 								<span class="text-sm text-red-500">{{validationError('email', registerErrors)}} </span>
 							</div>
 
-							<div class="w-full md:mx-2">
+							<div class="w-full md:mx-2"> 
 								<label class="font-bold"> User Type</label><br><br>
-								<select class="w-full border border-green-200 h-12 px-2 uppercase" v-model="register.perspective">
-								  <option value="1">Local Government</option>
-								  <option value="2">Hospital</option>
-								  <option value="3">Citizen</option>
+								<select class="w-full border border-green-200 h-12 px-2 uppercase" v-model="register.user_type">
+								  <option value="admin - lgu">LGU - Admin</option>
+								  <option value="employee - lgu">LGU - Employee</option>
+								  <option value="health-worker - lgu">LGU - Health Worker</option>
+								  <option value="admin - hospital">Hospital - Admin</option>
+								  <option value="employee - hospital">Hospital - Employee</option>
+								  <option value="citizen">Citizen</option>
 								</select>
-								<span class="text-sm text-red-500">{{validationError('perspective', registerErrors)}} </span>
+								<span class="text-sm text-red-500">{{validationError('user_type', registerErrors)}} </span>
 							</div>
 		 				</div>
 
@@ -124,6 +127,7 @@
 					password: null
 				},
 				register: {
+					id: null,
 					first_name: null,
 					middle_name: null,
 					last_name: null,
@@ -131,8 +135,8 @@
 					email: null,
 					password: null,
 					confirm_password: null,
-					user_type: null,
-					perspective: 1,
+					user_type: 'admin - lgu',
+					perspective: null,
 					is_active: false
 				},
 				loginError: null,
@@ -145,7 +149,10 @@
 
 		watch: {
 			openModal: function (v) {
-				if(!v) this.registerErrors = null;
+				if(!v) {
+					this.registerErrors = null;
+					this.is_login = true
+				} 
 			}
 		},
 
@@ -157,6 +164,7 @@
             	if(!res.props.message) {
 
             		this.$emit('update:openModal', false)
+            		this.register.id = null
             		this.register.first_name = null
                 this.register.middle_name = null
                 this.register.last_name = null
@@ -164,8 +172,8 @@
                 this.register.email = null
                 this.register.password = null
                 this.register.confirm_password = null
-                this.register.user_type = null
-                this.register.perspective = 1
+                this.register.user_type = 'admin - lgu'
+                this.register.perspective = null
 
                 this.openModal = false 
                 this.is_login = false
@@ -177,28 +185,50 @@
 			},
 
 			registerAcc() {
-				switch(this.register.perspective) {
-				  case 1:
-				    this.register.user_type = 'personnel'
-				    this.register.is_active = false
-				    break;
-				  case 2:
-				    this.register.user_type = 'personnel'
+				switch(this.register.user_type) {
+				  case 'admin - lgu':
+				    this.register.perspective = 1
+				    this.register.user_type = 'admin'
 				    this.register.is_active = false
 				    break;
 
-				   case 3:
+				  case 'employee - lgu':
+				    this.register.perspective = 1
+				    this.register.user_type = 'employee'
+				    this.register.is_active = false
+				    break;
+
+				  case 'health-worker - lgu':
+				    this.register.perspective = 1
+				    this.register.user_type = 'health-worker'
+				    this.register.is_active = false
+				    break;
+
+				  case 'admin - hospital':
+				    this.register.perspective = 2
+				    this.register.user_type = 'admin'
+				    this.register.is_active = false
+				    break;
+
+				  case 'employee - hospital':
+				    this.register.perspective = 2
+				    this.register.user_type = 'employee'
+				    this.register.is_active = false
+				    break;
+
+				   case 'citizen':
+				    this.register.perspective = 3
 				    this.register.user_type = 'citizen'
 				    this.register.is_active = true
 				    break;
 				  default:
 				}
 
-				Inertia.post(this.$root.route + "/users/register", this.register,
+				Inertia.post(this.$root.route + "/users/saveUser", this.register,
           {
             onSuccess: (res) => {
             	this.$emit('update:openModal', false)
-
+            	this.register.id = null
               this.register.first_name = null
               this.register.middle_name = null
               this.register.last_name = null
@@ -206,14 +236,16 @@
               this.register.email = null
               this.register.password = null
               this.register.confirm_password = null
-              this.register.user_type = null
-              this.register.perspective = 1
+              this.register.user_type = 'admin - lgu'
+              this.register.perspective = null
 
               this.openModal = false 
               this.is_login = false
             },
             onError: (err) => {
             	// console.log(err)
+
+            	this.register.user_type = 'admin - lgu'
             	this.registerErrors = err
             }
         });
