@@ -1,9 +1,9 @@
-import { App, plugin } from '@inertiajs/inertia-vue'
-import Vue from 'vue'
-import { InertiaProgress } from '@inertiajs/progress'
+import { App, plugin } from '@inertiajs/inertia-vue';
+import Vue from 'vue';
+import { InertiaProgress } from '@inertiajs/progress';
 import KProgress from 'k-progress';
 import VueCarousel from 'vue-carousel';
-import VueGraph from 'vue-graph'
+import VueGraph from 'vue-graph';
 
 InertiaProgress.init({
   // The delay after which the progress bar will
@@ -18,15 +18,15 @@ InertiaProgress.init({
 
   // Whether the NProgress spinner will be shown.
   showSpinner: true,
-})
+});
+
+InertiaProgress.init();
 
 Vue.use(plugin)
-
-InertiaProgress.init()
-
 Vue.component('k-progress', KProgress);
 Vue.use(VueCarousel);
 Vue.use(VueGraph);
+
 
 Vue.mixin({
   methods: {
@@ -43,8 +43,8 @@ Vue.mixin({
     isAuthorize(arg, user) {
       if(!user) return false;
       
-      if(arg == 'save_case' && user.perspective == 1) return true;
-
+      if(arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true; 
+      if(arg == 'users' && (user.perspective == 1 && user.user_type == 'admin') || (user.perspective == 2 && user.user_type == 'admin') ) return true; 
 
     }
   }

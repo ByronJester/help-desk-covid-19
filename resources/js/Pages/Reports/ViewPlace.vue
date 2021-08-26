@@ -4,24 +4,22 @@
 
 		<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
-		<div v-if="!viewCase && !openModal">
-			<div class="w-max mb-2 ml-5">
-				<div class="bg-green-200 border-t border-b border-green-700 text-black px-4 py-3" role="alert">
-				  <p class="text-3xl md:text-7xl">{{ options.place.name }}</p>
-				</div>
+		<div v-if="!viewCase && !openModal" class="w-screen">
+			<div class="w-full text-lg md:text-4xl md:px-5">
+				<i class="fa fa-arrow-left cursor-pointer ml-3" @click="back()"></i> 
+				<span class="ml-3">{{options.place.name}} </span>
+
+				<button 
+					class="rounded bg-green-400 border border-green-100 text-white px-1 py-1 md:px-5 md:py-3 float-right md:text-2xl mr-2" 
+					@click="newCase()"
+				>
+				New Case
+			</button>
 			</div>
 
-			<div class="w-max ml-5" v-if="isAuthorize('save_case', options.user)">
-				<div class="flex items-center bg-blue-500 text-white text-center font-bold px-4 py-3 mt-2" role="alert">
-				  <button class="text-sm md:text-xl" @click="newCase()">
-				  	<i class="fa fa-plus-square"> </i> <b class="ml-4 uppercase"> New Covid Case</b>
-				  </button>
-				</div>
-			</div>
+			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-10 px-3 md:px-20"/>
 
-			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-8 md:mt-16"/>
-
-			<ReportsCarousel :records="options.records" class="mt-20"/>
+			<ReportsCarousel :records="options.records" class="mt-8 px-3 md:px-20"/>
 		</div>
 
 		<CaseModal :viewCase.sync="viewCase" :form.sync="form"/>
@@ -101,6 +99,15 @@
 					travel_history: null,
 					status: 'RECOVERED'
 				}
+			},
+
+			back() {
+				Inertia.get(
+          this.$root.route + '/reports', {},
+          {
+            onSuccess: () => { },
+          },
+        );
 			}
 		},
 
