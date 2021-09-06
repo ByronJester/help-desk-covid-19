@@ -13,4 +13,9 @@ class PostImage extends Model
         'post_id',
         'image'
     ];
+
+    public function getImageAttribute($value)
+    {
+    	return '/images/posts/' . $value;
+    }
 }

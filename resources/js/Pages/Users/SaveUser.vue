@@ -19,7 +19,7 @@
 					<Toggle v-model="user.is_active"  class="ml-5"/>
 				</div>
 			</div>
-			<div class="w-full flex flex-col md:flex-row py-20">
+			<div class="w-full flex flex-col md:flex-row py-3 md:py-20">
 				<div class="w-full px-2 md:px-3">
 					<label class="font-bold"> First Name</label><br><br>
 					<input type="text" class="w-full border border-green-200 h-12 text-center" v-model="user.first_name">
@@ -39,7 +39,7 @@
 				</div>
 			</div>
 
-			<div class="w-full flex flex-col md:flex-row py-20">
+			<div class="w-full flex flex-col md:flex-row py-3 md:py-20">
 				<div class="w-full px-2 md:px-3">
 					<label class="font-bold"> Email</label><br><br>
 					<input type="text" class="w-full border border-green-200 h-12 text-center" v-model="user.email">

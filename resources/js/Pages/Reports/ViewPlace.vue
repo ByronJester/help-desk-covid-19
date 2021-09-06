@@ -157,7 +157,7 @@
 </script>
 
 <style scoped>
-	p {
+	/*p {
 		font-family: "Papyrus", "Courier New", cursive;
-	}
+	}*/
 </style>

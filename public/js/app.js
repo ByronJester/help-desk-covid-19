@@ -2383,6 +2383,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_Navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Layouts/Navigation */ "./resources/js/Layouts/Navigation.vue");
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
 /* harmony import */ var _Components_Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Toggle */ "./resources/js/Components/Toggle.vue");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2467,10 +2518,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       openModal: false,
       form: {
+        id: null,
         content: null,
         images: []
       },
-      formData: new FormData()
+      formData: new FormData(),
+      deleteId: null,
+      is_edit: false
     };
   },
   mounted: function mounted() {
@@ -2486,27 +2540,56 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var image = e.target.files[0];
-      this.formData.append('images[]', image);
+      this.formData.append('images[]', image); // this.formData.get('images')
+
+      var _iterator = _createForOfIteratorHelper(this.formData.keys()),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {// console.log(key);
+
+          var key = _step.value;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
       var reader = new FileReader();
       reader.readAsDataURL(image);
 
       reader.onload = function (e) {
-        _this.form.images.push(e.target.result);
+        _this.form.images.push({
+          image: e.target.result,
+          arg: image
+        });
       };
     },
     newPost: function newPost() {
       var _this2 = this;
 
+      this.formData.append('id', this.form.id);
       this.formData.append('content', this.form.content);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/save-post", this.formData, {
         onSuccess: function onSuccess(res) {
           _this2.formData = new FormData();
+          _this2.form.id = null;
           _this2.form.content = null;
           _this2.form.images = [];
         },
         onError: function onError(err) {}
       });
-    }
+    },
+    deletePost: function deletePost(id) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/delete-post", {
+        id: id
+      }, {
+        onSuccess: function onSuccess(res) {},
+        onError: function onError(err) {}
+      });
+    },
+    removeImage: function removeImage(image) {}
   }
 });
 
@@ -2600,21 +2683,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
 /* harmony import */ var _Places_PlacesCarousel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Places/PlacesCarousel */ "./resources/js/Pages/Places/PlacesCarousel.vue");
 /* harmony import */ var _Reports_ReportsCarousel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Reports/ReportsCarousel */ "./resources/js/Pages/Reports/ReportsCarousel.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3632,7 +3700,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.--home[data-v-6a63e488] {\n\t\theight: 100vh;\n\t\twidth: 100vw;\n}\ntextarea[data-v-6a63e488] {\n    overflow: auto;\n    outline: none;\n    box-shadow: none;\n\n    resize: none; /*remove the resize handle on the bottom right*/\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.--home[data-v-6a63e488] {\n\t\theight: 100vh;\n\t\twidth: 100vw;\n}\n.--home[data-v-6a63e488]::-webkit-scrollbar {\n\t  display: none;\n}\n\n\t/* Hide scrollbar for IE, Edge and Firefox */\n.--home[data-v-6a63e488] {\n\t  -ms-overflow-style: none;  /* IE and Edge */\n\t  scrollbar-width: none;  /* Firefox */\n}\ntextarea[data-v-6a63e488] {\n    overflow: auto;\n    outline: none;\n    box-shadow: none;\n\n    resize: none; /*remove the resize handle on the bottom right*/\n}\n.--post-image[data-v-6a63e488] {\n\t  position: relative;\n\t  text-align: center;\n\t  color: white;\n}\n.--remove-icon[data-v-6a63e488] {\n\t  position: absolute;\n\t  top: 8px;\n\t  right: 16px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3656,7 +3724,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n::-webkit-scrollbar {\n    display: none;\n}\np {\n\tfont-family: \"Papyrus\", \"Courier New\", cursive;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n::-webkit-scrollbar {\n    display: none;\n}\n\n/*p {\n\tfont-family: \"Papyrus\", \"Courier New\", cursive;\n}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3704,7 +3772,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\np[data-v-b7ac8cce] {\n\tfont-family: \"Papyrus\", \"Courier New\", cursive;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*p {\n\tfont-family: \"Papyrus\", \"Courier New\", cursive;\n}*/\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35558,7 +35626,7 @@ var render = function() {
                                 _c("i", { staticClass: "fa fa-home" }),
                                 _vm._v(" "),
                                 _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Home")
+                                  _vm._v("Announcement")
                                 ])
                               ]
                             )
@@ -35744,7 +35812,7 @@ var render = function() {
                             _c("i", { staticClass: "fa fa-home" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "ml-2" }, [
-                              _vm._v("Home")
+                              _vm._v("Announcement")
                             ])
                           ]
                         )
@@ -35908,7 +35976,7 @@ var staticRenderFns = [
         },
         [
           _c("i", { staticClass: "fa fa-tv" }),
-          _c("span", { staticClass: "ml-2" }, [_vm._v("Bayan News")])
+          _c("span", { staticClass: "ml-2" }, [_vm._v("News")])
         ]
       )
     ])
@@ -35941,7 +36009,7 @@ var staticRenderFns = [
         },
         [
           _c("i", { staticClass: "fa fa-tv" }),
-          _c("span", { staticClass: "ml-2" }, [_vm._v("Bayan News")])
+          _c("span", { staticClass: "ml-2" }, [_vm._v("News")])
         ]
       )
     ])
@@ -36599,7 +36667,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "w-screen" },
+    { staticClass: "--home overflow-x-hidden" },
     [
       _c("Login", {
         attrs: { openModal: _vm.openModal },
@@ -36687,15 +36755,17 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("i", {
-                          staticClass:
-                            "fa fa-image fa-lg md:fa-2x cursor-pointer",
-                          on: {
-                            click: function($event) {
-                              return _vm.uploadImage("post_image")
-                            }
-                          }
-                        })
+                        _vm.form.images.length == 0
+                          ? _c("i", {
+                              staticClass:
+                                "fa fa-image fa-lg md:fa-2x cursor-pointer",
+                              on: {
+                                click: function($event) {
+                                  return _vm.uploadImage("post_image")
+                                }
+                              }
+                            })
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _vm.form.images.length > 0
@@ -36721,11 +36791,16 @@ var render = function() {
                                       staticStyle: { height: "250px" }
                                     },
                                     [
-                                      _c("img", {
-                                        staticClass: "w-full",
-                                        style: { height: "250px" },
-                                        attrs: { src: image, alt: "" }
-                                      })
+                                      _c(
+                                        "div",
+                                        { staticClass: "--post-image" },
+                                        [
+                                          _c("img", {
+                                            staticClass: "w-full h-full",
+                                            attrs: { src: image.image, alt: "" }
+                                          })
+                                        ]
+                                      )
                                     ]
                                   )
                                 }),
@@ -36764,18 +36839,104 @@ var render = function() {
                   "div",
                   { staticClass: "w-4/5 md:w-2/5 bg-gray-200 my-5 rounded" },
                   [
+                    _vm.deleteId == post.id
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex items-center bg-yellow-400 text-white text-sm font-bold px-4 py-3",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "tex-lg font-bold my-2 w-full" },
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "text-xs md:text-base" },
+                                  [
+                                    _vm._v(
+                                      " \n\t\t  \t\t\tAre you sure to delete this post ? \n\t\t\t  \t"
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "float-right cursor-pointe text-xs md:text-base"
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "mx-1 md:mx-3",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.deleteId = null
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" No ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "mx-1 md:mx-3",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deletePost(post.id)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" Yes ")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "py-3 px-3" },
                       [
                         _c("p", { staticClass: "tex-lg font-bold my-2" }, [
-                          _vm._v(
-                            "\n\t\t  \t\t" +
-                              _vm._s(post.user.first_name) +
+                          _c("span", [
+                            _vm._v(
                               " " +
-                              _vm._s(post.user.last_name) +
-                              "\n\t\t  \t"
-                          )
+                                _vm._s(post.user.first_name) +
+                                " " +
+                                _vm._s(post.user.last_name) +
+                                " "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.options.user &&
+                          _vm.options.user.id == post.user_id
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "float-right cursor-pointer mx-1",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteId = post.id
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-trash fa-lg md:fa-lg"
+                                  })
+                                ]
+                              )
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("p", { staticClass: "tex-base" }, [
@@ -36804,14 +36965,13 @@ var render = function() {
                                     staticStyle: { height: "250px" }
                                   },
                                   [
-                                    _c("img", {
-                                      staticClass: "w-full",
-                                      style: { height: "250px" },
-                                      attrs: {
-                                        src: "/images/posts/" + image.image,
-                                        alt: ""
-                                      }
-                                    })
+                                    _c("div", { staticClass: "--post-image" }, [
+                                      _c("img", {
+                                        staticClass: "w-full",
+                                        style: { height: "250px" },
+                                        attrs: { src: image.image, alt: "" }
+                                      })
+                                    ])
                                   ]
                                 )
                               }),
@@ -37011,27 +37171,6 @@ var render = function() {
                 ]
               )
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.filter == 1 && !_vm.openModal
-          ? _c("ReportsCarousel", {
-              staticClass: "px-3 md:px-20",
-              attrs: { records: _vm.options.records }
-            })
           : _vm._e(),
         _vm._v(" "),
         _vm.filter == 1 && !_vm.openModal
@@ -38218,175 +38357,192 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "w-full flex flex-col md:flex-row py-20" }, [
-          _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-            _c("label", { staticClass: "font-bold" }, [_vm._v(" First Name")]),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.user.first_name,
-                  expression: "user.first_name"
-                }
-              ],
-              staticClass: "w-full border border-green-200 h-12 text-center",
-              attrs: { type: "text" },
-              domProps: { value: _vm.user.first_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+        _c(
+          "div",
+          { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
+          [
+            _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+              _c("label", { staticClass: "font-bold" }, [
+                _vm._v(" First Name")
+              ]),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.first_name,
+                    expression: "user.first_name"
                   }
-                  _vm.$set(_vm.user, "first_name", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-sm text-red-500" }, [
-              _vm._v(
-                _vm._s(_vm.validationError("first_name", _vm.saveError)) + " "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-            _c("label", { staticClass: "font-bold" }, [_vm._v(" Middle Name")]),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.user.middle_name,
-                  expression: "user.middle_name"
-                }
-              ],
-              staticClass: "w-full border border-green-200 h-12 text-center",
-              attrs: { type: "text" },
-              domProps: { value: _vm.user.middle_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                ],
+                staticClass: "w-full border border-green-200 h-12 text-center",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.first_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "first_name", $event.target.value)
                   }
-                  _vm.$set(_vm.user, "middle_name", $event.target.value)
                 }
-              }
-            }),
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("first_name", _vm.saveError)) + " "
+                )
+              ])
+            ]),
             _vm._v(" "),
-            _c("span", { staticClass: "text-sm text-red-500" }, [
-              _vm._v(
-                _vm._s(_vm.validationError("middle_name", _vm.saveError)) + " "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-            _c("label", { staticClass: "font-bold" }, [_vm._v(" Last Name")]),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.user.last_name,
-                  expression: "user.last_name"
-                }
-              ],
-              staticClass: "w-full border border-green-200 h-12 text-center",
-              attrs: { type: "text" },
-              domProps: { value: _vm.user.last_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+              _c("label", { staticClass: "font-bold" }, [
+                _vm._v(" Middle Name")
+              ]),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.middle_name,
+                    expression: "user.middle_name"
                   }
-                  _vm.$set(_vm.user, "last_name", $event.target.value)
+                ],
+                staticClass: "w-full border border-green-200 h-12 text-center",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.middle_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "middle_name", $event.target.value)
+                  }
                 }
-              }
-            }),
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("middle_name", _vm.saveError)) +
+                    " "
+                )
+              ])
+            ]),
             _vm._v(" "),
-            _c("span", { staticClass: "text-sm text-red-500" }, [
-              _vm._v(
-                _vm._s(_vm.validationError("last_name", _vm.saveError)) + " "
-              )
+            _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+              _c("label", { staticClass: "font-bold" }, [_vm._v(" Last Name")]),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.last_name,
+                    expression: "user.last_name"
+                  }
+                ],
+                staticClass: "w-full border border-green-200 h-12 text-center",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.last_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "last_name", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("last_name", _vm.saveError)) + " "
+                )
+              ])
             ])
-          ])
-        ]),
+          ]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "w-full flex flex-col md:flex-row py-20" }, [
-          _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-            _c("label", { staticClass: "font-bold" }, [_vm._v(" Email")]),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.user.email,
-                  expression: "user.email"
-                }
-              ],
-              staticClass: "w-full border border-green-200 h-12 text-center",
-              attrs: { type: "text" },
-              domProps: { value: _vm.user.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+        _c(
+          "div",
+          { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
+          [
+            _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+              _c("label", { staticClass: "font-bold" }, [_vm._v(" Email")]),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.email,
+                    expression: "user.email"
                   }
-                  _vm.$set(_vm.user, "email", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-sm text-red-500" }, [
-              _vm._v(_vm._s(_vm.validationError("email", _vm.saveError)) + " ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-            _c("label", { staticClass: "font-bold" }, [_vm._v(" Phone")]),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.user.phone,
-                  expression: "user.phone"
-                }
-              ],
-              staticClass: "w-full border border-green-200 h-12 text-center",
-              attrs: { type: "text" },
-              domProps: { value: _vm.user.phone },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                ],
+                staticClass: "w-full border border-green-200 h-12 text-center",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "email", $event.target.value)
                   }
-                  _vm.$set(_vm.user, "phone", $event.target.value)
                 }
-              }
-            }),
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("email", _vm.saveError)) + " "
+                )
+              ])
+            ]),
             _vm._v(" "),
-            _c("span", { staticClass: "text-sm text-red-500" }, [
-              _vm._v(_vm._s(_vm.validationError("phone", _vm.saveError)) + " ")
+            _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+              _c("label", { staticClass: "font-bold" }, [_vm._v(" Phone")]),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.phone,
+                    expression: "user.phone"
+                  }
+                ],
+                staticClass: "w-full border border-green-200 h-12 text-center",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "phone", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("phone", _vm.saveError)) + " "
+                )
+              ])
             ])
-          ])
-        ])
+          ]
+        )
       ])
     ],
     1

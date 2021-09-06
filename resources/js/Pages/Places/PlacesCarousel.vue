@@ -64,7 +64,7 @@
 	    display: none;
 	}
 
-	p {
+	/*p {
 		font-family: "Papyrus", "Courier New", cursive;
-	}
+	}*/
 </style>
