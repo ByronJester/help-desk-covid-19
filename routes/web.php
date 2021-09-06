@@ -23,8 +23,10 @@ Route::get('/', function () {
 
 
 Route::prefix('home')->group(function () {
-    Route::post('/save-post', [HomeController::class, 'savePost']);
     Route::get('/', [HomeController::class, 'homeView'])->name('view.home');
+    Route::post('/save-post', [HomeController::class, 'savePost']);
+    Route::post('/delete-post', [HomeController::class, 'deletePost']);
+    
 });
 
 Route::prefix('reports')->group(function () {

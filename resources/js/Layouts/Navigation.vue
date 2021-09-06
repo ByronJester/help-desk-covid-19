@@ -26,13 +26,13 @@
 
           <li class="nav-item mx-5" :class="{'--active' : active == '/home'}">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/home')">
-              <i class="fa fa-home"></i> <span class="ml-2" >Home</span>
+              <i class="fa fa-home"></i> <span class="ml-2" >Announcement</span>
             </a>
           </li>
 
           <li class="nav-item mx-5">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-              <i class="fa fa-tv"></i><span class="ml-2">Bayan News</span>
+              <i class="fa fa-tv"></i><span class="ml-2">News</span>
             </a>
           </li>
 
@@ -80,13 +80,13 @@
 
           <li class="nav-item mx-5" :class="{'--active' : active == '/home'}">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/home')">
-              <i class="fa fa-home"></i> <span class="ml-2" >Home</span>
+              <i class="fa fa-home"></i> <span class="ml-2" >Announcement</span>
             </a>
           </li>
 
           <li class="nav-item mx-5">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-              <i class="fa fa-tv"></i><span class="ml-2">Bayan News</span>
+              <i class="fa fa-tv"></i><span class="ml-2">News</span>
             </a>
           </li>
 

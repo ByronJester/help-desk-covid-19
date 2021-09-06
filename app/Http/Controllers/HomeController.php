@@ -35,7 +35,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        $data = $request->except('images');
+        $data = $request->except('id', 'images');
 
         $data['user_id'] = $user->id;
 
@@ -62,6 +62,17 @@ class HomeController extends Controller
 
         return redirect()->back();
         
+    }
+
+    public function deletePost(Request $request)
+    {
+        $id = $request->id;
+
+        $imageDelete = PostImage::where('post_id', $id)->delete();
+
+        $postDelete = Post::where('id', $id)->delete();
+
+        return redirect()->back();
     }
     
 } 
