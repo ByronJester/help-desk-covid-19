@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
         	UserSeeder::class,
             PlaceSeeder::class,
-            VirusCaseSeeder::class
+            VirusCaseSeeder::class,
+            VaccineSeeder::class,
+            VaccinationSeeder::class
         ]);
     }
 }
