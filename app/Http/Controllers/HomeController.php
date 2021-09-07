@@ -34,12 +34,16 @@ class HomeController extends Controller
     public function savePost(Request $request)
     {
         $user = Auth::user();
+        
+        $post = new Post();
 
-        $data = $request->except('id', 'images');
+        if($request->has('id')) {
+            $post = Post::where('id', $request->id)->first();
+        }
 
-        $data['user_id'] = $user->id;
-
-        $post = Post::create($data);
+        $post->user_id = $user->id;
+        $post->content = $request->content;
+        $post->save();
 
         if($post) {
             if($images = $request->images) {
@@ -52,6 +56,8 @@ class HomeController extends Controller
                     
                     $uplaod = $image->move($path, $filename . '.' . $extension);
 
+                    PostImage::where('post_id', $post->id)->delete();
+                    
                     PostImage::create([
                         'post_id' => $post->id,
                         'image'   => $filename . '.' . $extension

@@ -28,8 +28,9 @@
 			      	<div class="--post-image">
 				    		 <img
 		              :src="image.image"
-		              class="w-full h-full"
+		              class="w-full h-full cursor-pointer"
 		              alt=""
+		              @click="uploadImage('post_image')"
 		            />
 		            <!-- <div class="--remove-icon cursor-pointer text-black" @click="removeImage(image.arg)">
 		            	<i class="fa fa-times fa-2x"></i>
@@ -66,41 +67,69 @@
 			  	</div>
 				</div>
 
+				<div class="flex items-center bg-yellow-400 text-white text-sm font-bold px-4 py-3" 
+					role="alert"
+					v-if="edit.id == post.id"
+				>
+				  <div class="tex-lg font-bold my-2 w-full">
+
+			  		<span class="text-xs md:text-base"> 
+			  			Are you sure to edit this post ? 
+				  	</span> 
+			  		<span class="float-right cursor-pointe text-xs md:text-base"
+			  		>
+			  			<button class="mx-1 md:mx-3" @click="cancelEdit()"> No </button> 
+			  			<button class="mx-1 md:mx-3" @click="editPost()"> Yes </button>
+			  		</span>
+			  	</div>
+				</div>
+
 				<div class="py-3 px-3">
 					<p class="tex-lg font-bold my-2">
 			  		<span> {{post.user.first_name}} {{post.user.last_name}} </span> 
 			  		
-			  		<span class="float-right cursor-pointer mx-1" @click="deleteId = post.id"
+			  		<span class="float-right cursor-pointer mx-1" @click="initiateDelete(post)"
 			  			v-if="options.user && options.user.id == post.user_id"
 			  		>
 			  			<i class="fa fa-trash fa-lg md:fa-lg"></i>
 			  		</span>
 
-			  		<!-- <span class="float-right cursor-pointer mx-1" @click="editPost(post)"
+			  		<span class="float-right cursor-pointer mx-1" @click="initiateEdit(post)"
 			  			v-if="options.user && options.user.id == post.user_id"
 			  		>
 			  			<i class="fa fa-edit fa-lg md:fa-lg"></i>
-			  		</span> -->
+			  		</span>
 			  	</p>
 
-			  	<p class="tex-base">
+			  	<p class="tex-base" v-if="post.id != edit.id">
 			  		{{post.content}}
 			  	</p>
 
+			  	<textarea rows="4" v-else
+			  		class="text-xs md:text-lg rounded px-2 py-2 border border-green-500 w-full" 
+			  		v-model="edit.content"
+			  	>
+					</textarea>
+
 			  	<carousel class="mt-3" :navigationEnabled="false" :perPage="1" :paginationEnabled="true" v-if="post.images.length > 0">
-			      <slide class="w-full" style="height: 250px" v-for="(image, i) in post.images" :key="i">
+			      <slide class="w-full" style="height: 250px" 
+			      	v-for="(image, i) in post.id != edit.id ? post.images : edit.images" :key="i"
+			      >
 			      	<div class="--post-image">
 				    		 <img
 		              :src="image.image"
 		              class="w-full"
+		              :class="{'cursor-pointer': post.id == edit.id}"
 		              :style="{ 'height': '250px' }"
+		              @click="post.id == edit.id ? editImage('image_' + post.id + '_' + image.id) : ''"
 		              alt=""
 		            />
-		            <!-- <div class="--remove-icon cursor-pointer text-black" 
-		            	v-if="options.user && options.user.id == post.user_id"
+
+		            <input type="file" :ref="'image_' + post.id + '_' + image.id" 
+		            	accept="image/png, image/jpeg" 
+		            	@change="editImageChange('image_' + post.id + '_' + image.id, $event)"
+		            	style="display:none"
 		            >
-		            	<i class="fa fa-edit fa-2x"></i>
-		            </div> -->
 		          </div>
 			      </slide>
 			    </carousel>
@@ -133,7 +162,13 @@
 					content : null,
 					images: []
 				},
+				edit: {
+					id: null,
+					content: null,
+					images: null
+				},
 				formData: new FormData(),
+				editForm: new FormData(),
 				deleteId: null,
 				is_edit: false
 			}
@@ -150,30 +185,45 @@
 				this.$refs[arg].click()
 			},
 
-			imageChange(arg, e) {
-	      const image = e.target.files[0];
+			editImage(arg) {
+				this.$refs[arg][0].click()
+			},
 
-	      this.formData.append('images[]', image);
+			editImageChange(arg, e) {
+				const image = e.target.files[0];
 
-	      // this.formData.get('images')
+	      this.editForm = new FormData()
+	      this.edit.images = []
 
-
-
-	      for (var key of this.formData.keys()) {
-			   	// console.log(key);
-				}
+	      this.editForm.append('images[]', image);
 
         const reader = new FileReader();
 
         reader.readAsDataURL(image);
 
         reader.onload = e =>{
-          this.form.images.push({image: e.target.result, arg: image})
+          this.edit.images.push({image: e.target.result})
+        };
+			},
+
+			imageChange(arg, e) {
+	      const image = e.target.files[0];
+
+	      this.formData = new FormData()
+	      this.form.images = []
+
+	      this.formData.append('images[]', image);
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(image);
+
+        reader.onload = e =>{
+          this.form.images.push({image: e.target.result})
         };
 			},
 
 			newPost() {
-				this.formData.append('id', this.form.id)
 				this.formData.append('content', this.form.content)
 
 				Inertia.post(this.$root.route + "/home/save-post", this.formData,
@@ -191,6 +241,16 @@
         });
 			},
 
+			initiateDelete(post) {
+				this.deleteId = post.id
+
+				this.edit = {
+					id: null,
+					content: null,
+					images: []
+				}
+			},
+
 			deletePost(id) {
 				Inertia.post(this.$root.route + "/home/delete-post", {id: id},
           {
@@ -204,11 +264,39 @@
         });
 			},
 
-			removeImage(image) {
-				
+			initiateEdit(post) {
+				this.edit = Object.assign({}, post)
+			},
+
+			cancelEdit() {
+				this.edit = {
+					id: null,
+					content: null,
+					images: []
+				}
+			},
+
+			editPost() {
+				this.editForm.append('id', this.edit.id)
+				this.editForm.append('content', this.edit.content)
+
+				Inertia.post(this.$root.route + "/home/save-post", this.editForm,
+          {
+            onSuccess: (res) => {
+            	this.editForm = new FormData()
+            	this.edit.id = null
+            	this.edit.content = null
+            	this.edit.images = []
+            }, 
+
+            onError: (err) => {
+            	
+            }
+        });
 			}
 
-			
+
+
 		}
 	}
 

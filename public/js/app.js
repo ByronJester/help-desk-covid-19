@@ -2383,12 +2383,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_Navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Layouts/Navigation */ "./resources/js/Layouts/Navigation.vue");
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
 /* harmony import */ var _Components_Toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Toggle */ "./resources/js/Components/Toggle.vue");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2522,7 +2545,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         content: null,
         images: []
       },
+      edit: {
+        id: null,
+        content: null,
+        images: null
+      },
       formData: new FormData(),
+      editForm: new FormData(),
       deleteId: null,
       is_edit: false
     };
@@ -2536,50 +2565,62 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     uploadImage: function uploadImage(arg) {
       this.$refs[arg].click();
     },
-    imageChange: function imageChange(arg, e) {
+    editImage: function editImage(arg) {
+      this.$refs[arg][0].click();
+    },
+    editImageChange: function editImageChange(arg, e) {
       var _this = this;
 
       var image = e.target.files[0];
-      this.formData.append('images[]', image); // this.formData.get('images')
-
-      var _iterator = _createForOfIteratorHelper(this.formData.keys()),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {// console.log(key);
-
-          var key = _step.value;
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
+      this.editForm = new FormData();
+      this.edit.images = [];
+      this.editForm.append('images[]', image);
       var reader = new FileReader();
       reader.readAsDataURL(image);
 
       reader.onload = function (e) {
-        _this.form.images.push({
-          image: e.target.result,
-          arg: image
+        _this.edit.images.push({
+          image: e.target.result
+        });
+      };
+    },
+    imageChange: function imageChange(arg, e) {
+      var _this2 = this;
+
+      var image = e.target.files[0];
+      this.formData = new FormData();
+      this.form.images = [];
+      this.formData.append('images[]', image);
+      var reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this2.form.images.push({
+          image: e.target.result
         });
       };
     },
     newPost: function newPost() {
-      var _this2 = this;
+      var _this3 = this;
 
-      this.formData.append('id', this.form.id);
       this.formData.append('content', this.form.content);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/save-post", this.formData, {
         onSuccess: function onSuccess(res) {
-          _this2.formData = new FormData();
-          _this2.form.id = null;
-          _this2.form.content = null;
-          _this2.form.images = [];
+          _this3.formData = new FormData();
+          _this3.form.id = null;
+          _this3.form.content = null;
+          _this3.form.images = [];
         },
         onError: function onError(err) {}
       });
+    },
+    initiateDelete: function initiateDelete(post) {
+      this.deleteId = post.id;
+      this.edit = {
+        id: null,
+        content: null,
+        images: []
+      };
     },
     deletePost: function deletePost(id) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/delete-post", {
@@ -2589,7 +2630,31 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         onError: function onError(err) {}
       });
     },
-    removeImage: function removeImage(image) {}
+    initiateEdit: function initiateEdit(post) {
+      this.edit = Object.assign({}, post);
+    },
+    cancelEdit: function cancelEdit() {
+      this.edit = {
+        id: null,
+        content: null,
+        images: []
+      };
+    },
+    editPost: function editPost() {
+      var _this4 = this;
+
+      this.editForm.append('id', this.edit.id);
+      this.editForm.append('content', this.edit.content);
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/home/save-post", this.editForm, {
+        onSuccess: function onSuccess(res) {
+          _this4.editForm = new FormData();
+          _this4.edit.id = null;
+          _this4.edit.content = null;
+          _this4.edit.images = [];
+        },
+        onError: function onError(err) {}
+      });
+    }
   }
 });
 
@@ -36796,8 +36861,19 @@ var render = function() {
                                         { staticClass: "--post-image" },
                                         [
                                           _c("img", {
-                                            staticClass: "w-full h-full",
-                                            attrs: { src: image.image, alt: "" }
+                                            staticClass:
+                                              "w-full h-full cursor-pointer",
+                                            attrs: {
+                                              src: image.image,
+                                              alt: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.uploadImage(
+                                                  "post_image"
+                                                )
+                                              }
+                                            }
                                           })
                                         ]
                                       )
@@ -36902,6 +36978,69 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
+                    _vm.edit.id == post.id
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex items-center bg-yellow-400 text-white text-sm font-bold px-4 py-3",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "tex-lg font-bold my-2 w-full" },
+                              [
+                                _c(
+                                  "span",
+                                  { staticClass: "text-xs md:text-base" },
+                                  [
+                                    _vm._v(
+                                      " \n\t\t  \t\t\tAre you sure to edit this post ? \n\t\t\t  \t"
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "float-right cursor-pointe text-xs md:text-base"
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "mx-1 md:mx-3",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.cancelEdit()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" No ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "mx-1 md:mx-3",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.editPost()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" Yes ")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "py-3 px-3" },
@@ -36926,7 +37065,7 @@ var render = function() {
                                     "float-right cursor-pointer mx-1",
                                   on: {
                                     click: function($event) {
-                                      _vm.deleteId = post.id
+                                      return _vm.initiateDelete(post)
                                     }
                                   }
                                 },
@@ -36936,14 +37075,64 @@ var render = function() {
                                   })
                                 ]
                               )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.options.user &&
+                          _vm.options.user.id == post.user_id
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "float-right cursor-pointer mx-1",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initiateEdit(post)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-edit fa-lg md:fa-lg"
+                                  })
+                                ]
+                              )
                             : _vm._e()
                         ]),
                         _vm._v(" "),
-                        _c("p", { staticClass: "tex-base" }, [
-                          _vm._v(
-                            "\n\t\t  \t\t" + _vm._s(post.content) + "\n\t\t  \t"
-                          )
-                        ]),
+                        post.id != _vm.edit.id
+                          ? _c("p", { staticClass: "tex-base" }, [
+                              _vm._v(
+                                "\n\t\t  \t\t" +
+                                  _vm._s(post.content) +
+                                  "\n\t\t  \t"
+                              )
+                            ])
+                          : _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.edit.content,
+                                  expression: "edit.content"
+                                }
+                              ],
+                              staticClass:
+                                "text-xs md:text-lg rounded px-2 py-2 border border-green-500 w-full",
+                              attrs: { rows: "4" },
+                              domProps: { value: _vm.edit.content },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.edit,
+                                    "content",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
                         _vm._v(" "),
                         post.images.length > 0
                           ? _c(
@@ -36956,25 +37145,78 @@ var render = function() {
                                   paginationEnabled: true
                                 }
                               },
-                              _vm._l(post.images, function(image, i) {
-                                return _c(
-                                  "slide",
-                                  {
-                                    key: i,
-                                    staticClass: "w-full",
-                                    staticStyle: { height: "250px" }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "--post-image" }, [
-                                      _c("img", {
-                                        staticClass: "w-full",
-                                        style: { height: "250px" },
-                                        attrs: { src: image.image, alt: "" }
-                                      })
-                                    ])
-                                  ]
-                                )
-                              }),
+                              _vm._l(
+                                post.id != _vm.edit.id
+                                  ? post.images
+                                  : _vm.edit.images,
+                                function(image, i) {
+                                  return _c(
+                                    "slide",
+                                    {
+                                      key: i,
+                                      staticClass: "w-full",
+                                      staticStyle: { height: "250px" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "--post-image" },
+                                        [
+                                          _c("img", {
+                                            staticClass: "w-full",
+                                            class: {
+                                              "cursor-pointer":
+                                                post.id == _vm.edit.id
+                                            },
+                                            style: { height: "250px" },
+                                            attrs: {
+                                              src: image.image,
+                                              alt: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                post.id == _vm.edit.id
+                                                  ? _vm.editImage(
+                                                      "image_" +
+                                                        post.id +
+                                                        "_" +
+                                                        image.id
+                                                    )
+                                                  : ""
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("input", {
+                                            ref:
+                                              "image_" +
+                                              post.id +
+                                              "_" +
+                                              image.id,
+                                            refInFor: true,
+                                            staticStyle: { display: "none" },
+                                            attrs: {
+                                              type: "file",
+                                              accept: "image/png, image/jpeg"
+                                            },
+                                            on: {
+                                              change: function($event) {
+                                                return _vm.editImageChange(
+                                                  "image_" +
+                                                    post.id +
+                                                    "_" +
+                                                    image.id,
+                                                  $event
+                                                )
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                }
+                              ),
                               1
                             )
                           : _vm._e()
