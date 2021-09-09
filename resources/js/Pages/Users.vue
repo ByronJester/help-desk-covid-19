@@ -82,7 +82,7 @@
 		},
 
 		watch : {
-			selected: function (v) {
+			'table.selected': function (v) {
 				Inertia.get(
           this.$root.route + '/users/' + v.id, {},
           {

@@ -42,25 +42,35 @@
             </a>
           </li>
 
-          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations'}" > 
+          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations' || active == '/virus-cases'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-users"></i><span class="ml-2">Admin</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
-                <li>
+
+                <li v-if="isAuthorize('covid', user)">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                   @click="changeActive('/users')">
-                    <span class="ml-2">Users</span>
+                    @click="changeActive('/virus-cases')"
+                  >
+                    <span class="ml-2 cursor-pointer">Covid 19</span>
                   </a>
                 </li>
 
                 <li v-if="isAuthorize('vaccination', user)">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
-                    <span class="ml-2">Vaccinations</span>
+                    <span class="ml-2 cursor-pointer">Vaccinations</span>
                   </a>
                 </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                   @click="changeActive('/users')">
+                    <span class="ml-2 cursor-pointer">Users</span>
+                  </a>
+                </li>
+
               </ul>
             </div>
           </li>
@@ -113,25 +123,35 @@
             </a>
           </li>
 
-          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations'}">
+          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations' || active == '/virus-cases'}">
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-users"></i><span class="ml-2">Admin</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
-                <li class="">
+                
+                <li v-if="isAuthorize('covid', user)">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                   @click="changeActive('/users')">
-                    <span class="ml-2">Users</span>
+                    @click="changeActive('/virus-cases')"
+                  >
+                    <span class="ml-2 cursor-pointer">Covid 19</span>
                   </a>
                 </li>
 
                 <li v-if="isAuthorize('vaccination', user)">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
-                   <span class="ml-2">Vaccinations</span>
+                    <span class="ml-2 cursor-pointer">Vaccinations</span>
                   </a>
                 </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                   @click="changeActive('/users')">
+                    <span class="ml-2 cursor-pointer">Users</span>
+                  </a>
+                </li>
+
               </ul>
             </div>
           </li>
@@ -194,8 +214,25 @@
       },
 
       changeActive(arg) {
+        var req = {}
+
+        if(arg == '/users') {
+          req = {
+            page: 1,
+            search: ''
+          }
+        }
+
+        if(arg == '/virus-cases') {
+          req = {
+            place: 1,
+            page: 1,
+            search: ''
+          }
+        }
+
         Inertia.get(
-          this.$root.route + arg, {},
+          this.$root.route + arg, req,
           {
             onSuccess: () => { },
           },

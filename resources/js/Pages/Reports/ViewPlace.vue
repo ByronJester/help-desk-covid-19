@@ -9,12 +9,12 @@
 				<i class="fa fa-arrow-left cursor-pointer ml-3" @click="back()"></i> 
 				<span class="ml-3">{{options.place.name}} </span>
 
-				<button 
+				<!-- <button 
 					class="rounded bg-green-400 border border-green-100 text-white px-1 py-1 md:px-5 md:py-3 float-right md:text-2xl mr-2" 
 					@click="newCase()"
 				>
 				New Case
-			</button>
+				</button> -->
 			</div>
 
 			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-10 px-3 md:px-20"/>
@@ -86,19 +86,19 @@
 
 		methods: {
 			newCase() {
-				this.viewCase = true
+				// this.viewCase = true
 				
-				this.form = {
-					id: null,
-					place_id: this.options.place.id,
-					code: null,
-					age: null,
-					symptom: null,
-					gender: 'MALE',
-					date: null,
-					travel_history: null,
-					status: 'RECOVERED'
-				}
+				// this.form = {
+				// 	id: null,
+				// 	place_id: this.options.place.id,
+				// 	code: null,
+				// 	age: null,
+				// 	symptom: null,
+				// 	gender: 'MALE',
+				// 	date: null,
+				// 	travel_history: null,
+				// 	status: 'RECOVERED'
+				// }
 			},
 
 			back() {
@@ -113,39 +113,39 @@
 
 		watch: {
 			selected: function (v) {
-				if(!!v) this.viewCase = true;
+				// if(!!v) this.viewCase = true;
 
-				this.form = {
-					id: v.id,
-					place_id: v.place_id,
-					code: v.code,
-					age: v.age,
-					symptom: v.symptom,
-					gender: v.gender,
-					date: v.date,
-					travel_history: v.travel_history,
-					status: v.status
-				}
+				// this.form = {
+				// 	id: v.id,
+				// 	place_id: v.place_id,
+				// 	code: v.code,
+				// 	age: v.age,
+				// 	symptom: v.symptom,
+				// 	gender: v.gender,
+				// 	date: v.date,
+				// 	travel_history: v.travel_history,
+				// 	status: v.status
+				// }
 			},
 
 			viewCase: function (v) {
-				this.openModal = false
+				// this.openModal = false
 				
-				if(!v) {
-					this.selected = null;
+				// if(!v) {
+				// 	this.selected = null;
 
-					this.form = {
-						id: null,
-						place_id: this.options.place.id,
-						code: null,
-						age: null,
-						symptom: null,
-						gender: 'MALE',
-						date: null,
-						travel_history: null,
-						status: 'RECOVERED'
-					}
-				} 
+				// 	this.form = {
+				// 		id: null,
+				// 		place_id: this.options.place.id,
+				// 		code: null,
+				// 		age: null,
+				// 		symptom: null,
+				// 		gender: 'MALE',
+				// 		date: null,
+				// 		travel_history: null,
+				// 		status: 'RECOVERED'
+				// 	}
+				// } 
 			},
 
 			'options.user': function (v) {
