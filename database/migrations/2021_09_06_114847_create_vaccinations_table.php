@@ -21,6 +21,7 @@ class CreateVaccinationsTable extends Migration
             $table->integer('age');
             $table->date('birth_date');
             $table->string('gender')->comment("MALE, FEMALE");
+            $table->string('status')->default('pending')->comment("pending, ongoing, finish");
             $table->date('start_date')->nullable();
             $table->date('completed_date')->nullable();
 

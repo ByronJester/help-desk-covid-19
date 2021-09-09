@@ -3,7 +3,7 @@
 		<div class="flex flex-col">
 			<div class="w-full">
 				<carousel :navigationEnabled="false" :perPage="perPage" :paginationEnabled="pagination" v-if="cases.length > 0">
-		      <slide v-for="c in cases" :key="c.id" class="w-full cursor-pointer w-full md:px-1">
+		      <slide v-for="c in cases" :key="c.id" class="w-full w-full md:px-1">
 		    		<div @click="isAuthorize('save_case', options.user) ? selectCase(c) : ''" class="bg-blue-200 text-left h-60 text-white py-2 px-2 text-2xl text-center pt-5" style="background-image: url('/images/cases_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
 		    			<div>
 		    				<span> {{ c.code }}, {{ c.age }} y/o, {{ c.gender }}</span>

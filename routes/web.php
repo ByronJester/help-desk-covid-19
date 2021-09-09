@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\VirusCaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,6 @@ Route::prefix('home')->group(function () {
 });
 
 Route::prefix('reports')->group(function () {
-	Route::post('/save-incident', [ReportController::class, 'savePlaceIncident'])->middleware('auth');
     Route::get('/', [ReportController::class, 'reportView'])->name('view.report');
     Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
 });
@@ -39,6 +39,12 @@ Route::prefix('users')->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/saveUser', [UserController::class, 'saveUser']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
-    Route::get('/', [UserController::class, 'usersView'])->middleware('auth')->name('view.users');
+    Route::get('/', [UserController::class, 'usersView'])->middleware('auth')->name('view.users'); 
     Route::get('/{id}', [UserController::class, 'updateUser'])->middleware('auth');
 });
+
+Route::prefix('virus-cases')->group(function () {
+    Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
+    Route::post('/save', [VirusCaseController::class, 'caseSave'])->middleware('auth');
+});
+

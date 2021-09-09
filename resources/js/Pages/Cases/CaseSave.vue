@@ -94,10 +94,10 @@
 				errors: null
 			}
 		},
-
+ 
 		methods: {
 			save() {
-				Inertia.post(this.$root.route + "/reports/save-incident", this.form, 
+				Inertia.post(this.$root.route + "/virus-cases/save", this.form, 
           {
             onSuccess: () => { 
             	this.$emit('update:viewCase', false)
