@@ -1918,16 +1918,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['fields', 'keys', 'list', 'title', 'selected'],
+  props: ['fields', 'keys', 'list', 'selected', 'title', 'search', 'page', 'count'],
   components: {},
   data: function data() {
-    return {};
+    return {
+      form: {
+        search: null
+      },
+      timeOut: null
+    };
   },
   mounted: function mounted() {},
   methods: {
     getSelected: function getSelected(arg) {
       this.$emit('update:selected', arg);
+    },
+    prev: function prev() {
+      if (this.page <= 1) return;
+      this.$emit('update:page', this.page - 1);
+    },
+    next: function next() {
+      if (this.page >= this.count) return;
+      this.$emit('update:page', this.page + 1);
+    }
+  },
+  watch: {
+    'form.search': function formSearch(arg) {
+      var self = this;
+      clearTimeout(this.timeOut);
+      this.timeOut = setTimeout(function () {
+        self.$emit('update:search', arg);
+      }, 2000);
     }
   }
 });
@@ -1992,6 +2035,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3091,6 +3168,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3106,6 +3184,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       openModal: false,
       fields: ['Name', 'Phone', 'Email', 'User Type', 'Is Active'],
+      table: {
+        title: 'Users',
+        search: null,
+        page: this.options.users.current_page,
+        count: this.options.users.last_page,
+        selected: null
+      },
       keys: [{
         label: 'name',
         slot: false,
@@ -3126,19 +3211,36 @@ __webpack_require__.r(__webpack_exports__);
         label: 'is_active',
         slot: true,
         slot_name: 'is_active'
-      }],
-      selected: null,
-      aaa: true
+      }]
     };
   },
   mounted: function mounted() {
     if (!!this.options.user) {
       this.openModal = false;
     }
+
+    console.log(this.options);
   },
   watch: {
     selected: function selected(v) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.get(this.$root.route + '/users/' + v.id, {}, {
+        onSuccess: function onSuccess() {}
+      });
+    },
+    'table.page': function tablePage(p) {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.get(this.$root.route + '/users/', {
+        page: p,
+        search: this.table.search
+      }, {
+        onSuccess: function onSuccess() {}
+      });
+    },
+    'table.search': function tableSearch(s) {
+      this.table.page = 1;
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.get(this.$root.route + '/users/', {
+        page: this.table.page,
+        search: s
+      }, {
         onSuccess: function onSuccess() {}
       });
     }
@@ -3591,8 +3693,9 @@ vue__WEBPACK_IMPORTED_MODULE_5__.default.mixin({
     },
     isAuthorize: function isAuthorize(arg, user) {
       if (!user) return false;
+      if (arg == 'admin' && (user.perspective == 1 || user.perspective == 2)) return true;
+      if (arg == 'vaccination' && user.perspective == 1 && user.user_type != 'employee') return true;
       if (arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true;
-      if (arg == 'users' && user.perspective == 1 && user.user_type == 'admin' || user.perspective == 2 && user.user_type == 'admin') return true;
       if (arg == 'save_post' && user.perspective == 1 && user.user_type == 'admin' || user.perspective == 2 && user.user_type == 'admin') return true;
     }
   }
@@ -35432,9 +35535,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-screen" }, [
-    _c("div", { staticClass: "w-full font-bold text-4xl my-16" }, [
-      _vm._v("\n\t\t\t" + _vm._s(_vm.title) + "\n\t\t")
+  return _c("div", { staticClass: "w-full" }, [
+    _c("div", { staticClass: "w-full my-16" }, [
+      _c("span", { staticClass: "font-bold text-xl md:text-4xl" }, [
+        _vm._v(" " + _vm._s(_vm.title) + " ")
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "float-right w-3/6 md:w-1/5" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.search,
+              expression: "form.search"
+            }
+          ],
+          staticClass: "border border-green-200 px-3 py-1 md:py-4 w-full",
+          attrs: { type: "type", placeholder: "Search" },
+          domProps: { value: _vm.form.search },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "search", $event.target.value)
+            }
+          }
+        })
+      ])
     ]),
     _vm._v(" "),
     _c("table", { staticClass: "w-full" }, [
@@ -35443,10 +35572,10 @@ var render = function() {
           "tr",
           {
             staticClass:
-              "border border-black bg-blue-900 text-white uppercase text-sm whitespace-pre-wrap"
+              "border border-black bg-blue-900 text-white uppercase text-xs md:text-sm whitespace-pre-wrap"
           },
           _vm._l(_vm.fields, function(field) {
-            return _c("th", { staticClass: "py-3 px-6 text-center" }, [
+            return _c("th", { staticClass: "py-3 px-1 md:px-6 text-center" }, [
               _vm._v(" " + _vm._s(field))
             ])
           }),
@@ -35473,7 +35602,10 @@ var render = function() {
             _vm._l(_vm.keys, function(key) {
               return _c(
                 "td",
-                { staticClass: "py-3 px-6  whitespace-pre-wrap text-center" },
+                {
+                  staticClass:
+                    "py-3 px-1 md:px-6  whitespace-pre-wrap text-center"
+                },
                 [
                   !key.slot
                     ? _c(
@@ -35503,7 +35635,51 @@ var render = function() {
         }),
         0
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full" }, [
+      _c(
+        "span",
+        { staticClass: "text-xs md:text-sm font-bold text-green-500" },
+        [_vm._v("Page " + _vm._s(_vm.page) + " of " + _vm._s(_vm.count))]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-fullr flex justify-center items-center my-5" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "mx-2 text-green-600",
+            on: {
+              click: function($event) {
+                return _vm.prev()
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-chevron-left fa-lg" })]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "text-base md:text-3xl mx-2 font-bold" }, [
+          _vm._v("\n        " + _vm._s(_vm.page) + "\n      ")
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "mx-2 text-green-600",
+            on: {
+              click: function($event) {
+                return _vm.next()
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-chevron-right fa-lg" })]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -35728,30 +35904,63 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm.isAuthorize("users", _vm.user)
+                        _vm.isAuthorize("admin", _vm.user)
                           ? _c(
                               "li",
                               {
                                 staticClass: "nav-item mx-5",
-                                class: { "--active": _vm.active == "/users" }
+                                class: {
+                                  "--active":
+                                    _vm.active == "/users" ||
+                                    _vm.active == "/vaccinations"
+                                }
                               },
                               [
                                 _c(
-                                  "a",
+                                  "div",
                                   {
                                     staticClass:
-                                      "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.changeActive("/users")
-                                      }
-                                    }
+                                      "dropdown inline-block relative"
                                   },
                                   [
-                                    _c("i", { staticClass: "fa fa-users" }),
-                                    _c("span", { staticClass: "ml-2" }, [
-                                      _vm._v("Users")
-                                    ])
+                                    _vm._m(1),
+                                    _vm._v(" "),
+                                    _c(
+                                      "ul",
+                                      {
+                                        staticClass:
+                                          "dropdown-menu absolute hidden pt-1"
+                                      },
+                                      [
+                                        _c("li", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.changeActive(
+                                                    "/users"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "ml-2" },
+                                                [_vm._v("Users")]
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm.isAuthorize("vaccination", _vm.user)
+                                          ? _c("li", [_vm._m(2)])
+                                          : _vm._e()
+                                      ]
+                                    )
                                   ]
                                 )
                               ]
@@ -35812,7 +36021,7 @@ var render = function() {
                                         "dropdown-menu absolute hidden pt-1"
                                     },
                                     [
-                                      _vm._m(1),
+                                      _vm._m(3),
                                       _vm._v(" "),
                                       _c("li", {}, [
                                         _c(
@@ -35884,7 +36093,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c(
                       "li",
@@ -35914,30 +36123,56 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.isAuthorize("users", _vm.user)
+                    _vm.isAuthorize("admin", _vm.user)
                       ? _c(
                           "li",
                           {
                             staticClass: "nav-item mx-5",
-                            class: { "--active": _vm.active == "/users" }
+                            class: {
+                              "--active":
+                                _vm.active == "/users" ||
+                                _vm.active == "/vaccinations"
+                            }
                           },
                           [
                             _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.changeActive("/users")
-                                  }
-                                }
-                              },
+                              "div",
+                              { staticClass: "dropdown inline-block relative" },
                               [
-                                _c("i", { staticClass: "fa fa-users" }),
-                                _c("span", { staticClass: "ml-2" }, [
-                                  _vm._v("Users")
-                                ])
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "dropdown-menu absolute hidden pt-1"
+                                  },
+                                  [
+                                    _c("li", {}, [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changeActive("/users")
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("span", { staticClass: "ml-2" }, [
+                                            _vm._v("Users")
+                                          ])
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm.isAuthorize("vaccination", _vm.user)
+                                      ? _c("li", [_vm._m(6)])
+                                      : _vm._e()
+                                  ]
+                                )
                               ]
                             )
                           ]
@@ -35994,7 +36229,7 @@ var render = function() {
                                     "dropdown-menu absolute hidden pt-1"
                                 },
                                 [
-                                  _vm._m(3),
+                                  _vm._m(7),
                                   _vm._v(" "),
                                   _c("li", {}, [
                                     _c(
@@ -36050,6 +36285,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"
+      },
+      [
+        _c("i", { staticClass: "fa fa-users" }),
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Admin")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+      },
+      [_c("span", { staticClass: "ml-2" }, [_vm._v("Vaccinations")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("li", {}, [
       _c(
         "a",
@@ -36078,6 +36342,35 @@ var staticRenderFns = [
         ]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"
+      },
+      [
+        _c("i", { staticClass: "fa fa-users" }),
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Admin")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+      },
+      [_c("span", { staticClass: "ml-2" }, [_vm._v("Vaccinations")])]
+    )
   },
   function() {
     var _vm = this
@@ -37720,17 +38013,26 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("Table", {
-          staticClass: "px-10",
+          staticClass: "px-1 md:px-10",
           attrs: {
             fields: _vm.fields,
             keys: _vm.keys,
-            list: _vm.options.users,
-            title: "LGU Accounts",
-            selected: _vm.selected
+            list: _vm.options.users.data,
+            title: _vm.table.title,
+            search: _vm.table.search,
+            page: _vm.table.page,
+            count: _vm.table.count,
+            selected: _vm.table.selected
           },
           on: {
+            "update:search": function($event) {
+              return _vm.$set(_vm.table, "search", $event)
+            },
+            "update:page": function($event) {
+              return _vm.$set(_vm.table, "page", $event)
+            },
             "update:selected": function($event) {
-              _vm.selected = $event
+              return _vm.$set(_vm.table, "selected", $event)
             }
           },
           scopedSlots: _vm._u([

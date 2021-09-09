@@ -42,10 +42,27 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/users'}" v-if="isAuthorize('users', user)"> 
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/users')">
-              <i class="fa fa-users"></i><span class="ml-2">Users</span>
-            </a>
+          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations'}" > 
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
+                <i class="fa fa-users"></i><span class="ml-2">Admin</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                   @click="changeActive('/users')">
+                    <span class="ml-2">Users</span>
+                  </a>
+                </li>
+
+                <li v-if="isAuthorize('vaccination', user)">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
+                    <span class="ml-2">Vaccinations</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
 
           <li class="nav-item mx-5" v-if="!user">
@@ -96,10 +113,27 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/users'}" v-if="isAuthorize('users', user)">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/users')">
-              <i class="fa fa-users"></i><span class="ml-2">Users</span>
-            </a>
+          <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations'}">
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
+                <i class="fa fa-users"></i><span class="ml-2">Admin</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                <li class="">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                   @click="changeActive('/users')">
+                    <span class="ml-2">Users</span>
+                  </a>
+                </li>
+
+                <li v-if="isAuthorize('vaccination', user)">
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
+                   <span class="ml-2">Vaccinations</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
 
           <li class="nav-item mx-5" v-if="!user">

@@ -3,9 +3,10 @@
 		<div class="--users">
 			<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
-			<Table :fields="fields" :keys="keys" :list="options.users" :title="'LGU Accounts'" :selected.sync="selected" class="px-10">
+			<Table class="px-1 md:px-10" :fields="fields" :keys="keys" :list="options.users.data" :title="table.title" 
+				:search.sync="table.search" :page.sync="table.page" :count="table.count" :selected.sync="table.selected"
+			>
 				<template v-slot:is_active="{ arg }"> 
-					<!-- <Toggle v-model="arg"/> -->
 					<i class="fa fa-check-square fa-2x text-green-500" v-if="!!arg"></i>
 					<i class="fa fa-times-circle fa-2x text-red-500" v-else></i>
 				</template>
@@ -31,6 +32,13 @@
 			return {
 				openModal: false,
 				fields: ['Name', 'Phone', 'Email', 'User Type', 'Is Active'],
+				table: {
+					title: 'Users',
+					search: null,
+					page: this.options.users.current_page,
+					count: this.options.users.last_page,
+					selected: null
+				},
 				keys : [
 					{
 						label: 'name',
@@ -62,8 +70,6 @@
 						slot_name: 'is_active'
 					},
 				],
-				selected: null,
-				aaa: true
 			}
 		},
 
@@ -71,12 +77,34 @@
 			if(!!this.options.user) {
 				this.openModal = false
 			}
+
+			console.log(this.options)
 		},
 
 		watch : {
 			selected: function (v) {
 				Inertia.get(
           this.$root.route + '/users/' + v.id, {},
+          {
+            onSuccess: () => { },
+          },
+        );
+			},
+
+			'table.page': function (p) {
+				Inertia.get(
+          this.$root.route + '/users/', {page: p, search: this.table.search},
+          {
+            onSuccess: () => { },
+          },
+        );
+			},
+
+			'table.search': function (s) {
+				this.table.page = 1
+
+				Inertia.get(
+          this.$root.route + '/users/', {page: this.table.page, search: s},
           {
             onSuccess: () => { },
           },

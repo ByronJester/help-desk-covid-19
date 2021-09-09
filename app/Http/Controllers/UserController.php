@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\RegisterAccount;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -76,12 +77,27 @@ class UserController extends Controller
         if(Auth::user()) {
             $user = Auth::user();
         }
+
+        $perPage = $request->perPage ?? 5;
+        $page = $request->page ?? 1;
+
+        $search = $request->search ?? null;
+
+        $users = User::where('perspective', $user->perspective)->where('id', '!=', $user->id);
+
+        if(!!$search && $search != '') {
+            $users = $users->where(function (Builder $query) use ($search) {
+                return $query->where('first_name', 'LIKE', '%' . $search . '%')
+                    ->where('middle_name', 'LIKE', '%' . $search . '%')
+                    ->where('last_name', 'LIKE', '%' . $search . '%');
+            });
+        }
         
         return Inertia::render('Users',
             [
                 'options'    => [
                     'user'      => $user,
-                    'users'     => User::where('perspective', $user->perspective)->where('id', '!=', $user->id)->get()
+                    'users'     => $users->paginate($perPage)
                 ]
             ]
         );
