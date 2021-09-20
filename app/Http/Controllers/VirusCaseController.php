@@ -22,7 +22,7 @@ class VirusCaseController extends Controller
         }
 
         $perPage = $request->perPage ?? 10;
-        $page = $request->page ?? 1;
+        $page = $request->page ?? 1; 
 
         $search = $request->search ?? null;
 
@@ -41,8 +41,9 @@ class VirusCaseController extends Controller
                 'options'    => [
                     'user'      => $user,
                     'cases'     => $cases->paginate($perPage),
-                    'places'		=> $places,
-                    'place'			=> $place
+                    'places'    => $places,
+                    'place'		=> $place,
+                    'search'    => $search
                 ]
             ]
         );

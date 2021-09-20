@@ -18,18 +18,28 @@ class VaccineSeeder extends Seeder
     public function run()
     {
       Vaccine::create([
-      	'name' => 'sinovac',
+      	'name' => 'SINOVAC',
       	'dosage' => 2
       ]);
 
       Vaccine::create([
-      	'name' => 'moderna',
+      	'name' => 'MODERNA',
       	'dosage' => 2
       ]);
 
       Vaccine::create([
-      	'name' => 'pfizer',
+      	'name' => 'PFIZER',
       	'dosage' => 2
+      ]);
+
+      Vaccine::create([
+        'name' => 'JOHNSON AND JOHNSON',
+        'dosage' => 1
+      ]);
+
+      Vaccine::create([
+        'name' => 'ASTRAZENECA',
+        'dosage' => 1
       ]);
     }
 }

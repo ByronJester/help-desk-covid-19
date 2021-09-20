@@ -16,16 +16,30 @@ class Vaccination extends Model
         'age',
         'birth_date',
         'gender',
-        'start_date',
-        'completed_date'
+        'phone',
+        'classification'
     ];
 
     protected $with = [
         'place'
     ];
 
-		public function place()
+    protected $appends = [ 
+        'vaccine_name'
+    ];
+
+	public function place()
     {
         return $this->belongsTo(Place::class);
+    }
+
+    public function vaccine()
+    {
+        return $this->belongsTo(Vaccine::class);
+    }
+
+    public function getVaccineNameAttribute()
+    {
+        return $this->vaccine->name;
     }
 }

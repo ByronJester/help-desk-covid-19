@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VirusCaseController;
+use App\Http\Controllers\VaccinationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,23 @@ Route::prefix('home')->group(function () {
     Route::get('/', [HomeController::class, 'homeView'])->name('view.home');
     Route::post('/save-post', [HomeController::class, 'savePost']);
     Route::post('/delete-post', [HomeController::class, 'deletePost']);
-    
+     
 });
 
 Route::prefix('reports')->group(function () {
-    Route::get('/', [ReportController::class, 'reportView'])->name('view.report');
-    Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
+    // Route::get('/', [ReportController::class, 'reportView'])->name('view.report');
+    // Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
+
+    Route::prefix('cases')->group(function () {
+        Route::get('/', [ReportController::class, 'reportView'])->name('view.covid.report');
+        Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
+    });
+
+    Route::prefix('vaccinations')->group(function () {
+        Route::post('/submit-request', [VaccinationController::class, 'saveVaccination']);
+        Route::post('/approve-request', [VaccinationController::class, 'approveVaccination']);
+        Route::get('/', [ReportController::class, 'reportView'])->name('view.vaccination.report');
+    });
 });
 
 Route::prefix('users')->group(function () {
@@ -46,5 +58,10 @@ Route::prefix('users')->group(function () {
 Route::prefix('virus-cases')->group(function () {
     Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
     Route::post('/save', [VirusCaseController::class, 'caseSave'])->middleware('auth');
+});
+
+
+Route::prefix('vaccinations')->group(function () {
+    Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth')->name('view.vaccinations');
 });
 

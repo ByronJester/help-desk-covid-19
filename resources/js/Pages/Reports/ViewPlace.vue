@@ -17,9 +17,9 @@
 				</button> -->
 			</div>
 
-			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-10 px-3 md:px-20"/>
+			<CaseCarousel :cases.sync="options.cases" :selected.sync="selected" :options="options" class="mt-20 px-3 md:px-20"/>
 
-			<ReportsCarousel :records="options.records" class="mt-8 px-3 md:px-20"/>
+			<ReportsCarousel :records="options.records" :vaccinations="null" :path="path" class="mt-8 px-3 md:px-20"/>
 		</div>
 
 		<CaseModal :viewCase.sync="viewCase" :form.sync="form"/>
@@ -60,7 +60,8 @@
 					date: null,
 					travel_history: null,
 					status: 'RECOVERED'
-				}
+				},
+				path: null
 			}
 		},
 
@@ -82,6 +83,8 @@
 			if(!!this.options.user) {
 				this.openModal = false
 			}
+
+			this.path = '/reports/cases'
 		},
 
 		methods: {
@@ -103,7 +106,7 @@
 
 			back() {
 				Inertia.get(
-          this.$root.route + '/reports', {},
+          this.$root.route + '/reports/cases', {},
           {
             onSuccess: () => { },
           },
