@@ -22,37 +22,45 @@ class VaccinationSeeder extends Seeder
 
       $vaccines = Vaccine::get();
 
+      $classification = [
+      	'A1', 'A2', 'A3', 'A4', 'A5', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'C'
+      ];
+
 	    foreach ($places as $key => $place) {
 
 	    	foreach ($vaccines as $vaccine) {
 
-	    		for ($i = 0; $i < rand(3, 25); $i++) { 
+	    		for ($i = 0; $i < rand(3, 40); $i++) { 
 		     		Vaccination::create([
 		     			'place_id' 			 => $place->id,
 		     			'vaccine_id'		 => $vaccine->id,
 		     			'name'			 		 => Str::random(10),
+		     			'phone'					 => '09771023141',
 		     			'age'	  		 		 => rand(1, 90),
 		     			'birth_date'		 => Carbon::now()->subDays(rand(1, 730))->format('Y-m-d'),
 		     			'gender'   			 => 'MALE',
-		     			'start_date'		 => Carbon::now()->subDays(rand(1, 100))->format('Y-m-d'),
-		     			'completed_date' => Carbon::now()->subDays(rand(101, 200))->format('Y-m-d')
-		     		]);
-
-		     		Vaccination::create([
-		     			'place_id' 			 => $place->id,
-		     			'vaccine_id'		 => $vaccine->id,
-		     			'name'			 		 => Str::random(10),
-		     			'age'	  		 		 => rand(1, 90),
-		     			'birth_date'		 => Carbon::now()->subDays(rand(1, 730))->format('Y-m-d'),
-		     			'gender'   			 => 'FEMALE',
-		     			'start_date'		 => Carbon::now()->subDays(rand(1, 100))->format('Y-m-d'),
-		     			'completed_date' => Carbon::now()->subDays(rand(101, 200))->format('Y-m-d')
+		     			'classification' => $classification[array_rand($classification, 1)]
 		     		]);
 		     	}
 
 	    	}
-	     	
-	     	
+
+	    	foreach ($vaccines as $vaccine) {
+
+	    		for ($i = 0; $i < rand(3, 40); $i++) { 
+		     		Vaccination::create([
+		     			'place_id' 			 => $place->id,
+		     			'vaccine_id'		 => $vaccine->id,
+		     			'phone'					 => '09771023141',
+		     			'name'			 		 => Str::random(10),
+		     			'age'	  		 		 => rand(1, 90),
+		     			'birth_date'		 => Carbon::now()->subDays(rand(1, 730))->format('Y-m-d'),
+		     			'gender'   			 => 'FEMALE',
+		     			'classification' => $classification[array_rand($classification, 1)]
+		     		]);
+		     	}
+
+	    	}
 	    }
     }
 }

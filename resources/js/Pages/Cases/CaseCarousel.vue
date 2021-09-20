@@ -66,12 +66,8 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	::-webkit-scrollbar {
 	    display: none;
-	}
-
-	p {
-		font-family: "Papyrus", "Courier New", cursive;
 	}
 </style>

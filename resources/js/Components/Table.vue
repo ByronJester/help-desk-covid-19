@@ -3,7 +3,7 @@
 		<div class="w-full my-16">
 			<span class="font-bold text-xl md:text-4xl"> {{ title }} </span> 
       <span class="float-right w-3/6 md:w-1/5">
-        <input type="type" v-model="form.search" placeholder="Search" class="border border-green-200 px-3 py-1 md:py-4 w-full"/>
+        <input type="type" v-model="form.search" @input="initiateSearch()" placeholder="Search" class="border border-green-200 px-3 py-1 md:py-4 w-full"/>
       </span>
 		</div>
 		<table
@@ -15,7 +15,7 @@
         </tr>
       </thead>
 
-      <tbody class="text-gray-600 text-sm font-light">
+      <tbody class="text-black text-xs md:text-sm font-light">
         <tr
           class="border border-black hover:bg-gray-200 cursor-pointer"
           v-for="(l, index) in list"
@@ -23,8 +23,8 @@
           @click="getSelected(l)"
         >
           <td class="py-3 px-1 md:px-6  whitespace-pre-wrap text-center" v-for="key in keys">
-            <div class="flex items-center justify-center" v-if="!key.slot">
-              <span class="font-medium">{{list[index][key.label]}}</span>
+            <div class="flex items-center justify-center " v-if="!key.slot">
+              <span>{{list[index][key.label]}}</span>
             </div>
 
             <div class="flex items-center justify-center" v-else>
@@ -74,6 +74,7 @@
 		},
 
 		mounted() {
+      this.form.search = this.search
 		},
 
 		methods: {
@@ -91,21 +92,25 @@
         if(this.page >= this.count) return;
 
         this.$emit('update:page', this.page + 1)
-      }
-		},
+      },
 
-    watch : {
-      'form.search': function (arg) {
+      initiateSearch() {
         var self = this
 
         clearTimeout(this.timeOut);
 
         this.timeOut = setTimeout(
           function(){
-            self.$emit('update:search', arg)
+            self.$emit('update:search', self.form.search)
           }
         , 2000);
+      }
+		},
 
+    watch : {
+      'form.search': function (arg) {
+        
+        // this.initiateSearch()
 
       }
     }

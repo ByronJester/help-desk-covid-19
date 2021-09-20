@@ -34,7 +34,7 @@
 				fields: ['Name', 'Phone', 'Email', 'User Type', 'Is Active'],
 				table: {
 					title: 'Users',
-					search: null,
+					search: this.options.search,
 					page: this.options.users.current_page,
 					count: this.options.users.last_page,
 					selected: null
@@ -77,8 +77,6 @@
 			if(!!this.options.user) {
 				this.openModal = false
 			}
-
-			console.log(this.options)
 		},
 
 		watch : {
