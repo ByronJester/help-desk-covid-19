@@ -2291,6 +2291,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user', 'openModal'],
@@ -3115,6 +3147,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Users/Login */ "./resources/js/Pages/Users/Login.vue");
 /* harmony import */ var _Places_PlacesCarousel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Places/PlacesCarousel */ "./resources/js/Pages/Places/PlacesCarousel.vue");
 /* harmony import */ var _Reports_ReportsCarousel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Reports/ReportsCarousel */ "./resources/js/Pages/Reports/ReportsCarousel.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37037,6 +37085,58 @@ var render = function() {
                                           )
                                         ]
                                       )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changeActive(
+                                                "/reports/vaccinations-information"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass: "ml-2 cursor-pointer"
+                                            },
+                                            [_vm._v("Vaccinations Information")]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.changeActive(
+                                                "/reports/vaccinations-classification"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass: "ml-2 cursor-pointer"
+                                            },
+                                            [_vm._v("Vaccinations Priority")]
+                                          )
+                                        ]
+                                      )
                                     ])
                                   ]
                                 )
@@ -37364,6 +37464,54 @@ var render = function() {
                                       )
                                     ]
                                   )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeActive(
+                                            "/reports/vaccinations-information"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "ml-2 cursor-pointer" },
+                                        [_vm._v("Vaccinations Information")]
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeActive(
+                                            "/reports/vaccinations-classification"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "ml-2 cursor-pointer" },
+                                        [_vm._v("Vaccinations Priority")]
+                                      )
+                                    ]
+                                  )
                                 ])
                               ]
                             )
@@ -37600,8 +37748,8 @@ var staticRenderFns = [
           "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"
       },
       [
-        _c("i", { staticClass: "fa fa-users" }),
-        _c("span", { staticClass: "ml-2" }, [_vm._v("Reports")])
+        _c("i", { staticClass: "fa fa-file" }),
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Reports and Statistics")])
       ]
     )
   },
@@ -37665,8 +37813,8 @@ var staticRenderFns = [
           "px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"
       },
       [
-        _c("i", { staticClass: "fa fa-users" }),
-        _c("span", { staticClass: "ml-2" }, [_vm._v("Reports")])
+        _c("i", { staticClass: "fa fa-file" }),
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Reports and Statistics")])
       ]
     )
   },
@@ -39225,714 +39373,782 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.path == "/reports/vaccinations" && !_vm.openModal
-          ? _c(
+        _c(
+          "div",
+          { staticClass: "w-full" },
+          [
+            _c(
               "div",
-              { staticClass: "w-full" },
+              { staticClass: "w-full flex justify-center items-center" },
               [
-                _c("div", { staticClass: "w-full flex-col md:flex-row" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "w-full flex flex-col md:flex-row px-2 md:px-0"
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "w-full flex flex-col bg-gray-300 md:mx-4 px-2 rounded my-2 md:my-0"
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "w-full md:text-xl font-bold pt-5 pl-5"
-                            },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\tVaccination Form\n\t\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "w-full flex flex-row px-3" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Name")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.name,
-                                        expression: "form.name"
-                                      }
-                                    ],
+                _c(
+                  "div",
+                  {
+                    staticClass: "w-full flex flex-col md:flex-row px-2 md:px-0"
+                  },
+                  [
+                    _vm.path == "/reports/vaccinations" && !_vm.openModal
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full flex flex-col bg-gray-300 md:mx-4 px-2 rounded my-2 md:my-0"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "w-full font-bold pt-5 pl-5" },
+                              [
+                                _c("span", { staticClass: "md:text-4xl" }, [
+                                  _vm._v("Vaccination Form")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
                                     staticClass:
-                                      "w-full border border-green-200 h-12 text-center",
-                                    attrs: { type: "text" },
-                                    domProps: { value: _vm.form.name },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                                      "rounded text-white border border-green-400 bg-green-600 px-3 py-3 font-bold float-right",
+                                    on: { click: _vm.sendVaccineForm }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\tRequest\n\t\t\t\t\t\t\t"
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex flex-row px-3" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Name")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.name,
+                                          expression: "form.name"
                                         }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "name",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
+                                      ],
+                                      staticClass:
+                                        "w-full border border-green-200 h-12 text-center",
+                                      attrs: { type: "text" },
+                                      domProps: { value: _vm.form.name },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
                                             "name",
-                                            _vm.saveError
+                                            $event.target.value
                                           )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Age")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.age,
-                                        expression: "form.age"
-                                      }
-                                    ],
-                                    staticClass:
-                                      "w-full border border-green-200 h-12 text-center",
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.form.age },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
                                         }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "age",
-                                          $event.target.value
-                                        )
                                       }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "name",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Age")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.age,
+                                          expression: "form.age"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "w-full border border-green-200 h-12 text-center",
+                                      attrs: { type: "number" },
+                                      domProps: { value: _vm.form.age },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
                                             "age",
-                                            _vm.saveError
+                                            $event.target.value
                                           )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "w-full flex flex-row px-3" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Birthdate")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.birth_date,
-                                        expression: "form.birth_date"
-                                      }
-                                    ],
-                                    staticClass:
-                                      "w-full border border-green-200 h-12 text-center",
-                                    attrs: { type: "date" },
-                                    domProps: { value: _vm.form.birth_date },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
                                         }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "birth_date",
-                                          $event.target.value
-                                        )
                                       }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "age",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex flex-row px-3" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Birthdate")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.birth_date,
+                                          expression: "form.birth_date"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "w-full border border-green-200 h-12 text-center",
+                                      attrs: { type: "date" },
+                                      domProps: { value: _vm.form.birth_date },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
                                             "birth_date",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Barangay")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.form.place_id,
-                                          expression: "form.place_id"
-                                        }
-                                      ],
-                                      staticClass:
-                                        "w-full border border-green-200 h-12 text-center",
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            _vm.form,
-                                            "place_id",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
+                                            $event.target.value
                                           )
                                         }
                                       }
-                                    },
-                                    _vm._l(_vm.options.places, function(place) {
-                                      return _c(
-                                        "option",
-                                        {
-                                          staticClass: "uppercase",
-                                          domProps: { value: place.id }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t  \t" +
-                                              _vm._s(place.name) +
-                                              "\n\t\t\t\t\t\t\t\t  "
-                                          )
-                                        ]
-                                      )
                                     }),
-                                    0
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
-                                            "place_id",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "w-full flex flex-row px-3" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Contact No.")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.form.phone,
-                                        expression: "form.phone"
-                                      }
-                                    ],
-                                    staticClass:
-                                      "w-full border border-green-200 h-12 text-center",
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.form.phone },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.form,
-                                          "phone",
-                                          $event.target.value
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "birth_date",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
                                         )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Barangay")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.place_id,
+                                            expression: "form.place_id"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "w-full border border-green-200 h-12 text-center",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.form,
+                                              "place_id",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      _vm._l(_vm.options.places, function(
+                                        place
+                                      ) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            staticClass: "uppercase",
+                                            domProps: { value: place.id }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n\t\t\t\t\t\t\t\t  \t" +
+                                                _vm._s(place.name) +
+                                                "\n\t\t\t\t\t\t\t\t  "
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "place_id",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex flex-row px-3" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Contact No.")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.phone,
+                                          expression: "form.phone"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "w-full border border-green-200 h-12 text-center",
+                                      attrs: { type: "number" },
+                                      domProps: { value: _vm.form.phone },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.form,
                                             "phone",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Gender")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.form.gender,
-                                          expression: "form.gender"
-                                        }
-                                      ],
-                                      staticClass:
-                                        "w-full border border-green-200 h-12 text-center",
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            _vm.form,
-                                            "gender",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
+                                            $event.target.value
                                           )
                                         }
                                       }
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "MALE" } },
-                                        [_vm._v("Male")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "FEMALE" } },
-                                        [_vm._v("Female")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
-                                            "gender",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "w-full flex flex-row px-3" },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v(" Vaccine")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.form.vaccine_id,
-                                          expression: "form.vaccine_id"
-                                        }
-                                      ],
-                                      staticClass:
-                                        "w-full border border-green-200 h-12 text-center",
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            _vm.form,
-                                            "vaccine_id",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          )
-                                        }
-                                      }
-                                    },
-                                    _vm._l(_vm.options.vaccines, function(
-                                      vaccine
-                                    ) {
-                                      return _c(
-                                        "option",
-                                        {
-                                          staticClass: "uppercase",
-                                          domProps: { value: vaccine.id }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t  \t" +
-                                              _vm._s(vaccine.name) +
-                                              "\n\t\t\t\t\t\t\t\t  "
-                                          )
-                                        ]
-                                      )
                                     }),
-                                    0
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
-                                            "vaccine_id",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
-                                },
-                                [
-                                  _c("label", { staticClass: "font-bold" }, [
-                                    _vm._v("Classification")
-                                  ]),
-                                  _c("br"),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.form.classification,
-                                          expression: "form.classification"
-                                        }
-                                      ],
-                                      staticClass:
-                                        "w-full border border-green-200 h-12 text-center",
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "phone",
+                                              _vm.saveError
                                             )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            _vm.form,
-                                            "classification",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Gender")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.gender,
+                                            expression: "form.gender"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "w-full border border-green-200 h-12 text-center",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.form,
+                                              "gender",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("option", { attrs: { value: "A1" } }, [
-                                        _vm._v("A1")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "A2" } }, [
-                                        _vm._v("A2")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "A3" } }, [
-                                        _vm._v("A3")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "A4" } }, [
-                                        _vm._v("A4")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "A5" } }, [
-                                        _vm._v("A5")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B1" } }, [
-                                        _vm._v("B1")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B2" } }, [
-                                        _vm._v("B2")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B3" } }, [
-                                        _vm._v("B3")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B4" } }, [
-                                        _vm._v("B4")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B5" } }, [
-                                        _vm._v("B5")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "B6" } }, [
-                                        _vm._v("B6")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "C" } }, [
-                                        _vm._v("C")
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    { staticClass: "text-sm text-red-500" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.validationError(
-                                            "classification",
-                                            _vm.saveError
-                                          )
-                                        ) + " "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "w-full flex flex-row px-5 py-2 mt-2 md:mt-5 mb-5"
-                            },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "w-full border border-green-400 bg-green-600 px-3 py-3 font-bold",
-                                  on: { click: _vm.sendVaccineForm }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t"
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("hr", {
-                  staticClass: "text-green-500 bg-green-500 mt-8",
-                  staticStyle: { height: "2px", "border-width": "0" }
-                }),
-                _vm._v(" "),
-                _c("ReportsCarousel", {
-                  staticClass: "px-3 md:px-20",
-                  attrs: {
-                    records: null,
-                    vaccinations: _vm.options.vaccinations,
-                    path: _vm.path
-                  }
-                })
-              ],
-              1
-            )
-          : _vm._e()
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "MALE" } },
+                                          [_vm._v("Male")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "FEMALE" } },
+                                          [_vm._v("Female")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "gender",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex flex-row px-3" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-full py-2 mt-2 md:mt-3 mx-2"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v(" Vaccine")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.vaccine_id,
+                                            expression: "form.vaccine_id"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "w-full border border-green-200 h-12 text-center",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.form,
+                                              "vaccine_id",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      _vm._l(_vm.options.vaccines, function(
+                                        vaccine
+                                      ) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            staticClass: "uppercase",
+                                            domProps: { value: vaccine.id }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n\t\t\t\t\t\t\t\t  \t" +
+                                                _vm._s(vaccine.name) +
+                                                "\n\t\t\t\t\t\t\t\t  "
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "vaccine_id",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "w-full py-2 mt-2 md:mt-3 mx-2 pb-5"
+                                  },
+                                  [
+                                    _c("label", { staticClass: "font-bold" }, [
+                                      _vm._v("Classification")
+                                    ]),
+                                    _c("br"),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.form.classification,
+                                            expression: "form.classification"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "w-full border border-green-200 h-12 text-center",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.form,
+                                              "classification",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "A1" } },
+                                          [_vm._v("A1")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "A2" } },
+                                          [_vm._v("A2")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "A3" } },
+                                          [_vm._v("A3")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "A4" } },
+                                          [_vm._v("A4")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "A5" } },
+                                          [_vm._v("A5")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B1" } },
+                                          [_vm._v("B1")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B2" } },
+                                          [_vm._v("B2")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B3" } },
+                                          [_vm._v("B3")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B4" } },
+                                          [_vm._v("B4")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B5" } },
+                                          [_vm._v("B5")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "B6" } },
+                                          [_vm._v("B6")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "C" } },
+                                          [_vm._v("C")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-sm text-red-500" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.validationError(
+                                              "classification",
+                                              _vm.saveError
+                                            )
+                                          ) + " "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.path == "/reports/vaccinations-classification" &&
+                    !_vm.openModal
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "w-full md:text-4xl font-bold pt-5 pl-5 mb-10"
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\tVaccination Priority\n\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.path == "/reports/vaccinations-information" &&
+                    !_vm.openModal
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "w-full md:text-4xl font-bold pt-5 pl-5 mb-10"
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\tVaccinations Information\n\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(1)
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("hr", {
+              staticClass: "text-green-500 bg-green-500 mt-8",
+              staticStyle: { height: "2px", "border-width": "0" }
+            }),
+            _vm._v(" "),
+            _c("ReportsCarousel", {
+              staticClass: "px-3 md:px-20",
+              attrs: {
+                records: null,
+                vaccinations: _vm.options.vaccinations,
+                path: _vm.path
+              }
+            })
+          ],
+          1
+        )
       ],
       1
     )
@@ -39946,92 +40162,95 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass:
-          "w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
+        staticClass: "w-full py-2 md:px-20 mt-2 mb-5 flex flex-col md:flex-row"
       },
       [
-        _c("div", { staticClass: "w-full md:text-xl font-bold pt-5 pl-5" }, [
-          _vm._v("\n\t\t\t\t\t\t\tVaccination Priority\n\t\t\t\t\t\t")
+        _c("div", { staticClass: "w-full" }, [
+          _c("p", { staticClass: "font-bold md:text-2xl my-3" }, [
+            _vm._v("\n\t\t\t\t\t\t\t\t\tPrioriry Eligable A\n\t\t\t\t\t\t\t\t")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\tA1. Workers in frontline healt services\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\tA2. All senior citizens\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\tA3. Person with comorbidities\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\tA4. Frontline personnel in essential sectors, including uniformed personnel\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\tA5. Indigent population\n\t\t\t\t\t\t\t\t"
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "w-full py-2 md:px-20 mt-2 mb-5" }, [
-          _c("p", { staticClass: "font-bold md:text-lg my-3" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tPrioriry Eligable A\n\t\t\t\t\t\t\t")
+        _c("div", { staticClass: "w-full" }, [
+          _c("p", { staticClass: "font-bold md:text-2xl my-3" }, [
+            _vm._v("\n\t\t\t\t\t\t\t\t\tPrioriry Eligable B\n\t\t\t\t\t\t\t\t")
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tA1. Workers in frontline healt services\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB1. Teachers, social workers\n\t\t\t\t\t\t\t\t"
             )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tA2. All senior citizens\n\t\t\t\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tA3. Person with comorbidities\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB2. Other government workers\n\t\t\t\t\t\t\t\t"
             )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tA4. Frontline personnel in essential sectors, including uniformed personnel\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB3. Other essential workers\n\t\t\t\t\t\t\t\t"
             )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tA5. Indigent population\n\t\t\t\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "font-bold md:text-lg my-3" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tPrioriry Eligable B\n\t\t\t\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tB1. Teachers, social workers\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB4. Socio-demographic groups at significantly higher risk other than senior citizens and poor population base on the NHTS-PR\n\t\t\t\t\t\t\t\t"
             )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tB2. Other government workers\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB5. Overseas filipino workers\n\t\t\t\t\t\t\t\t"
             )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tB3. Other essential workers\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tB6. Other remaining workforce\n\t\t\t\t\t\t\t\t"
             )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full" }, [
+          _c("p", { staticClass: "font-bold md:text-2xl my-3" }, [
+            _vm._v("\n\t\t\t\t\t\t\t\t\tPrioriry Eligable C\n\t\t\t\t\t\t\t\t")
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\tB4. Socio-demographic groups at significantly higher risk other than senior citizens and poor population base on the NHTS-PR\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\tB5. Overseas filipino workers\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\tB6. Other remaining workforce\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "font-bold md:text-lg my-3" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tPrioriry Eligable C\n\t\t\t\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\tC. Rest of the filipino population not otherwise included in the above groups\n\t\t\t\t\t\t\t"
+              "\n\t\t\t\t\t\t\t\t\tC. Rest of the filipino population not otherwise included in the above groups\n\t\t\t\t\t\t\t\t"
             )
           ])
         ])
@@ -40044,52 +40263,48 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      {
-        staticClass:
-          "w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
-      },
+      { staticClass: "w-full py-2 md:px-20 mt-2 flex flex-col md:flex-row" },
       [
-        _c("div", { staticClass: "w-full md:text-xl font-bold pt-5 pl-5" }, [
-          _vm._v(
-            "\n\t\t\t\t\t\t\tVaccines Benifits and Side Effects\n\t\t\t\t\t\t"
-          )
+        _c("div", { staticClass: "w-full" }, [
+          _c("p", { staticClass: "font-bold md:text-2xl my-3" }, [
+            _vm._v("\n\t\t\t\t\t\t\t\t\tBenefits\n\t\t\t\t\t\t\t\t")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\t1. COVID 19-vaccines are effective. They can keep you from getting and spreading the virus that causes COVID-19\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _c("br"),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\t2. COVID-19 vaccines also help keep you from getting seriously ill even if you do get COVID-19.\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _c("br"),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
+            _vm._v(
+              "\n\t\t\t\t\t\t\t\t\t3. Getting vaccinated yourself may also protect people around you, particularly people at increased risk for severe illness from COVID-19.\n\t\t\t\t\t\t\t\t"
+            )
+          ]),
+          _c("br")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "w-full py-2 md:px-20 mt-2" }, [
-          _c("p", { staticClass: "font-bold md:text-lg my-3" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tBenefits\n\t\t\t\t\t\t\t")
+        _c("div", { staticClass: "w-full" }, [
+          _c("p", { staticClass: "font-bold md:text-2xl" }, [
+            _vm._v("\n\t\t\t\t\t\t\t\t\tSide Effects\n\t\t\t\t\t\t\t\t")
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
+          _c("p", { staticClass: "text-sm md:text-xl my-2" }, [
             _vm._v(
-              "\n\t\t\t\t\t\t\t\t1. COVID 19-vaccines are effective. They can keep you from getting and spreading the virus that causes COVID-19\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\t2. COVID-19 vaccines also help keep you from getting seriously ill even if you do get COVID-19.\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\t3. Getting vaccinated yourself may also protect people around you, particularly people at increased risk for severe illness from COVID-19.\n\t\t\t\t\t\t\t"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "font-bold md:text-lg my-3" }, [
-            _vm._v("\n\t\t\t\t\t\t\t\tSide Effects\n\t\t\t\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-sm my-2" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\t\t\tLike any vaccine, COVID-19 vaccines can cause mild, short term side effects, such as a low-grade fever or pain or redness at the injection site. Most reactions to vaccines are mild and go away within a few days on their own. More serious or long-lasting side effects to vaccines are possible but extremely rare. Vaccines are continually monitored for as long as they are in use, to detect rare adverse events and implement approaches to limit their occurrence. "
+              "\n\t\t\t\t\t\t\t\t\tLike any vaccine, COVID-19 vaccines can cause mild, short term side effects, such as a low-grade fever or pain or redness at the injection site. Most reactions to vaccines are mild and go away within a few days on their own. More serious or long-lasting side effects to vaccines are possible but extremely rare. Vaccines are continually monitored for as long as they are in use, to detect rare adverse events and implement approaches to limit their occurrence. "
             ),
             _c("br"),
             _c("br"),
             _vm._v(
-              "\n\n\t\t\t\t\t\t\t\tReported side effects to COVID-19 vaccines have mostly been mild to moderate and short-lasting. They include: fever, fatigue, headache, muscle pain, chills, diarrhoea, and pain at the injection site. The chances of any of these side effects following vaccination differ according to the specific COVID-19 vaccine. "
+              "\n\n\t\t\t\t\t\t\t\t\tReported side effects to COVID-19 vaccines have mostly been mild to moderate and short-lasting. They include: fever, fatigue, headache, muscle pain, chills, diarrhoea, and pain at the injection site. The chances of any of these side effects following vaccination differ according to the specific COVID-19 vaccine. "
             ),
             _c("br")
           ])

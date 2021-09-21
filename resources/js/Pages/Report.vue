@@ -25,13 +25,21 @@
 				/>
 			</div>
 
-			<div class="w-full" v-if="path == '/reports/vaccinations' && !openModal">
-				<div class="w-full flex-col md:flex-row">
+			<div class="w-full">
+				<div class="w-full flex justify-center items-center">
 					<div class="w-full flex flex-col md:flex-row px-2 md:px-0">
 
-						<div class="w-full flex flex-col bg-gray-300 md:mx-4 px-2 rounded my-2 md:my-0">
-							<div class="w-full md:text-xl font-bold pt-5 pl-5">
-								Vaccination Form
+						<div class="w-full flex flex-col bg-gray-300 md:mx-4 px-2 rounded my-2 md:my-0"
+							v-if="path == '/reports/vaccinations' && !openModal"
+						>
+							<div class="w-full font-bold pt-5 pl-5">
+								<span class="md:text-4xl">Vaccination Form</span>
+
+								<button class="rounded text-white border border-green-400 bg-green-600 px-3 py-3 font-bold float-right"
+									@click="sendVaccineForm"
+								>
+									Request
+								</button>
 							</div>
 
 							<div class="w-full flex flex-row px-3">
@@ -94,7 +102,7 @@
 									<span class="text-sm text-red-500">{{validationError('vaccine_id', saveError)}} </span>
 								</div>
 
-								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
+								<div class="w-full py-2 mt-2 md:mt-3 mx-2 pb-5">
 									<label class="font-bold">Classification</label><br><br>
 									<select v-model="form.classification" class="w-full border border-green-200 h-12 text-center">
 									  <option value="A1">A1</option>
@@ -113,116 +121,124 @@
 									<span class="text-sm text-red-500">{{validationError('classification', saveError)}} </span>
 								</div>
 							</div>
-
-							<div class="w-full flex flex-row px-5 py-2 mt-2 md:mt-5 mb-5">
-								<button class="w-full border border-green-400 bg-green-600 px-3 py-3 font-bold"
-									@click="sendVaccineForm"
-								>
-									Submit
-								</button>
-							</div>	
 						</div>
 
-						<div class="w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left">
-							<div class="w-full md:text-xl font-bold pt-5 pl-5">
+						<div class="w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
+							v-if="path == '/reports/vaccinations-classification' && !openModal"
+						>
+							<div class="w-full md:text-4xl font-bold pt-5 pl-5 mb-10">
 								Vaccination Priority
 							</div>
 
-							<div class="w-full py-2 md:px-20 mt-2 mb-5">
-								<p class="font-bold md:text-lg my-3">
-									Prioriry Eligable A
-								</p>
+							<div class="w-full py-2 md:px-20 mt-2 mb-5 flex flex-col md:flex-row">
 
-								<p class="text-sm my-2">
-									A1. Workers in frontline healt services
-								</p>
+								<div class="w-full">
+									<p class="font-bold md:text-2xl my-3">
+										Prioriry Eligable A
+									</p>
 
-								<p class="text-sm my-2">
-									A2. All senior citizens
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										A1. Workers in frontline healt services
+									</p>
 
-								<p class="text-sm my-2">
-									A3. Person with comorbidities
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										A2. All senior citizens
+									</p>
 
-								<p class="text-sm my-2">
-									A4. Frontline personnel in essential sectors, including uniformed personnel
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										A3. Person with comorbidities
+									</p>
 
-								<p class="text-sm my-2">
-									A5. Indigent population
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										A4. Frontline personnel in essential sectors, including uniformed personnel
+									</p>
 
-								<p class="font-bold md:text-lg my-3">
-									Prioriry Eligable B
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										A5. Indigent population
+									</p>
 
-								<p class="text-sm my-2">
-									B1. Teachers, social workers
-								</p>
+								</div>
 
-								<p class="text-sm my-2">
-									B2. Other government workers
-								</p>
+								<div class="w-full">
+									<p class="font-bold md:text-2xl my-3">
+										Prioriry Eligable B
+									</p>
 
-								<p class="text-sm my-2">
-									B3. Other essential workers
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B1. Teachers, social workers
+									</p>
 
-								<p class="text-sm my-2">
-									B4. Socio-demographic groups at significantly higher risk other than senior citizens and poor population base on the NHTS-PR
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B2. Other government workers
+									</p>
 
-								<p class="text-sm my-2">
-									B5. Overseas filipino workers
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B3. Other essential workers
+									</p>
 
-								<p class="text-sm my-2">
-									B6. Other remaining workforce
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B4. Socio-demographic groups at significantly higher risk other than senior citizens and poor population base on the NHTS-PR
+									</p>
 
-								<p class="font-bold md:text-lg my-3">
-									Prioriry Eligable C
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B5. Overseas filipino workers
+									</p>
 
-								<p class="text-sm">
-									C. Rest of the filipino population not otherwise included in the above groups
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										B6. Other remaining workforce
+									</p>
+								</div>
+
+								<div class="w-full">
+									<p class="font-bold md:text-2xl my-3">
+										Prioriry Eligable C
+									</p>
+
+									<p class="text-sm md:text-xl my-2">
+										C. Rest of the filipino population not otherwise included in the above groups
+									</p>
+								</div>
 							</div>
 							
 						</div>
 
-						<div class="w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left">
-							<div class="w-full md:text-xl font-bold pt-5 pl-5">
-								Vaccines Benifits and Side Effects
+						<div class="w-full flex flex-col bg-gray-300 md:mx-4 rounded my-2 md:my-0 text-center md:text-left"
+							v-if="path == '/reports/vaccinations-information' && !openModal"
+						>
+							<div class="w-full md:text-4xl font-bold pt-5 pl-5 mb-10">
+								Vaccinations Information
 							</div>
 
-							<div class="w-full py-2 md:px-20 mt-2">
-								<p class="font-bold md:text-lg my-3">
-									Benefits
-								</p>
+							<div class="w-full py-2 md:px-20 mt-2 flex flex-col md:flex-row">
+								<div class="w-full">
+									<p class="font-bold md:text-2xl my-3">
+										Benefits
+									</p>
 
-								<p class="text-sm my-2">
-									1. COVID 19-vaccines are effective. They can keep you from getting and spreading the virus that causes COVID-19
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										1. COVID 19-vaccines are effective. They can keep you from getting and spreading the virus that causes COVID-19
+									</p><br>
 
-								<p class="text-sm my-2">
-									2. COVID-19 vaccines also help keep you from getting seriously ill even if you do get COVID-19.
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										2. COVID-19 vaccines also help keep you from getting seriously ill even if you do get COVID-19.
+									</p><br>
 
-								<p class="text-sm my-2">
-									3. Getting vaccinated yourself may also protect people around you, particularly people at increased risk for severe illness from COVID-19.
-								</p>
+									<p class="text-sm md:text-xl my-2">
+										3. Getting vaccinated yourself may also protect people around you, particularly people at increased risk for severe illness from COVID-19.
+									</p><br>
+								</div>
 
-								<p class="font-bold md:text-lg my-3">
-									Side Effects
-								</p>
+								<div class="w-full">
+									<p class="font-bold md:text-2xl">
+										Side Effects
+									</p>
 
-								<p class="text-sm my-2">
-									Like any vaccine, COVID-19 vaccines can cause mild, short term side effects, such as a low-grade fever or pain or redness at the injection site. Most reactions to vaccines are mild and go away within a few days on their own. More serious or long-lasting side effects to vaccines are possible but extremely rare. Vaccines are continually monitored for as long as they are in use, to detect rare adverse events and implement approaches to limit their occurrence. <br><br>
+									<p class="text-sm md:text-xl my-2">
+										Like any vaccine, COVID-19 vaccines can cause mild, short term side effects, such as a low-grade fever or pain or redness at the injection site. Most reactions to vaccines are mild and go away within a few days on their own. More serious or long-lasting side effects to vaccines are possible but extremely rare. Vaccines are continually monitored for as long as they are in use, to detect rare adverse events and implement approaches to limit their occurrence. <br><br>
 
-									Reported side effects to COVID-19 vaccines have mostly been mild to moderate and short-lasting. They include: fever, fatigue, headache, muscle pain, chills, diarrhoea, and pain at the injection site. The chances of any of these side effects following vaccination differ according to the specific COVID-19 vaccine. <br>
-								</p>
+										Reported side effects to COVID-19 vaccines have mostly been mild to moderate and short-lasting. They include: fever, fatigue, headache, muscle pain, chills, diarrhoea, and pain at the injection site. The chances of any of these side effects following vaccination differ according to the specific COVID-19 vaccine. <br>
+									</p>
+								</div>
 
 							</div>
 						</div>
