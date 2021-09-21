@@ -43,7 +43,15 @@ Route::prefix('reports')->group(function () {
     Route::prefix('vaccinations')->group(function () {
         Route::post('/submit-request', [VaccinationController::class, 'saveVaccination']);
         Route::post('/approve-request', [VaccinationController::class, 'approveVaccination']);
-        Route::get('/', [ReportController::class, 'reportView'])->name('view.vaccination.report');
+        Route::get('/', [ReportController::class, 'reportView']);
+    });
+
+    Route::prefix('vaccinations-information')->group(function () {
+        Route::get('/', [ReportController::class, 'reportView']);
+    });
+
+    Route::prefix('vaccinations-classification')->group(function () {
+        Route::get('/', [ReportController::class, 'reportView']);
     });
 });
 
