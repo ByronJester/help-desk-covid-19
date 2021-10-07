@@ -36,16 +36,10 @@
             </a>
           </li>
 
-          <!-- <li class="nav-item mx-5" :class="{'--active' : active == '/reports'}">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer"  @click="changeActive('/reports')">
-              <i class="fa fa-copy"></i><span class="ml-2" >Reports</span> 
-            </a>
-          </li> -->
-
-          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases' || active == '/reports/vaccinations'}" > 
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-                <i class="fa fa-file"></i><span class="ml-2">Reports and Statistics</span>
+                <i class="fa fa-file"></i><span class="ml-2">Reports</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
@@ -60,9 +54,36 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click=""
+                  >
+                    <span class="ml-2 cursor-pointer">Vaccination Approval List</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click=""
+                  >
+                    <span class="ml-2 cursor-pointer">Vaccinated List</span>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/vaccinations' || active == '/reports/vaccinations-information' || active == '/reports/vaccinations-classification'}" > 
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
+                <i class="fa fa-file"></i><span class="ml-2">Vaccinations</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations')"
                   >
-                    <span class="ml-2 cursor-pointer">Vaccinations</span>
+                    <span class="ml-2 cursor-pointer">Vaccinations Request Form</span>
                   </a>
                 </li>
 
@@ -70,7 +91,7 @@
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations-information')"
                   >
-                    <span class="ml-2 cursor-pointer">Vaccinations Information</span>
+                    <span class="ml-2 cursor-pointer">Vaccinne Benefits & Side Effect</span>
                   </a>
                 </li>
 
@@ -85,6 +106,7 @@
               </ul>
             </div>
           </li>
+
 
           <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations' || active == '/virus-cases'}" > 
             <div class="dropdown inline-block relative">
@@ -163,16 +185,10 @@
             </a>
           </li>
 
-          <!-- <li class="nav-item mx-5" :class="{'--active' : active == '/reports'}">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/reports')">
-              <i class="fa fa-copy"></i><span class="ml-2" >Reports</span>
-            </a>
-          </li> -->
-
-          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases' || active == '/reports/vaccinations'}" > 
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-                <i class="fa fa-file"></i><span class="ml-2">Reports and Statistics</span>
+                <i class="fa fa-file"></i><span class="ml-2">Reports</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
@@ -187,9 +203,36 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click=""
+                  >
+                    <span class="ml-2 cursor-pointer">Vaccination Approval List</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click=""
+                  >
+                    <span class="ml-2 cursor-pointer">Vaccinated List</span>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/vaccinations' || active == '/reports/vaccinations-information' || active == '/reports/vaccinations-classification'}" > 
+            <div class="dropdown inline-block relative">
+              <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
+                <i class="fa fa-file"></i><span class="ml-2">Vaccinations</span>
+              </a>
+
+              <ul class="dropdown-menu absolute hidden pt-1">
+                 <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations')"
                   >
-                    <span class="ml-2 cursor-pointer">Vaccinations</span>
+                    <span class="ml-2 cursor-pointer">Vaccinations Request Form</span>
                   </a>
                 </li>
 
@@ -197,7 +240,7 @@
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations-information')"
                   >
-                    <span class="ml-2 cursor-pointer">Vaccinations Information</span>
+                    <span class="ml-2 cursor-pointer">Vaccinne Benefits & Side Effect</span>
                   </a>
                 </li>
 
@@ -361,5 +404,7 @@
 
   .dropdown:hover .dropdown-menu {
     display: block;
+    width: 300px;
+    text-align: center;
   }
 </style>

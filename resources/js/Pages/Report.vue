@@ -245,10 +245,10 @@
 					</div>
 				</div>
 				
-				<hr style="height:2px; border-width:0" class="text-green-500 bg-green-500 mt-8">
+				<hr style="height:2px; border-width:0" class="text-green-500 bg-green-500 mt-8" v-if="!openModal">
 
 				<ReportsCarousel :records="null" :vaccinations="options.vaccinations" :path="path"
-					class="px-3 md:px-20"
+					class="px-3 md:px-20" v-if="!openModal"
 				/>
 			</div>
 			

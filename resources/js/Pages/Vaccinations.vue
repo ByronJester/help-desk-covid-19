@@ -106,7 +106,14 @@
 
 		watch : {
 			'table.selected': function (v) {
-				
+				this.$dialog
+				  .confirm('Please confirm to continue')
+				  .then(function(dialog) {
+				    console.log('Clicked on proceed');
+				  })
+				  .catch(function() {
+				    console.log('Clicked on cancel');
+				  });
 			},
 
 			'table.page': function (p) {
