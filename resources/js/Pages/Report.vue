@@ -16,16 +16,27 @@
 
 				<ReportsCarousel :records="options.records" :vaccinations="options.vaccinations" :path="path"
 					v-if="filter == 1 && !openModal"
-					class="px-3 md:px-20"
+					class="px-3 md:px-20" 
 				/>
 
 				<PlacesCarousel :places.sync="options.places" :selected.sync="selected" 
 					v-if="filter == 2 && !openModal" 
 					class="px-3 md:px-20"
 				/>
-			</div>
+			</div> 
 
-			<div class="w-full">
+			<div class="w-full mt-40" v-if="path == '/reports/pending-vaccination' || path == '/reports/finish-vaccination'">
+				<div class="md:text-4xl font-bold mb-16 ml-20">
+					{{path == '/reports/pending-vaccination' ? 'Vaccination Approval List' : 'Vaccinated List' }}
+				</div>
+
+				<VaccinationCarousel :vaccinations.sync="path == '/reports/pending-vaccination' ? options.pendingVaccination : options.finishVaccination" 
+					v-if="!openModal" 
+					class="px-3 md:px-20"
+				/>
+			</div> 
+
+			<div class="w-full" v-if="path != '/reports/cases'">
 				<div class="w-full flex justify-center items-center">
 					<div class="w-full flex flex-col md:flex-row px-2 md:px-0">
 
@@ -245,7 +256,7 @@
 					</div>
 				</div>
 				
-				<hr style="height:2px; border-width:0" class="text-green-500 bg-green-500 mt-8" v-if="!openModal">
+				<!-- <hr style="height:2px; border-width:0" class="text-green-500 bg-green-500 mt-8" v-if="!openModal"> -->
 
 				<ReportsCarousel :records="null" :vaccinations="options.vaccinations" :path="path"
 					class="px-3 md:px-20" v-if="!openModal"
@@ -264,6 +275,7 @@
 	import Login from "./Users/Login";
 	import PlacesCarousel from "./Places/PlacesCarousel";
 	import ReportsCarousel from "./Reports/ReportsCarousel";
+	import VaccinationCarousel from "./Vaccinations/VaccinationCarousel";
 
 	export default {
 		props: ['options'],
@@ -273,7 +285,8 @@
 		    Login,
 		    Nav,
 		    PlacesCarousel,
-		    ReportsCarousel
+		    ReportsCarousel,
+		    VaccinationCarousel
 		},
 		data() {
 			return {

@@ -10,6 +10,7 @@ use App\Models\Place;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\SaveVaccination;
+use Illuminate\Support\Facades\Route;
 
 class VaccinationController extends Controller
 {
@@ -20,6 +21,8 @@ class VaccinationController extends Controller
         if(Auth::user()) {
             $user = Auth::user(); 
         }
+
+        $uri = $request->path();
 
         $perPage = $request->perPage ?? 10;
         $page = $request->page ?? 1; 
@@ -35,6 +38,16 @@ class VaccinationController extends Controller
         if(!!$search && $search != ''){
         	$vaccinations = $vaccinations->where('name', 'LIKE', '%' . $search . '%');
         }
+
+        if($uri == 'reports/pending-vaccination') {
+            $vaccinations = $vaccinations->where(function ($q) {
+                $q->orWhere('status', 'pending')->orWhere('status', 'approve');
+            });
+        }
+
+        if($uri == 'reports/finish-vaccination') {
+            $vaccinations = $vaccinations->where('status', 'finish');
+        }
         
         return Inertia::render('Vaccinations',
             [
@@ -43,7 +56,8 @@ class VaccinationController extends Controller
                     'vaccinations'  => $vaccinations->paginate($perPage),
                     'places'    	=> $places,
                     'place'			=> $place,
-                    'search'        => $search
+                    'search'        => $search,
+                    'uri'           => $uri
                 ]
             ]
         );
@@ -56,8 +70,10 @@ class VaccinationController extends Controller
         return redirect()->back();
     }
 
-    public function approveVaccination(Request $request)
+    public function changeStatus(Request $request)
     {
+        $update = Vaccination::where('id', $request->id)->update(['status' => $request->status]);
 
+        return redirect()->back();
     }
 }

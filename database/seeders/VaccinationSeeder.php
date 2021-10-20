@@ -30,7 +30,7 @@ class VaccinationSeeder extends Seeder
 
 	    	foreach ($vaccines as $vaccine) {
 
-	    		for ($i = 0; $i < rand(3, 40); $i++) { 
+	    		for ($i = 0; $i < rand(3, 10); $i++) { 
 		     		Vaccination::create([
 		     			'place_id' 			 => $place->id,
 		     			'vaccine_id'		 => $vaccine->id,
@@ -47,7 +47,7 @@ class VaccinationSeeder extends Seeder
 
 	    	foreach ($vaccines as $vaccine) {
 
-	    		for ($i = 0; $i < rand(3, 40); $i++) { 
+	    		for ($i = 0; $i < rand(3, 10); $i++) { 
 		     		Vaccination::create([
 		     			'place_id' 			 => $place->id,
 		     			'vaccine_id'		 => $vaccine->id,

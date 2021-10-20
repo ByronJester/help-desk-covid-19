@@ -36,7 +36,7 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases'}" > 
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases' || active == '/reports/pending-vaccination' || active == '/reports/finish-vaccination'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-file"></i><span class="ml-2">Reports</span>
@@ -54,7 +54,7 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                    @click=""
+                    @click="changeActive('/reports/pending-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccination Approval List</span>
                   </a>
@@ -62,7 +62,7 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                    @click=""
+                    @click="changeActive('/reports/finish-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinated List</span>
                   </a>
@@ -185,7 +185,7 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases'}" > 
+          <li class="nav-item mx-5" :class="{'--active' : active == '/reports/cases' || active == '/reports/pending-vaccination' || active == '/reports/finish-vaccination'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
                 <i class="fa fa-file"></i><span class="ml-2">Reports</span>
@@ -203,7 +203,7 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                    @click=""
+                    @click="changeActive('/reports/pending-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccination Approval List</span>
                   </a>
@@ -211,7 +211,7 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                    @click=""
+                    @click="changeActive('/reports/finish-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinated List</span>
                   </a>
@@ -367,7 +367,7 @@
           }
         }
 
-        if(arg == '/vaccinations') {
+        if(arg == '/vaccinations' || arg == '/reports/pending-vaccination' || arg == '/reports/finish-vaccination') {
           req = {
             place: 1,
             page: 1,

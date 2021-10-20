@@ -10,7 +10,7 @@ use App\Models\Place;
 use App\Models\VirusCase;
 use App\Models\Vaccine;
 use App\Models\Vaccination;
-use App\Http\Requests\VirusCase as SaveCase;
+use App\Http\Requests\VirusCase as SaveCase; 
 
 class ReportController extends Controller
 {
@@ -68,8 +68,9 @@ class ReportController extends Controller
                         'male'          => $male,
                         'female'        => $female,
                     ],
-                    'vaccinations' => $vaccinations,
-
+                    'vaccinations'       => $vaccinations,
+                    "pendingVaccination" => [],
+                    "finishVaccination"  => []
                 ]
             ]
     	);

@@ -36,13 +36,12 @@ Route::prefix('reports')->group(function () {
     // Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
 
     Route::prefix('cases')->group(function () {
-        Route::get('/', [ReportController::class, 'reportView'])->name('view.covid.report');
+        Route::get('/', [ReportController::class, 'reportView']);
         Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
     });
 
     Route::prefix('vaccinations')->group(function () {
         Route::post('/submit-request', [VaccinationController::class, 'saveVaccination']);
-        Route::post('/approve-request', [VaccinationController::class, 'approveVaccination']);
         Route::get('/', [ReportController::class, 'reportView']);
     });
 
@@ -52,6 +51,14 @@ Route::prefix('reports')->group(function () {
 
     Route::prefix('vaccinations-classification')->group(function () {
         Route::get('/', [ReportController::class, 'reportView']);
+    });
+
+    Route::prefix('pending-vaccination')->group(function () { 
+        Route::get('/', [VaccinationController::class, 'vaccinationList']);
+    });
+
+    Route::prefix('finish-vaccination')->group(function () { 
+        Route::get('/', [VaccinationController::class, 'vaccinationList']); 
     });
 });
 
@@ -70,6 +77,8 @@ Route::prefix('virus-cases')->group(function () {
 
 
 Route::prefix('vaccinations')->group(function () {
-    Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth')->name('view.vaccinations');
+    Route::post('/changeStatus', [VaccinationController::class, 'changeStatus'])->middleware('auth'); 
+    Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth');
+
 });
 

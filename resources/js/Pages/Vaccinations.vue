@@ -21,6 +21,37 @@
 			<Table class="px-1 md:px-10" :fields="fields" :keys="keys" :list="options.vaccinations.data" :title="table.title" 
 				:search.sync="table.search" :page.sync="table.page" :count="table.count" :selected.sync="table.selected"
 			>
+				<template v-slot:actions="{ arg }"> 
+					<div class="flex items-center bg-gray-200 text-sm font-bold px-4 py-3 relative" 
+						role="alert"
+						v-if="!!arg && options.uri == 'vaccinations' && arg.status != 'cancel'"
+					>
+					  <div class="tex-lg font-bold my-2 w-full">
+					  	<span class="absolute text-red-600 cursor-pointer" style="top: -0.4rem; left: -0.3rem" @click="table.selected = null">  
+				  			<i class="fa fa-times-circle fa-2x"></i>
+					  	</span> 
+
+				  		<span class="text-xs md:text-base ml-10">  
+				  			Select Status:
+					  	</span> 
+				  		<span class="float-right cursor-pointe text-xs md:text-base"
+				  		>
+				  			<button class="mx-1 md:mx-3" @click="changeStatus(arg.id, 'cancel')" v-if="arg.status != 'finish' && arg.status != 'cancel'">
+				  				Cancel 
+				  			</button>
+
+				  			<button class="mx-1 md:mx-3" @click="changeStatus(arg.id, 'approve')" v-if="arg.status == 'pending'"> 
+				  				Approve 
+				  			</button>
+
+				  			<button class="mx-1 md:mx-3" @click="changeStatus(arg.id,'finish')" v-if="arg.status == 'approve'"> 
+				  				Finish 
+				  			</button>
+				  		</span>
+				  	</div>
+					</div>
+				</template>
+				
 			</Table>
 		</div>
 	</div>
@@ -101,35 +132,35 @@
 		},
 
 		mounted() {
-			// this.table.search = this.options.search
+			this.table.search = this.options.search
 		},
 
 		watch : {
 			'table.selected': function (v) {
-				this.$dialog
-				  .confirm('Please confirm to continue')
-				  .then(function(dialog) {
-				    console.log('Clicked on proceed');
-				  })
-				  .catch(function() {
-				    console.log('Clicked on cancel');
-				  });
+				// this.$dialog
+				//   .confirm('Please confirm to continue')
+				//   .then(function(dialog) {
+				//     console.log('Clicked on proceed');
+				//   })
+				//   .catch(function() {
+				//     console.log('Clicked on cancel');
+				//   });
 			},
 
 			'table.page': function (p) {
 				Inertia.get(
-          this.$root.route + '/vaccinations', {place: this.form.place_id, page: p, search: this.table.search},
+          this.$root.route + '/' + this.options.uri, {status: this.table.status, place: this.form.place_id, page: p, search: this.table.search},
           {
             onSuccess: () => { },
           },
         );
 			},
 
-			'options.search': function (s) { 
+			'table.search': function (s) { 
 				this.table.page = 1
 
 				Inertia.get(
-          this.$root.route + '/vaccinations', {place: this.form.place_id, page: this.table.page, search: s},
+          this.$root.route + '/' + this.options.uri, {status: this.table.status, place: this.form.place_id, page: this.table.page, search: s},
           {
             onSuccess: (res) => { 
             	this.table.search = res.props.options.search
@@ -142,7 +173,7 @@
 				if(!!this.viewCase) return;
 
 				Inertia.get(
-          this.$root.route + '/vaccinations/', {place: p, page: this.table.page, search: this.table.search},
+          this.$root.route + '/' + this.options.uri, {status: this.table.status, place: p, page: this.table.page, search: this.table.search},
           {
             onSuccess: () => { },
           },
@@ -151,21 +182,19 @@
 		},
 
 		methods : {
-			// newCase() {
-			// 	this.viewCase = true
-				
-			// 	this.form = {
-			// 		id: null,
-			// 		place_id: this.form.place_id,
-			// 		code: null,
-			// 		age: null,
-			// 		symptom: null,
-			// 		gender: 'MALE',
-			// 		date: null,
-			// 		travel_history: null,
-			// 		status: 'RECOVERED'
-			// 	}
-			// }
+			changeStatus(id, arg) {
+				let data = { id: id, status: arg }
+
+				Inertia.post(
+          this.$root.route + '/vaccinations/changeStatus', data,
+          {
+            onSuccess: () => { 
+            	this.table.selected = null
+            },
+          },
+        );
+
+			}
 		}
 	}
 
