@@ -134,6 +134,14 @@
 
                 <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click="changeActive('/contact-tracing')"
+                  >
+                    <span class="ml-2 cursor-pointer">Contact Tracing</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                    @click="changeActive('/users')">
                     <span class="ml-2 cursor-pointer">Users</span>
                   </a>
@@ -277,6 +285,14 @@
                     @click="changeActive('/vaccinations')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinations</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click="changeActive('/contact-tracing')"
+                  >
+                    <span class="ml-2 cursor-pointer">Contact Tracing</span>
                   </a>
                 </li>
 

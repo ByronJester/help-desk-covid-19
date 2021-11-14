@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VirusCaseController;
 use App\Http\Controllers\VaccinationController;
+use App\Http\Controllers\ContactTracingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,10 +76,13 @@ Route::prefix('virus-cases')->group(function () {
     Route::post('/save', [VirusCaseController::class, 'caseSave'])->middleware('auth');
 });
 
+Route::prefix('contact-tracing')->group(function () {
+    Route::get('/', [ContactTracingController::class, 'traceList'])
+        ->middleware('auth')->name('view.contact.tracing');
+});
 
 Route::prefix('vaccinations')->group(function () {
     Route::post('/changeStatus', [VaccinationController::class, 'changeStatus'])->middleware('auth'); 
     Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth');
-
 });
 

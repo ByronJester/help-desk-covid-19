@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             PlaceSeeder::class,
             VirusCaseSeeder::class,
             VaccineSeeder::class,
-            // VaccinationSeeder::class
+            ContactTracingSeeder::class,
+            VaccinationSeeder::class
         ]);
     }
 }
