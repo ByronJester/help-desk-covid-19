@@ -31,13 +31,10 @@ class ContactTracingSeeder extends Seeder
 
         	ContactTracing::create([
         		'place_id' => $case->place_id,
-        		'virus_case_id' => $case->id,
         		'name' => Str::random(10),
-        		'age' => rand(1, 90),
         		'birth_date' => Carbon::now()->subDays(rand(1, 730))->format('Y-m-d'),
         		'phone' => '09771023141',
-        		'gender' => $gender[array_rand($gender, 1)],
-        		'status' => $status[array_rand($status, 1)]
+        		'gender' => $gender[array_rand($gender, 1)]
         	]);
 
         }

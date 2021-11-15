@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Place;
 use App\Models\ContactTracing;
+use App\Models\VirusCase;
 
 class ContactTracingController extends Controller
 {
@@ -34,7 +35,7 @@ class ContactTracingController extends Controller
         $tracings = $tracings->where('name', 'LIKE', '%' . $search . '%');
       }
       
-      return Inertia::render('ContactTracing',
+      return Inertia::render('ContactTracings',
           [
               'options'    => [
                   'user'        => $user,
@@ -46,5 +47,45 @@ class ContactTracingController extends Controller
           ]
       );
     
+    }
+
+    public function tracingView(Request $request, $id)
+    {
+      $user = null;
+
+      if(Auth::user()) {
+          $user = Auth::user();
+      }
+
+      $tracing = null;
+
+      if($id != 'add') {
+        $tracing = ContactTracing::where('id', $id)->first();
+      }
+
+      return Inertia::render('ContactTracings/Save',
+        [
+          'options'    => [
+              'user'        => $user,
+              'tracing'     => $tracing,
+              'place'       => $request->place
+          ]
+        ]
+      );
+    }
+
+    public function saveTrace(Request $request)
+    {
+      $id = $request->id;
+
+      $data = $request->except(['id']);
+
+      if($id) {
+        ContactTracing::where('id', $id)->update($data);
+      } else {
+        ContactTracing::create($data);
+      }
+
+      return redirect()->route('view.contact.tracing');
     }
 }

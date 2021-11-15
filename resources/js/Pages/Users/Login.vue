@@ -75,9 +75,10 @@
 								  <option value="admin - lgu">LGU - Admin</option>
 								  <option value="employee - lgu">LGU - Employee</option>
 								  <option value="health-worker - lgu">LGU - Health Worker</option>
-								  <option value="admin - hospital">Hospital - Admin</option>
+								  <!-- <option value="admin - hospital">Hospital - Admin</option>
 								  <option value="employee - hospital">Hospital - Employee</option>
-								  <option value="citizen">Citizen</option>
+ -->								  
+ 									<option value="citizen">Citizen</option>
 								</select>
 								<span class="text-sm text-red-500">{{validationError('user_type', registerErrors)}} </span>
 							</div>

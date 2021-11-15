@@ -78,7 +78,7 @@ class UserController extends Controller
             $user = Auth::user();
         }
 
-        $perPage = $request->perPage ?? 5;
+        $perPage = $request->perPage ?? 5; 
         $page = $request->page ?? 1;
 
         $search = $request->search ?? null;

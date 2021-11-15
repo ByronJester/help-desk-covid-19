@@ -77,8 +77,13 @@ Route::prefix('virus-cases')->group(function () {
 });
 
 Route::prefix('contact-tracing')->group(function () {
+    Route::post('/save', [ContactTracingController::class, 'saveTrace'])->middleware('auth');
+
     Route::get('/', [ContactTracingController::class, 'traceList'])
         ->middleware('auth')->name('view.contact.tracing');
+
+    Route::get('/{id}', [ContactTracingController::class, 'tracingView'])
+        ->middleware('auth')->name('view.save.tracing');
 });
 
 Route::prefix('vaccinations')->group(function () {

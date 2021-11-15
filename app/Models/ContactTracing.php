@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ContactTracing extends Model
 {
@@ -19,4 +20,11 @@ class ContactTracing extends Model
         'gender',
         'status'
     ];
+
+
+    public function getBirthDateAttribute($value)
+    {
+        // return Carbon::createFromFormat('Y/m/d', $value);
+        return $value;
+    }
 }

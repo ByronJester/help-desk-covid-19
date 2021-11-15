@@ -5,6 +5,7 @@
 
 			<div class="w-full px-1 md:px-10">
 				<button class="bg-green-500 border border-green-500 rounded py-2 md:py-5 px-3 font-bold text-white"
+					@click="newTracing"
 				>
 					ADD CONTACT TRACING
 				</button>
@@ -66,7 +67,7 @@
 					},
 
 					{
-						label: 'gender',
+						label: 'gender', 
 						slot: false,
 						slot_name: null
 					},
@@ -89,9 +90,25 @@
 			}
 		},
 
+		methods: {
+			newTracing() {
+				Inertia.get(
+          this.$root.route + '/contact-tracing/add', {place: this.form.place_id},
+          {
+            onSuccess: () => { },
+          },
+        );
+			}
+		},
+
 		watch : {
 			'table.selected': function (v) {
-	
+				Inertia.get(
+          this.$root.route + '/contact-tracing/' + v.id, {place: this.form.place_id},
+          {
+            onSuccess: () => { },
+          },
+        );
 			},
 
 			'table.page': function (p) {
@@ -129,7 +146,6 @@
 </script>
 
 <style scoped>
-	<style scoped>
 	.--tracing {
 		height: 100vh;
 		width: 100vw;
@@ -150,5 +166,4 @@
     @apply: bg-green-400;
     background-color: #68d391;
   }
-</style>
 </style>
