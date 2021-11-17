@@ -30,9 +30,9 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-              <i class="fa fa-tv"></i><span class="ml-2">News</span>
+          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}">
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/news')">
+              <i class="fa fa-tv"></i><span class="ml-2">Bayan Pantrol</span>
             </a>
           </li>
 
@@ -187,9 +187,9 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5">
-            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-              <i class="fa fa-tv"></i><span class="ml-2">News</span>
+          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}">
+            <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/news')">
+              <i class="fa fa-tv"></i><span class="ml-2">Bayan Patrol</span>
             </a>
           </li>
 

@@ -20,6 +20,7 @@ class CreateContactTracingsTable extends Migration
             $table->date('birth_date');
             $table->string('phone');
             $table->string('gender')->comment("MALE, FEMALE");
+            $table->boolean('is_active')->default(true);
             
             $table->foreign('place_id')->references('id')->on('places');
             $table->softDeletes();

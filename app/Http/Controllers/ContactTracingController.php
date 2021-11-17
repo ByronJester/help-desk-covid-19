@@ -29,7 +29,16 @@ class ContactTracingController extends Controller
 
       $place = $request->place ?? $places[0]['id'];
 
-      $tracings = ContactTracing::orderBy('created_at', 'desc')->where('place_id', $place);
+      $tracings = ContactTracing::orderBy('created_at', 'desc')
+       ->where('is_active', true)->where('place_id', $place);
+
+      if($user) {
+        if($user->perspective != 1) {
+          $tracings = $tracings->where('is_active', true);
+        }
+      } else {
+        $tracings = $tracings->where('is_active', true);
+      }
 
       if(!!$search && $search != ''){
         $tracings = $tracings->where('name', 'LIKE', '%' . $search . '%');

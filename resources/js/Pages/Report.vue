@@ -334,7 +334,6 @@
             },
             onError: (err) => {
             	this.saveError = err
-            	alert()
             	console.log(err)
             }
         });

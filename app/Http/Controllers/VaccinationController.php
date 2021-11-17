@@ -33,7 +33,8 @@ class VaccinationController extends Controller
 
         $place = $request->place ?? $places[0]['id'];
 
-        $vaccinations = Vaccination::orderBy('created_at', 'desc')->where('place_id', $place);
+        $vaccinations = Vaccination::orderBy('created_at', 'desc')->where('is_active', true)
+            ->where('place_id', $place);
 
         if(!!$search && $search != ''){
         	$vaccinations = $vaccinations->where('name', 'LIKE', '%' . $search . '%');

@@ -23,6 +23,7 @@ class CreateCasesTable extends Migration
             $table->date('date');
             $table->string('travel_history')->nullable();
             $table->string('status')->nullable()->comment('RECOVERED, DEATH');
+            $table->boolean('is_active')->default(true);
 
             $table->foreign('place_id')->references('id')->on('places');
 

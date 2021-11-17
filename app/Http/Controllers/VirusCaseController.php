@@ -30,7 +30,16 @@ class VirusCaseController extends Controller
 
         $place = $request->place ?? $places[0]['id'];
 
-        $cases = VirusCase::orderBy('created_at', 'desc')->where('place_id', $place);
+        $cases = VirusCase::orderBy('created_at', 'desc')->where('is_active', true)
+            ->where('place_id', $place);
+
+        if($user) {
+          if($user->perspective != 1) {
+            $cases = $cases->where('is_active', true);
+          }
+        } else {
+          $cases = $cases->where('is_active', true);
+        }
 
         if(!!$search && $search != ''){
         	$cases = $cases->where('code', 'LIKE', '%' . $search . '%');

@@ -1,13 +1,13 @@
 <template>
-	<div class="--home overflow-x-hidden">
+	<div class="--news overflow-x-hidden">
 		<Login :openModal.sync="openModal"/>
 
 		<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
 		<div class="flex flex-col mt-10 mb-5 items-center" v-if="!openModal">
-		  <div class="w-4/5 md:w-2/5 bg-gray-300 rounded" v-if="isAuthorize('save_post', options.user)">
+		  <div class="w-4/5 md:w-2/5 bg-gray-300 rounded" v-if="isAuthorize('save_news', options.user)">
 		  	<div class="px-5 my-2 md:my-5">
-			  	<label class="text-xs md:text-lg uppercase font-bold"> What's new announcement ?</label><br><br>
+			  	<label class="text-xs md:text-lg uppercase font-bold"> What's the recent news on Balayan ?</label><br><br>
 			
 			  	<textarea rows="4" class="text-xs md:text-lg rounded px-2 py-2 border border-green-500 w-full" v-model="form.content">
 					</textarea>
@@ -57,7 +57,7 @@
 				  <div class="tex-lg font-bold my-2 w-full">
 
 			  		<span class="text-xs md:text-base"> 
-			  			Are you sure to delete this post ? 
+			  			Are you sure to delete this news ? 
 				  	</span> 
 			  		<span class="float-right cursor-pointe text-xs md:text-base"
 			  		>
@@ -74,7 +74,7 @@
 				  <div class="tex-lg font-bold my-2 w-full">
 
 			  		<span class="text-xs md:text-base"> 
-			  			Are you sure to edit this post ? 
+			  			Are you sure to edit this news ? 
 				  	</span> 
 			  		<span class="float-right cursor-pointe text-xs md:text-base"
 			  		>
@@ -225,9 +225,9 @@
 
 			newPost() {
 				this.formData.append('content', this.form.content)
-				this.formData.append('identifier', 'home')
+				this.formData.append('identifier', 'news')
 
-				Inertia.post(this.$root.route + "/home/save-post", this.formData,
+				Inertia.post(this.$root.route + "/news/save-post", this.formData,
           {
             onSuccess: (res) => {
             	this.formData = new FormData()
@@ -253,7 +253,7 @@
 			},
 
 			deletePost(id) {
-				Inertia.post(this.$root.route + "/home/delete-post", {id: id},
+				Inertia.post(this.$root.route + "/news/delete-post", {id: id},
           {
             onSuccess: (res) => {
             	
@@ -280,9 +280,9 @@
 			editPost() {
 				this.editForm.append('id', this.edit.id)
 				this.editForm.append('content', this.edit.content)
-				this.editForm.append('identifier', 'home')
+				this.editForm.append('identifier', 'news')
 
-				Inertia.post(this.$root.route + "/home/save-post", this.editForm,
+				Inertia.post(this.$root.route + "/news/save-post", this.editForm,
           {
             onSuccess: (res) => {
             	this.editForm = new FormData()
@@ -305,17 +305,17 @@
 </script>
 
 <style scoped>
-	.--home {
+	.--news {
 		height: 100vh;
 		width: 100vw;
 	}
 
-	.--home::-webkit-scrollbar {
+	.--news::-webkit-scrollbar {
 	  display: none;
 	}
 
 	/* Hide scrollbar for IE, Edge and Firefox */
-	.--home {
+	.--news {
 	  -ms-overflow-style: none;  /* IE and Edge */
 	  scrollbar-width: none;  /* Firefox */
 	}
