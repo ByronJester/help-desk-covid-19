@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('user_id')->unsigned()->comment('Foreign key from table users');
             $table->longText('content');
             $table->boolean('allow_comment')->default(1);
+            $table->string('identifier');
 
             $table->foreign('user_id')->references('id')->on('users');
 

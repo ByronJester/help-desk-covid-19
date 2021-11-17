@@ -25,12 +25,20 @@ class VirusCaseController extends Controller
         $page = $request->page ?? 1; 
 
         $search = $request->search ?? null;
-
+ 
         $places = Place::get();
 
         $place = $request->place ?? $places[0]['id'];
 
         $cases = VirusCase::orderBy('created_at', 'desc')->where('place_id', $place);
+
+        if($user) {
+          if($user->perspective != 1) {
+            $cases = $cases->where('is_active', true);
+          }
+        } else {
+          $cases = $cases->where('is_active', true);
+        }
 
         if(!!$search && $search != ''){
         	$cases = $cases->where('code', 'LIKE', '%' . $search . '%');
@@ -58,4 +66,16 @@ class VirusCaseController extends Controller
 
       return redirect()->back();
     }
+
+    public function changeStatus(Request $request)
+    {
+      $id = $request->id;
+
+      $data = $request->only(['is_active']);
+
+      VirusCase::where('id', $id)->update($data);
+
+      return response()->json(['message' => 'Successfully change status.']);
+    }
+
 }

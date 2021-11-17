@@ -28,18 +28,18 @@ class UserSeeder extends Seeder
         	'updated_at' => Carbon::now(),
         ]);
 
-        User::create([
-        	'first_name' => 'Hospital',
-        	'last_name' => 'Hospital',
-        	'phone' =>  '09354315556',
-        	'email' => 'admin.hospital@email.com',
-        	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        	'user_type'	=> 'admin',
-        	'perspective' => 2,
-            'is_active'   => true,
-        	'created_at' => Carbon::now(),
-        	'updated_at' => Carbon::now(),
-        ]);
+        // User::create([
+        // 	'first_name' => 'Hospital',
+        // 	'last_name' => 'Hospital',
+        // 	'phone' =>  '09354315556',
+        // 	'email' => 'admin.hospital@email.com',
+        // 	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        // 	'user_type'	=> 'admin',
+        // 	'perspective' => 2,
+        //     'is_active'   => true,
+        // 	'created_at' => Carbon::now(),
+        // 	'updated_at' => Carbon::now(),
+        // ]);
 
         User::create([
         	'first_name' => 'Citizen',

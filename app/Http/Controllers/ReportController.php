@@ -10,7 +10,7 @@ use App\Models\Place;
 use App\Models\VirusCase;
 use App\Models\Vaccine;
 use App\Models\Vaccination;
-use App\Http\Requests\VirusCase as SaveCase;
+use App\Http\Requests\VirusCase as SaveCase; 
 
 class ReportController extends Controller
 {
@@ -22,11 +22,11 @@ class ReportController extends Controller
         	$user = Auth::user();
         }
 
-        $recovered  = VirusCase::where('status', 'RECOVERED')->count();
-        $death      = VirusCase::where('status', 'DEATH')->count();
-        $quarantine = VirusCase::where('status', 'QUARANTINE')->count();
-        $male       = VirusCase::where('gender', 'MALE')->count();
-        $female     = VirusCase::where('gender', 'FEMALE')->count();
+        $recovered  = VirusCase::where('is_active', true)->where('status', 'RECOVERED')->count();
+        $death      = VirusCase::where('is_active', true)->where('status', 'DEATH')->count();
+        $quarantine = VirusCase::where('is_active', true)->where('status', 'QUARANTINE')->count();
+        $male       = VirusCase::where('is_active', true)->where('gender', 'MALE')->count();
+        $female     = VirusCase::where('is_active', true)->where('gender', 'FEMALE')->count();
 
         $vaccines = Vaccine::get();
 
@@ -37,20 +37,20 @@ class ReportController extends Controller
 
             $vaccinations[] = [
                 'name'     => $vaccine->name,
-                'male'     => Vaccination::where('vaccine_id', $vaccine->id)->where('gender', 'MALE')->count(),
-                'female'   => Vaccination::where('vaccine_id', $vaccine->id)->where('gender', 'FEMALE')->count(),
-                'A1'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'A1')->count(),
-                'A2'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'A2')->count(),
-                'A3'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'A3')->count(),
-                'A4'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'A4')->count(),
-                'A5'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'A5')->count(),
-                'B1'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B1')->count(),
-                'B2'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B2')->count(),
-                'B3'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B3')->count(),
-                'B4'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B4')->count(),
-                'B5'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B5')->count(),
-                'B6'       => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'B6')->count(),
-                'C'        => Vaccination::where('vaccine_id', $vaccine->id)->where('classification', 'C')->count(),
+                'male'     => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('gender', 'MALE')->count(),
+                'female'   => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('gender', 'FEMALE')->count(),
+                'A1'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'A1')->count(),
+                'A2'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'A2')->count(),
+                'A3'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'A3')->count(),
+                'A4'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'A4')->count(),
+                'A5'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'A5')->count(),
+                'B1'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B1')->count(),
+                'B2'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B2')->count(),
+                'B3'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B3')->count(),
+                'B4'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B4')->count(),
+                'B5'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B5')->count(),
+                'B6'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'B6')->count(),
+                'C'        => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('classification', 'C')->count(),
 
             ];
         }
@@ -68,8 +68,9 @@ class ReportController extends Controller
                         'male'          => $male,
                         'female'        => $female,
                     ],
-                    'vaccinations' => $vaccinations,
-
+                    'vaccinations'       => $vaccinations,
+                    "pendingVaccination" => [],
+                    "finishVaccination"  => []
                 ]
             ]
     	);
@@ -83,11 +84,11 @@ class ReportController extends Controller
             $user = Auth::user();
         }
 
-        $recovered  = VirusCase::where('status', 'RECOVERED')->where('place_id', $id)->count();
-        $death      = VirusCase::where('status', 'DEATH')->where('place_id', $id)->count();
-        $quarantine = VirusCase::where('status', 'QUARANTINE')->where('place_id', $id)->count();
-        $male       = VirusCase::where('gender', 'MALE')->where('place_id', $id)->count();
-        $female     = VirusCase::where('gender', 'FEMALE')->where('place_id', $id)->count();
+        $recovered  = VirusCase::where('is_active', true)->where('status', 'RECOVERED')->where('place_id', $id)->count();
+        $death      = VirusCase::where('is_active', true)->where('status', 'DEATH')->where('place_id', $id)->count();
+        $quarantine = VirusCase::where('is_active', true)->where('status', 'QUARANTINE')->where('place_id', $id)->count();
+        $male       = VirusCase::where('is_active', true)->where('gender', 'MALE')->where('place_id', $id)->count();
+        $female     = VirusCase::where('is_active', true)->where('gender', 'FEMALE')->where('place_id', $id)->count();
 
         $vaccines = Vaccine::get();
 
@@ -98,33 +99,33 @@ class ReportController extends Controller
 
             $vaccinations[] = [
                 'name'     => $vaccine->name,
-                'male'     => Vaccination::where('vaccine_id', $vaccine->id)->where('place_id', $id)
+                'male'     => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('place_id', $id)
                                ->where('gender', 'MALE')->count(),
-                'female'   => Vaccination::where('vaccine_id', $vaccine->id)->where('place_id', $id)
+                'female'   => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)->where('place_id', $id)
                             ->where('gender', 'FEMALE')->count(),
-                'A1'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'A1'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'A1')->count(),
-                'A2'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'A2'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'A2')->count(),
-                'A3'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'A3'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'A3')->count(),
-                'A4'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'A4'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'A4')->count(),
-                'A5'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'A5'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'A5')->count(),
-                'B1'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B1'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B1')->count(),
-                'B2'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B2'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B2')->count(),
-                'B3'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B3'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B3')->count(),
-                'B4'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B4'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B4')->count(),
-                'B5'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B5'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B5')->count(),
-                'B6'       => Vaccination::where('vaccine_id', $vaccine->id)
+                'B6'       => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'B6')->count(),
-                'C'        => Vaccination::where('vaccine_id', $vaccine->id)
+                'C'        => Vaccination::where('is_active', true)->where('vaccine_id', $vaccine->id)
                                 ->where('place_id', $id)->where('classification', 'C')->count(),
             ];
         }
@@ -134,7 +135,7 @@ class ReportController extends Controller
                 'options'    => [
                     'user'   => $user,
                     'place'  => Place::where('id', $id)->first(),
-                    'cases'  => VirusCase::orderBy('created_at', 'desc')->where('place_id', $id)->get(),
+                    'cases'  => VirusCase::orderBy('updated_at', 'desc')->where('is_active', true)->where('place_id', $id)->get(),
                     'vaccines'  => $vaccines,
                     'records'   => [
                         'recovered'     => $recovered,

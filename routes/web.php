@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VirusCaseController;
 use App\Http\Controllers\VaccinationController;
+use App\Http\Controllers\ContactTracingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,12 @@ Route::prefix('home')->group(function () {
     Route::get('/', [HomeController::class, 'homeView'])->name('view.home');
     Route::post('/save-post', [HomeController::class, 'savePost']);
     Route::post('/delete-post', [HomeController::class, 'deletePost']);
-     
+});
+
+Route::prefix('news')->group(function () {
+    Route::get('/', [HomeController::class, 'newsView'])->name('view.news');
+    Route::post('/save-post', [HomeController::class, 'savePost']);
+    Route::post('/delete-post', [HomeController::class, 'deletePost']);
 });
 
 Route::prefix('reports')->group(function () {
@@ -36,13 +42,12 @@ Route::prefix('reports')->group(function () {
     // Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
 
     Route::prefix('cases')->group(function () {
-        Route::get('/', [ReportController::class, 'reportView'])->name('view.covid.report');
+        Route::get('/', [ReportController::class, 'reportView']);
         Route::get('/view/{id}', [ReportController::class, 'viewPlace'])->name('view.place.incident'); 
     });
 
     Route::prefix('vaccinations')->group(function () {
         Route::post('/submit-request', [VaccinationController::class, 'saveVaccination']);
-        Route::post('/approve-request', [VaccinationController::class, 'approveVaccination']);
         Route::get('/', [ReportController::class, 'reportView']);
     });
 
@@ -52,6 +57,14 @@ Route::prefix('reports')->group(function () {
 
     Route::prefix('vaccinations-classification')->group(function () {
         Route::get('/', [ReportController::class, 'reportView']);
+    });
+
+    Route::prefix('pending-vaccination')->group(function () { 
+        Route::get('/', [VaccinationController::class, 'vaccinationList']);
+    });
+
+    Route::prefix('finish-vaccination')->group(function () { 
+        Route::get('/', [VaccinationController::class, 'v accinationList']); 
     });
 });
 
@@ -64,12 +77,25 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('virus-cases')->group(function () {
-    Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
     Route::post('/save', [VirusCaseController::class, 'caseSave'])->middleware('auth');
+    Route::post('/change-status', [VirusCaseController::class, 'changeStatus'])->middleware('auth');
+    Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
 });
 
+Route::prefix('contact-tracing')->group(function () {
+    Route::post('/save', [ContactTracingController::class, 'saveTrace'])->middleware('auth');
+
+    Route::post('/change-status', [ContactTracingController::class, 'changeStatus'])->middleware('auth');
+
+    Route::get('/', [ContactTracingController::class, 'traceList'])
+        ->middleware('auth')->name('view.contact.tracing');
+
+    Route::get('/{id}', [ContactTracingController::class, 'tracingView'])
+        ->middleware('auth')->name('view.save.tracing');
+});
 
 Route::prefix('vaccinations')->group(function () {
-    Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth')->name('view.vaccinations');
+    Route::post('/changeStatus', [VaccinationController::class, 'changeStatus'])->middleware('auth'); 
+    Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth');
 });
 

@@ -67,7 +67,15 @@
 							</div>
 	 					</div>
 
-	 					<div class="w-full mt-2 md:my-4 md:px-20">
+	 					<div class="w-full mt-3 md:mt-8 md:px-20" v-if="!!form.id">
+	 						<button class="w-full py-2 px-3 bg-yellow-500 text-center font-bold text-white" 
+	 							@click="changeStatus(!!form.is_active ? false : true)"
+	 						> 
+	 							{{ !!form.is_active ? 'Archive' : 'Recover' }}
+	 						</button>
+	 					</div>
+
+	 					<div class="w-full md:px-20 mt-2">
 	 						<button class="w-full py-2 px-3 bg-green-500 text-center font-bold text-white" @click="save()"> 
 	 							Save
 	 						</button>
@@ -86,6 +94,7 @@
 
 <script>
 	import { Inertia } from "@inertiajs/inertia";
+	import axios from 'axios'
 
 	export default {
 		props: ['viewCase', 'form'],
@@ -107,7 +116,26 @@
             	this.errors = err
             }
           });
+			},
+
+			changeStatus(arg) {
+				alert()
+
+				let data = {
+					id: this.form.id,
+					is_active: arg
+				}
+
+    		axios.post(this.$root.route + '/virus-cases/change-status', data)
+			  .then(function (response) {
+			    location.reload();
+			  })
+			  .catch(function (error) {
+			  });
 			}
+		},
+
+		mounted(){
 		},
 
 		watch : {

@@ -20,15 +20,37 @@ class HomeController extends Controller
         if(Auth::user()) {
         	$user = Auth::user();
         }
+
+        $posts = Post::orderBy('created_at', 'desc')->where('identifier', 'home')->get();
         
     	return Inertia::render('Home',  
     		[
                 'options'    => [
                 	'user' => $user,
-                    'posts' => Post::orderBy('created_at', 'desc')->get()
+                    'posts' => $posts
                 ]
             ]
     	);
+    }
+
+    public function newsView(Request $request)
+    {
+        $user = null;
+
+        if(Auth::user()) {
+            $user = Auth::user();
+        }
+
+        $posts = Post::orderBy('created_at', 'desc')->where('identifier', 'news')->get();
+        
+        return Inertia::render('News',  
+            [
+                'options'    => [
+                    'user' => $user,
+                    'posts' => $posts
+                ]
+            ]
+        );
     }
 
     public function savePost(Request $request)
@@ -43,6 +65,7 @@ class HomeController extends Controller
 
         $post->user_id = $user->id;
         $post->content = $request->content;
+        $post->identifier = $request->identifier;
         $post->save();
 
         if($post) {

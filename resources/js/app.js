@@ -4,6 +4,8 @@ import { InertiaProgress } from '@inertiajs/progress';
 import KProgress from 'k-progress';
 import VueCarousel from 'vue-carousel';
 import VueGraph from 'vue-graph';
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
 
 InertiaProgress.init({
   // The delay after which the progress bar will
@@ -26,6 +28,7 @@ Vue.use(plugin)
 Vue.component('k-progress', KProgress);
 Vue.use(VueCarousel);
 Vue.use(VueGraph);
+Vue.use(VuejsDialog);
 
 Vue.mixin({
   methods: {
@@ -46,7 +49,8 @@ Vue.mixin({
       if(arg == 'covid' && (user.perspective == 1) ) return true; 
       if(arg == 'vaccination' && user.perspective == 1 && user.user_type != 'employee') return true;
       if(arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true; 
-      if(arg == 'save_post' && (user.perspective == 1 && user.user_type == 'admin') || (user.perspective == 2 && user.user_type == 'admin')) return true;
+      if(arg == 'save_post' && user.perspective == 1) return true;
+      if(arg == 'save_news' && user.perspective == 3) return true;
     },
   }
 })

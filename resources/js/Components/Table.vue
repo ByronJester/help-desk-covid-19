@@ -6,6 +6,11 @@
         <input type="type" v-model="form.search" @input="initiateSearch()" placeholder="Search" class="border border-green-200 px-3 py-1 md:py-4 w-full"/>
       </span>
 		</div>
+
+    <div class="w-full my-5">
+      <slot :name="'actions'" :arg="selected"></slot>
+    </div>
+
 		<table
       class="w-full"
     >
@@ -97,7 +102,7 @@
       initiateSearch() {
         var self = this
 
-        clearTimeout(this.timeOut);
+        clearTimeout(self.timeOut);
 
         this.timeOut = setTimeout(
           function(){

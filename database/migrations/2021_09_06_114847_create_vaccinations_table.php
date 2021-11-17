@@ -24,6 +24,7 @@ class CreateVaccinationsTable extends Migration
             $table->string('gender')->comment("MALE, FEMALE");
             $table->string('classification');
             $table->string('status')->default('pending')->comment("pending, ongoing, finish");
+            $table->boolean('is_active')->default(true);
 
             $table->foreign('place_id')->references('id')->on('places');
             $table->foreign('vaccine_id')->references('id')->on('vaccines');
