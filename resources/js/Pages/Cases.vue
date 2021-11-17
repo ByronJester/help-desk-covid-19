@@ -25,7 +25,7 @@
 			>
 				<template v-slot:is_active="{ arg }"> 
 					<i class="fa fa-check-square fa-2x text-green-500" v-if="!!arg"></i>
-					<i class="fa fa-times-circle fa-2x text-red-500" v-else></i>
+					<i class="fa fa-times-circle fa-2x text-red-500" v-else></i>  
 				</template>
 			</Table>
 
@@ -50,7 +50,7 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Code', 'Age', 'Gender', 'Date', 'Status'],
+				fields: ['Code', 'Age', 'Gender', 'Date', 'Status', 'Active'],
 				table: {
 					title: 'Covid 19 Cases',
 					search: this.options.search,
@@ -88,6 +88,12 @@
 						slot: false,
 						slot_name: null
 					},
+
+					{
+						label: 'is_active',
+						slot: true,
+						slot_name: 'is_active'
+					},
 				],
 				viewCase: false,
 				form: {
@@ -99,13 +105,14 @@
 					gender: 'MALE',
 					date: null,
 					travel_history: null,
-					status: 'RECOVERED'
+					status: 'RECOVERED',
+					is_active: true
 				},
 			}
 		},
 
 		mounted() {
-			
+			console.log(this.options)
 		},
 
 		watch : {
@@ -121,7 +128,8 @@
 					gender: v.gender,
 					date: v.date,
 					travel_history: v.travel_history,
-					status: v.status
+					status: v.status,
+					is_active: v.is_active
 				}
 			},
 

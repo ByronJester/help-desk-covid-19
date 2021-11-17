@@ -14,6 +14,13 @@
 				>
 					Save
 				</button>
+
+				<button 
+					class="rounded bg-yellow-400 border border-yellow-100 text-white px-1 py-1 md:px-5 md:py-3 float-right md:text-2xl mr-2" v-if="form.id != null"
+					@click="changeStatus(!!form.is_active ? false : true)"
+				>
+					{{ !!form.is_active ? 'Archive' : 'Recover' }}
+				</button>
 			</div>
 
 			<div class="w-full flex flex-col mt-20 md:px-32">
@@ -82,12 +89,9 @@
 			}
 		},
 
-		mounted() {
+		created() {
 			if(!!this.options.tracing) {
-
 				this.form = Object.assign({}, this.options.tracing)
-
-				console.log(this.form)
 			}
 		},
 
@@ -104,6 +108,20 @@
 			save() {
 				Inertia.post(
           this.$root.route + '/contact-tracing/save', this.form,
+          {
+            onSuccess: () => { },
+          },
+        );
+			},
+
+			changeStatus(arg) {
+				let data = {
+					id: this.form.id,
+					is_active: arg
+				}
+
+				Inertia.post(
+          this.$root.route + '/contact-tracing/change-status', data,
           {
             onSuccess: () => { },
           },

@@ -33,8 +33,15 @@ class VaccinationController extends Controller
 
         $place = $request->place ?? $places[0]['id'];
 
-        $vaccinations = Vaccination::orderBy('created_at', 'desc')->where('is_active', true)
-            ->where('place_id', $place);
+        $vaccinations = Vaccination::orderBy('created_at', 'desc')->where('place_id', $place);
+
+        if($user) {
+            if($user->perspective != 1) {
+                $vaccinations = $vaccinations->where('is_active', true);
+            }
+        } else {
+            $vaccinations = $vaccinations->where('is_active', true);
+        }
 
         if(!!$search && $search != ''){
         	$vaccinations = $vaccinations->where('name', 'LIKE', '%' . $search . '%');
@@ -73,8 +80,14 @@ class VaccinationController extends Controller
 
     public function changeStatus(Request $request)
     {
-        $update = Vaccination::where('id', $request->id)->update(['status' => $request->status]);
-
+        if($request->status == 'archive') {
+            $update = Vaccination::where('id', $request->id)->update(['is_active' => false]);
+        } else if($request->status == 'recover') {
+            $update = Vaccination::where('id', $request->id)->update(['is_active' => true]);
+        } else {
+            $update = Vaccination::where('id', $request->id)->update(['status' => $request->status]);
+        }
+        
         return redirect()->back();
     }
 }

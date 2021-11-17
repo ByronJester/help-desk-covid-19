@@ -7,7 +7,7 @@
 				<button class="bg-green-500 border border-green-500 rounded py-2 md:py-5 px-3 font-bold text-white"
 					@click="newTracing"
 				>
-					ADD CONTACT TRACING
+					New
 				</button>
 
 				<select v-model="form.place_id"
@@ -45,7 +45,7 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Name', 'Age', 'Gender', 'Contact', 'Status'],
+				fields: ['Name', 'Birth Date', 'Gender', 'Contact', 'Active'],
 				table: {
 					title: 'Covid 19 Contact Tracing',
 					search: this.options.search,
@@ -61,7 +61,7 @@
 					},
 
 					{
-						label: 'age',
+						label: 'formatted_date',
 						slot: false,
 						slot_name: null
 					},
@@ -79,9 +79,9 @@
 					},
 
 					{
-						label: 'status',
-						slot: false,
-						slot_name: null
+						label: 'is_active',
+						slot: true,
+						slot_name: 'is_active'
 					},
 				],
 				form: {

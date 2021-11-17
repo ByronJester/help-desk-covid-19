@@ -35,7 +35,19 @@
 				  			Select Status:
 					  	</span> 
 				  		<span class="float-right cursor-pointe text-xs md:text-base"
-				  		>
+				  		>	
+				  			<button class="mx-1 md:mx-3 text-yellow-700" @click="changeStatus(arg.id, 'archive')" 
+				  				v-if="!!arg.is_active"
+				  			>
+				  				Archive 
+				  			</button>
+
+				  			<button class="mx-1 md:mx-3 text-yellow-700" @click="changeStatus(arg.id, 'recover')"
+				  				v-if="!arg.is_active"
+				  			>
+				  				Recover 
+				  			</button>
+
 				  			<button class="mx-1 md:mx-3" @click="changeStatus(arg.id, 'cancel')" v-if="arg.status != 'finish' && arg.status != 'cancel'">
 				  				Cancel 
 				  			</button>
@@ -50,6 +62,11 @@
 				  		</span>
 				  	</div>
 					</div>
+				</template>
+
+				<template v-slot:is_active="{ arg }"> 
+					<i class="fa fa-check-square fa-2x text-green-500" v-if="!!arg"></i>
+					<i class="fa fa-times-circle fa-2x text-red-500" v-else></i>
 				</template>
 				
 			</Table>
@@ -71,7 +88,7 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Name', 'Vaccine', 'Age', 'Gender', 'Contact', 'Status'],
+				fields: ['Name', 'Vaccine', 'Age', 'Contact', 'Status', 'Active'],
 				table: {
 					title: 'Vaccinations',
 					search: this.options.search,
@@ -98,11 +115,11 @@
 						slot_name: null
 					},
 
-					{
-						label: 'gender',
-						slot: false,
-						slot_name: null
-					},
+					// {
+					// 	label: 'gender', 
+					// 	slot: false,
+					// 	slot_name: null
+					// },
 
 					{
 						label: 'phone',
@@ -114,6 +131,12 @@
 						label: 'status',
 						slot: false,
 						slot_name: null
+					},
+
+					{
+						label: 'is_active',
+						slot: true,
+						slot_name: 'is_active'
 					},
 				],
 				viewCase: false,

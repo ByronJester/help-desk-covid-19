@@ -313,6 +313,8 @@
 				this.openModal = false
 			}
 
+			console.log(this.options)
+
 			this.path = window.location.pathname
 		},
 

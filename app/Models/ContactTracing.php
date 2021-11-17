@@ -21,10 +21,16 @@ class ContactTracing extends Model
         'status'
     ];
 
+    protected $appends = [
+        'formatted_date'
+    ];
 
-    public function getBirthDateAttribute($value)
+    public function getFormattedDateAttribute()
     {
-        // return Carbon::createFromFormat('Y/m/d', $value);
-        return $value;
+        $date = Carbon::parse($this->birth_date);
+
+        return $date->isoFormat('LL');
     }
+
+
 }

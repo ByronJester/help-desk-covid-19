@@ -29,8 +29,7 @@ class ContactTracingController extends Controller
 
       $place = $request->place ?? $places[0]['id'];
 
-      $tracings = ContactTracing::orderBy('created_at', 'desc')
-       ->where('is_active', true)->where('place_id', $place);
+      $tracings = ContactTracing::orderBy('created_at', 'desc')->where('place_id', $place);
 
       if($user) {
         if($user->perspective != 1) {
@@ -94,6 +93,17 @@ class ContactTracingController extends Controller
       } else {
         ContactTracing::create($data);
       }
+
+      return redirect()->route('view.contact.tracing');
+    }
+
+    public function changeStatus(Request $request)
+    {
+      $id = $request->id;
+
+      $data = $request->only(['is_active']);
+
+      ContactTracing::where('id', $id)->update($data);
 
       return redirect()->route('view.contact.tracing');
     }

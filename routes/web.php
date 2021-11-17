@@ -64,7 +64,7 @@ Route::prefix('reports')->group(function () {
     });
 
     Route::prefix('finish-vaccination')->group(function () { 
-        Route::get('/', [VaccinationController::class, 'vaccinationList']); 
+        Route::get('/', [VaccinationController::class, 'v accinationList']); 
     });
 });
 
@@ -77,12 +77,15 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('virus-cases')->group(function () {
-    Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
     Route::post('/save', [VirusCaseController::class, 'caseSave'])->middleware('auth');
+    Route::post('/change-status', [VirusCaseController::class, 'changeStatus'])->middleware('auth');
+    Route::get('/', [VirusCaseController::class, 'virusList'])->middleware('auth')->name('view.cases');
 });
 
 Route::prefix('contact-tracing')->group(function () {
     Route::post('/save', [ContactTracingController::class, 'saveTrace'])->middleware('auth');
+
+    Route::post('/change-status', [ContactTracingController::class, 'changeStatus'])->middleware('auth');
 
     Route::get('/', [ContactTracingController::class, 'traceList'])
         ->middleware('auth')->name('view.contact.tracing');
