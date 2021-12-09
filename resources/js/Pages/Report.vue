@@ -103,7 +103,7 @@
 							</div>
 
 							<div class="w-full flex flex-row px-3">
-								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
+								<!-- <div class="w-full py-2 mt-2 md:mt-3 mx-2">
 									<label class="font-bold"> Vaccine</label><br><br>
 									<select v-model="form.vaccine_id" class="w-full border border-green-200 h-12 text-center">
 									  <option v-for="vaccine in options.vaccines":value="vaccine.id" class="uppercase">
@@ -111,23 +111,23 @@
 									  </option>
 									</select>
 									<span class="text-sm text-red-500">{{validationError('vaccine_id', saveError)}} </span>
-								</div>
+								</div> -->
 
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2 pb-5">
 									<label class="font-bold">Classification</label><br><br>
-									<select v-model="form.classification" class="w-full border border-green-200 h-12 text-center">
-									  <option value="A1">A1</option>
-									  <option value="A2">A2</option>
-									  <option value="A3">A3</option>
-									  <option value="A4">A4</option>
-									  <option value="A5">A5</option>
-									  <option value="B1">B1</option>
-									  <option value="B2">B2</option>
-									  <option value="B3">B3</option>
-									  <option value="B4">B4</option>
-									  <option value="B5">B5</option>
-									  <option value="B6">B6</option>
-									  <option value="C">C</option>
+									<select v-model="form.classification" class="w-full border border-green-200 h-12">
+									  <option value="A1">A1 - Workers in frontline healt services</option>
+									  <option value="A2">A2 - All senior citizens</option>
+									  <option value="A3">A3 - Person with comorbidities</option>
+									  <option value="A4">A4 - Frontline personnel in essential sectors, including uniformed personnel</option>
+									  <option value="A5">A5 - Indigent population</option>
+									  <option value="B1">B1 - Teachers, social workers</option>
+									  <option value="B2">B2 - Other government workers</option>
+									  <option value="B3">B3 - Other essential workers</option>
+									  <option value="B4">B4 - Socio-demographic groups at significantly higher risk other than senior citizens and poor population base on the NHTS-PR</option>
+									  <option value="B5">B5 - Overseas filipino workers</option>
+									  <option value="B6">B6 - Other remaining workforce</option>
+									  <option value="C">C - Rest of the filipino population not otherwise included in the above groups</option>
 									</select>
 									<span class="text-sm text-red-500">{{validationError('classification', saveError)}} </span>
 								</div>
@@ -259,7 +259,7 @@
 				<!-- <hr style="height:2px; border-width:0" class="text-green-500 bg-green-500 mt-8" v-if="!openModal"> -->
 
 				<ReportsCarousel :records="null" :vaccinations="options.vaccinations" :path="path"
-					class="px-3 md:px-20" v-if="!openModal"
+					class="px-3 md:px-20" v-if="!openModal && options.vaccinations.length > 0" 
 				/>
 			</div>
 			
@@ -295,8 +295,8 @@
 				filter: 1,
 				path: null,
 				form: {
-					vaccine_id: 1,
 					place_id: 1,
+					vaccine_id: null,
 					name: null,
 					age: null,
 					birth_date: null,
@@ -313,8 +313,6 @@
 				this.openModal = false
 			}
 
-			console.log(this.options)
-
 			this.path = window.location.pathname
 		},
 
@@ -324,8 +322,8 @@
           {
             onSuccess: (res) => {
             	this.form = {
-								vaccine_id: 1,
 								place_id: 1,
+								vaccine_id: null,
 								name: null,
 								age: null,
 								birth_date: null,

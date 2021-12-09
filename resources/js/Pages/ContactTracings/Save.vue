@@ -19,7 +19,7 @@
 					class="rounded bg-yellow-400 border border-yellow-100 text-white px-1 py-1 md:px-5 md:py-3 float-right md:text-2xl mr-2" v-if="form.id != null"
 					@click="changeStatus(!!form.is_active ? false : true)"
 				>
-					{{ !!form.is_active ? 'Archive' : 'Recover' }}
+					{{ !!form.is_active ? 'Archive' : 'Restore' }}
 				</button>
 			</div>
 

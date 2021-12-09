@@ -10,11 +10,11 @@
 					new vaccination
 				</button> -->
 
-				<select v-model="form.place_id"
+				<!-- <select v-model="form.place_id"
 					class="border border-green-500 rounded py-2 md:py-5 px-3 w-3/6 md:w-1/5"
-				>
+				> 
 				  <option v-for="place in options.places" :value="place.id">{{place.name}}</option>
-				</select>
+				</select> -->
 
 			</div>
 
@@ -45,7 +45,7 @@
 				  			<button class="mx-1 md:mx-3 text-yellow-700" @click="changeStatus(arg.id, 'recover')"
 				  				v-if="!arg.is_active"
 				  			>
-				  				Recover 
+				  				Restore 
 				  			</button>
 
 				  			<button class="mx-1 md:mx-3" @click="changeStatus(arg.id, 'cancel')" v-if="arg.status != 'finish' && arg.status != 'cancel'">
@@ -88,9 +88,9 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Name', 'Vaccine', 'Age', 'Contact', 'Status', 'Active'],
+				fields: ['Name', 'Age', 'Contact', 'Status', 'Date' , 'Active'],
 				table: {
-					title: 'Vaccinations',
+					title: 'Vaccinations Approval',
 					search: this.options.search,
 					page: this.options.vaccinations.current_page,
 					count: this.options.vaccinations.last_page,
@@ -99,12 +99,6 @@
 				keys : [
 					{
 						label: 'name',
-						slot: false,
-						slot_name: null
-					},
-
-					{
-						label: 'vaccine_name',
 						slot: false,
 						slot_name: null
 					},
@@ -134,6 +128,12 @@
 					},
 
 					{
+						label: 'date',
+						slot: false,
+						slot_name: 'date'
+					},
+					
+					{
 						label: 'is_active',
 						slot: true,
 						slot_name: 'is_active'
@@ -156,6 +156,8 @@
 
 		mounted() {
 			this.table.search = this.options.search
+
+			consol.log(this.options)
 		},
 
 		watch : {

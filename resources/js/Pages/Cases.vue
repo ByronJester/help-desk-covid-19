@@ -50,7 +50,7 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Code', 'Age', 'Gender', 'Date', 'Status', 'Active'],
+				fields: ['Code', 'Age', 'Gender', 'Date', 'Status', 'Recovered', 'Death', 'Quarantine', 'Active'],
 				table: {
 					title: 'Covid 19 Cases',
 					search: this.options.search,
@@ -90,6 +90,24 @@
 					},
 
 					{
+						label: 'recovered',
+						slot: false,
+						slot_name: null
+					},
+
+					{
+						label: 'death',
+						slot: false,
+						slot_name: null
+					},
+
+					{
+						label: 'quarantine',
+						slot: false,
+						slot_name: null
+					},
+
+					{
 						label: 'is_active',
 						slot: true,
 						slot_name: 'is_active'
@@ -101,11 +119,14 @@
 					place_id: this.options.place,
 					code: null,
 					age: null,
-					symptom: null,
+					symptom: 'symptomatic',
 					gender: 'MALE',
 					date: null,
 					travel_history: null,
 					status: 'RECOVERED',
+					recovered_at: null,
+					death_at: null,
+					quarantine_at: null,
 					is_active: true
 				},
 			}

@@ -6,14 +6,14 @@
         <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white cursor-pointer" @click="changeActive('/home')">
           <span>
             <img
-              :src="'/images/icon.jpg'"
+              :src="'/images/logo.jpg'"
               class="h-16 w-20 md:h-24 md:w-32"
               style="border-radius: 50%;"
               alt="" 
             />
           </span>
         </a>
-        <button class="mx-auto cursor-pointer text-xl px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none" type="button" @click="showNav()">
+        <button class="mx-auto cursor-pointer text-xl px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none fVocus:outline-none" type="button" @click="showNav()">
           <span class="block relative w-6 h-px rounded-sm bg-white"></span>
           <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
           <span class="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
@@ -30,9 +30,9 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}">
+          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}" v-if="user">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/news')">
-              <i class="fa fa-tv"></i><span class="ml-2">Bayan Pantrol</span>
+              <i class="fa fa-tv"></i><span class="ml-2">Bayan Pantrol</span> 
             </a>
           </li>
 
@@ -60,13 +60,13 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/finish-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinated List</span>
                   </a>
-                </li>
+                </li> -->
 
               </ul>
             </div>
@@ -95,13 +95,13 @@
                   </a>
                 </li>
 
-                <li>
+    <!--             <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations-classification')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinations Priority</span>
                   </a>
-                </li>
+                </li> -->
 
               </ul>
             </div>
@@ -111,7 +111,7 @@
           <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations' || active == '/virus-cases'}" > 
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-                <i class="fa fa-users"></i><span class="ml-2">Admin</span>
+                <i class="fa fa-users"></i><span class="ml-2">Maintenance</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
@@ -187,7 +187,7 @@
             </a>
           </li>
 
-          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}">
+          <li class="nav-item mx-5" :class="{'--active' : active == '/news'}" v-if="user">
             <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer" @click="changeActive('/news')">
               <i class="fa fa-tv"></i><span class="ml-2">Bayan Patrol</span>
             </a>
@@ -217,13 +217,13 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/finish-vaccination')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinated List</span>
                   </a>
-                </li>
+                </li> -->
 
               </ul>
             </div>
@@ -252,13 +252,13 @@
                   </a>
                 </li>
 
-                <li>
+                <!-- <li>
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
                     @click="changeActive('/reports/vaccinations-classification')"
                   >
                     <span class="ml-2 cursor-pointer">Vaccinations Priority</span>
                   </a>
-                </li>
+                </li> -->
 
               </ul>
             </div>
@@ -267,7 +267,7 @@
           <li v-if="isAuthorize('admin', user)" class="nav-item mx-5" :class="{'--active' : active == '/users' || active == '/vaccinations' || active == '/virus-cases'}">
             <div class="dropdown inline-block relative">
               <a class="px-3 py-2 flex items-center uppercase font-bold leading-snug text-white hover:opacity-75 cursor-pointer">
-                <i class="fa fa-users"></i><span class="ml-2">Admin</span>
+                <i class="fa fa-users"></i><span class="ml-2">Maintenance</span>
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">

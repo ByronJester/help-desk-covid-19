@@ -69,7 +69,7 @@
 	        <rotate3d></rotate3d>
 	    	</graph-bar3d>
 
-	    	<graph-bar3d
+	    	<!-- <graph-bar3d
 	            style="width: 100% !important; margin-top: 70px"
 	            :height="600"
 	            :axis-min="0"
@@ -90,9 +90,9 @@
 	        <tooltip :names="['A1', 'A2', 'A3', 'A4', 'A5']" :position="'left'"></tooltip>
 	        <legends :names="['A1', 'A2', 'A3', 'A4', 'A5']"></legends>
 	        <rotate3d></rotate3d>
-	    	</graph-bar3d>
+	    	</graph-bar3d> -->
 
-	    	<graph-bar3d
+	    	<!-- <graph-bar3d
 	            style="width: 100% !important; margin-top: 70px"
 	            :height="600"
 	            :axis-min="0"
@@ -114,9 +114,9 @@
 	        <tooltip :names="['B1', 'B2', 'B3', 'B4', 'B5', 'B6']" :position="'left'"></tooltip>
 	        <legends :names="['B1', 'B2', 'B3', 'B4', 'B5', 'B6']"></legends>
 	        <rotate3d></rotate3d>
-	    	</graph-bar3d>
+	    	</graph-bar3d> -->
 
-	    	<graph-bar3d
+	    	<!-- <graph-bar3d
 	            style="width: 100% !important; margin-top: 70px"
 	            :height="600"
 	            :axis-min="0"
@@ -133,7 +133,7 @@
 	        <tooltip :names="['C']" :position="'left'"></tooltip>
 	        <legends :names="['C']"></legends>
 	        <rotate3d></rotate3d>
-	    	</graph-bar3d>
+	    	</graph-bar3d> -->
 			</div>
 
 

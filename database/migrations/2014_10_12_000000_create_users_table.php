@@ -23,7 +23,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('user_type');
-            $table->integer('perspective')->comment("1 (LGU), 2 (HOSPITAL), 3 (Citizens)");
+            $table->integer('perspective')->comment("1 (LGU), 3 (Citizens)");
+            $table->string('identification_image')->nullable();
+            $table->boolean('agree')->default(false);
             $table->boolean('is_active');
             $table->rememberToken();
 

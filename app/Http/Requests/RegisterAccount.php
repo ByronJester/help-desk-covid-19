@@ -38,6 +38,8 @@ class RegisterAccount extends FormRequest
             'user_type' => "sometimes|required",
             'perspective' => "sometimes|required",
             'is_active' => "required",
+            'identification_image' => "sometimes|required|image",
+            'agree' => "sometimes|required"
         ];
 
         if($this->id) {
@@ -47,4 +49,8 @@ class RegisterAccount extends FormRequest
 
         return $rules;
     }
+
+    // protected function failedValidation(Validator $validator) {
+    //     throw new HttpResponseException(response()->json($validator->errors(), 422));
+    // }
 }

@@ -13,9 +13,9 @@
 		</div>
 
 		<div class="w-full flex flex-col mt-20 md:px-32">
-			<div class="w-40 flex-col">
+			<div class="w-full flex-col md:flex-row">
 				<div class="w-full px-2 md:px-3 inline-flex">
-					<label class="font-bold"> Active </label>
+					<label class="font-bold"> {{ !!user.is_active ? 'Verified' : 'Unverified' }} </label>
 					<Toggle v-model="user.is_active"  class="ml-5"/>
 				</div>
 			</div>
@@ -51,10 +51,21 @@
 					<input type="text" class="w-full border border-green-200 h-12 text-center" v-model="user.phone">
 					<span class="text-sm text-red-500">{{validationError('phone', saveError)}} </span>
 				</div>
+
+				<div class="w-full px-2 md:px-3">
+					<label class="font-bold"> Valid ID</label><br><br>
+					<img
+            :src="options.user.identification_image"
+            style="height: 300px; width: 100%;"
+            alt=""
+          />
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+
 
 <script>
 	import { Inertia } from "@inertiajs/inertia";
@@ -94,6 +105,8 @@
 				is_active: this.options.user.is_active,
 			}
 			this.user = Object.assign(this.user, current)
+
+			console.log(this.options)
 		},
 
 		methods: {

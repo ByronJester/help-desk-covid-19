@@ -26,6 +26,7 @@ class User extends Authenticatable
         'is_active',
         'email',
         'password',
+        'identification_image',
     ];
 
     /**
@@ -56,5 +57,10 @@ class User extends Authenticatable
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getIdentificationImageAttribute($value)
+    {
+        return '/images/identifications/' . $value;
     }
 }

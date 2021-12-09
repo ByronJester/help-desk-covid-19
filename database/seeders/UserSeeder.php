@@ -41,17 +41,17 @@ class UserSeeder extends Seeder
         // 	'updated_at' => Carbon::now(),
         // ]);
 
-        User::create([
-        	'first_name' => 'Citizen',
-        	'last_name' => 'Citizen',
-        	'phone' =>  '09059264056',
-        	'email' => 'citizen@email.com',
-        	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        	'user_type'	=> 'citizen',
-        	'perspective' => 3,
-            'is_active'   => true,
-        	'created_at' => Carbon::now(),
-        	'updated_at' => Carbon::now(),
-        ]);
+        // User::create([
+        // 	'first_name' => 'Citizen',
+        // 	'last_name' => 'Citizen',
+        // 	'phone' =>  '09059264056',
+        // 	'email' => 'citizen@email.com',
+        // 	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        // 	'user_type'	=> 'citizen',
+        // 	'perspective' => 3,
+        //     'is_active'   => true,
+        // 	'created_at' => Carbon::now(),
+        // 	'updated_at' => Carbon::now(),
+        // ]);
     }
 }

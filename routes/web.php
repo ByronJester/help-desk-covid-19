@@ -64,7 +64,7 @@ Route::prefix('reports')->group(function () {
     });
 
     Route::prefix('finish-vaccination')->group(function () { 
-        Route::get('/', [VaccinationController::class, 'v accinationList']); 
+        Route::get('/', [VaccinationController::class, 'vaccinationList']); 
     });
 });
 
@@ -72,7 +72,8 @@ Route::prefix('users')->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/saveUser', [UserController::class, 'saveUser']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
-    Route::get('/', [UserController::class, 'usersView'])->middleware('auth')->name('view.users'); 
+    Route::get('/', [UserController::class, 'usersView'])->middleware('auth')->name('view.users');
+    Route::get('/terms-condition', [UserController::class, 'viewTerms'])->name('view.terms'); 
     Route::get('/{id}', [UserController::class, 'updateUser'])->middleware('auth');
 });
 

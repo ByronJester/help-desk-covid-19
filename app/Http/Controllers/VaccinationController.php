@@ -33,7 +33,7 @@ class VaccinationController extends Controller
 
         $place = $request->place ?? $places[0]['id'];
 
-        $vaccinations = Vaccination::orderBy('created_at', 'desc')->where('place_id', $place);
+        $vaccinations = Vaccination::orderBy('created_at', 'desc');
 
         if($user) {
             if($user->perspective != 1) {
@@ -73,7 +73,7 @@ class VaccinationController extends Controller
 
     public function saveVaccination(SaveVaccination $request)
     {
-        $save = Vaccination::create($request->toArray());
+        $save = Vaccination::create($request->except(['vaccine_id']));
 
         return redirect()->back();
     }

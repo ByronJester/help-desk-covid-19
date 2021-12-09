@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
         	UserSeeder::class,
             PlaceSeeder::class,
-            VirusCaseSeeder::class,
-            VaccineSeeder::class,
-            ContactTracingSeeder::class,
-            VaccinationSeeder::class
+            // VirusCaseSeeder::class,
+            // VaccineSeeder::class,
+            // ContactTracingSeeder::class,
+            // VaccinationSeeder::class
         ]);
     }
 }

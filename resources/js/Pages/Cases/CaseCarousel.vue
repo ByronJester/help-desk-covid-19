@@ -10,11 +10,23 @@
 		    			</div>
 
 		    			<div>
-		    				<span> {{ c.formatted_date }}</span>
+		    				<span> Positive Date: {{ c.formatted_date }}</span>
 		    			</div>
 
 		    			<div>
 		    				<span> {{ c.status }}</span>
+		    			</div>
+
+		    			<div v-if="c.status == 'RECOVERED'">
+		    				<span> Recovered Date: {{ c.recovered }}</span>
+		    			</div>
+
+		    			<div v-if="c.status == 'DEATH'">
+		    				<span> Death Date: {{ c.death }}</span>
+		    			</div>
+
+		    			<div v-if="c.status == 'QUARANTINE'">
+		    				<span> Quarantine Date: {{ c.quarantine }}</span>
 		    			</div>
 
 		    			<div v-if="c.symptom">

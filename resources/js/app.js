@@ -45,8 +45,9 @@ Vue.mixin({
     isAuthorize(arg, user) {
       if(!user) return false;
       
-      if(arg == 'admin' && (user.perspective == 1 || user.perspective == 2) ) return true; 
-      if(arg == 'covid' && (user.perspective == 1) ) return true; 
+      if(arg == 'admin' && user.perspective == 1) return true; 
+      if(arg == 'admin' && user.perspective == 1) return true; 
+      if(arg == 'covid' ) return true; 
       if(arg == 'vaccination' && user.perspective == 1 && user.user_type != 'employee') return true;
       if(arg == 'save_case' && user.perspective == 1 && user.user_type == 'admin') return true; 
       if(arg == 'save_post' && user.perspective == 1) return true;

@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Vaccination extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'place_id',
-        'vaccine_id',
         'name',
         'age',
         'birth_date',
@@ -25,7 +24,7 @@ class Vaccination extends Model
     ];
 
     protected $appends = [ 
-        'vaccine_name'
+        'date'
     ];
 
 	public function place()
@@ -33,13 +32,10 @@ class Vaccination extends Model
         return $this->belongsTo(Place::class);
     }
 
-    public function vaccine()
+    public function getDateAttribute()
     {
-        return $this->belongsTo(Vaccine::class);
-    }
+        $date = Carbon::parse($this->update_at);
 
-    public function getVaccineNameAttribute()
-    {
-        return $this->vaccine->name;
+        return $date->isoFormat('LL');
     }
 }
