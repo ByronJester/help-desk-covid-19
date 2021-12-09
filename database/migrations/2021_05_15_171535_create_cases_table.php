@@ -18,11 +18,14 @@ class CreateCasesTable extends Migration
             $table->bigInteger('place_id')->unsigned()->comment('Foreign key from table places');
             $table->string('code')->unique();
             $table->integer('age');
-            $table->longText('symptom')->nullable();
+            $table->string('symptom');
             $table->string('gender')->comment("MALE, FEMALE");
             $table->date('date');
             $table->string('travel_history')->nullable();
-            $table->string('status')->nullable()->comment('RECOVERED, DEATH');
+            $table->string('status')->nullable()->comment('RECOVERED, DEATH', 'QUARANTINE');
+            $table->date('recovered_at')->nullable();
+            $table->date('death_at')->nullable();
+            $table->date('quarantine_at')->nullable();
             $table->boolean('is_active')->default(true);
 
             $table->foreign('place_id')->references('id')->on('places');

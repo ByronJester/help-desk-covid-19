@@ -49,7 +49,9 @@
 				</div>
 		  </div>
 
-			<div class="w-4/5 md:w-2/5 bg-gray-200 my-5 rounded" v-for="post in options.posts">
+			<div class="w-4/5 md:w-2/5 bg-gray-200 my-5 rounded" v-for="post in options.posts"
+				v-if="options.user && (options.user.user_type == 'admin' || options.user.user_type == 'employee - lgu') || options.user.id == post.user_id"
+			>
 				<div class="flex items-center bg-yellow-400 text-white text-sm font-bold px-4 py-3" 
 					role="alert"
 					v-if="deleteId == post.id"
@@ -86,7 +88,8 @@
 
 				<div class="py-3 px-3">
 					<p class="tex-lg font-bold my-2">
-			  		<span> {{post.user.first_name}} {{post.user.last_name}} </span> 
+			  		<span class="text-lg"> {{post.user.first_name}} {{post.user.last_name}} </span><br>
+			  		<span class="tex-xs"> {{post.posted_date}} </span><br><br>
 			  		
 			  		<span class="float-right cursor-pointer mx-1" @click="initiateDelete(post)"
 			  			v-if="options.user && options.user.id == post.user_id"
@@ -178,6 +181,8 @@
 			if(!!this.options.user) {
 				this.openModal = false
 			}
+
+			console.log(this.options)
 		},
 
 		methods : {

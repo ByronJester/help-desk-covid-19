@@ -28,12 +28,11 @@ class VaccinationSeeder extends Seeder
 
 	    foreach ($places as $key => $place) {
 
-	    	foreach ($vaccines as $vaccine) {
+	    	// foreach ($vaccines as $vaccine) {
 
 	    		for ($i = 0; $i < rand(3, 10); $i++) { 
 		     		Vaccination::create([
 		     			'place_id' 			 => $place->id,
-		     			'vaccine_id'		 => $vaccine->id,
 		     			'name'			 		 => Str::random(10),
 		     			'phone'					 => '09771023141',
 		     			'age'	  		 		 => rand(1, 90),
@@ -43,14 +42,13 @@ class VaccinationSeeder extends Seeder
 		     		]);
 		     	}
 
-	    	}
+	    	// }
 
-	    	foreach ($vaccines as $vaccine) {
+	    	// foreach ($vaccines as $vaccine) {
 
 	    		for ($i = 0; $i < rand(3, 10); $i++) { 
 		     		Vaccination::create([
 		     			'place_id' 			 => $place->id,
-		     			'vaccine_id'		 => $vaccine->id,
 		     			'phone'					 => '09771023141',
 		     			'name'			 		 => Str::random(10),
 		     			'age'	  		 		 => rand(1, 90),
@@ -60,7 +58,7 @@ class VaccinationSeeder extends Seeder
 		     		]);
 		     	}
 
-	    	}
+	    	// }
 	    }
     }
 }

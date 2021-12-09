@@ -25,7 +25,6 @@ class SaveVaccination extends FormRequest
     {
         $rules = [
             'place_id' => "required",
-            'vaccine_id' => "required",
             'name' => "required",
             'age' => "required|numeric",
             'birth_date' => "required",

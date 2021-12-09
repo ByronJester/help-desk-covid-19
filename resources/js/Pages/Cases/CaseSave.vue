@@ -22,16 +22,15 @@
 
 	 					<div class="flex flex-col md:flex-row w-full">
 	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-		 						<label class="font-bold">Symptom</label><br><br>
-								<textarea v-model="form.symptom" rows="2" class="w-full border border-green-200 px-2 py-2">
-								
-								</textarea>
-								<span class="text-sm text-red-500">{{validationError('symptom', errors)}} </span>
+								<label class="font-bold">Status</label>
+								<select v-model="form.symptom" class="w-full border border-green-200 px-2 py-2">
+								  <option value="asymotimatic" class="uppercase">asymotimatic</option>
+								  <option value="symptomatic" class="uppercase">symptomatic</option>
+								</select>
+								<span class="text-sm text-red-500">{{validationError('gender', errors)}} </span>
 							</div>
-	 					</div>
 
-	 					<div class="flex flex-col md:flex-row w-full">
-	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
 								<label class="font-bold">Gender</label>
 								<select v-model="form.gender" class="w-full border border-green-200 px-2 py-2">
 								  <option value="MALE">MALE</option>
@@ -39,7 +38,9 @@
 								</select>
 								<span class="text-sm text-red-500">{{validationError('gender', errors)}} </span>
 							</div>
+	 					</div>
 
+	 					<div class="flex flex-col md:flex-row w-full">
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
 								<label class="font-bold">Status</label>
 								<select v-model="form.status" class="w-full border border-green-200 px-2 py-2">
@@ -50,7 +51,25 @@
 								<span class="text-sm text-red-500">{{validationError('status', errors)}} </span>
 							</div>
 
-							
+							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+								<label class="font-bold"> RECOVERED Date</label><br><br>
+								<input type="date" v-model="form.recovered_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
+								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+							</div>
+	 					</div>
+
+	 					<div class="flex flex-col md:flex-row w-full">
+							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+								<label class="font-bold"> Death Date</label><br><br>
+								<input type="date" v-model="form.death_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
+								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+							</div>
+
+							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+								<label class="font-bold"> Quarantine Date</label><br><br>
+								<input type="date" v-model="form.quarantine_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
+								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+							</div>
 	 					</div>
 
 	 					<div class="flex flex-col md:flex-row w-full">
@@ -61,7 +80,7 @@
 							</div>
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Date</label><br><br>
+								<label class="font-bold"> Positive Date</label><br><br>
 								<input type="date" v-model="form.date" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
 								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
 							</div>
@@ -71,7 +90,7 @@
 	 						<button class="w-full py-2 px-3 bg-yellow-500 text-center font-bold text-white" 
 	 							@click="changeStatus(!!form.is_active ? false : true)"
 	 						> 
-	 							{{ !!form.is_active ? 'Archive' : 'Recover' }}
+	 							{{ !!form.is_active ? 'Archive' : 'Restore' }}
 	 						</button>
 	 					</div>
 
@@ -119,7 +138,6 @@
 			},
 
 			changeStatus(arg) {
-				alert()
 
 				let data = {
 					id: this.form.id,

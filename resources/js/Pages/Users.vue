@@ -19,7 +19,7 @@
 	import { Inertia } from "@inertiajs/inertia";
 	import Nav from "../Layouts/Navigation";
 	import Table from "../Components/Table"; 
-	import Toggle from "../Components/Toggle";
+	import Toggle from "../Components/Toggle"; 
 
 	export default {
 		props: ['options'],

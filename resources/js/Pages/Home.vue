@@ -85,9 +85,10 @@
 				</div>
 
 				<div class="py-3 px-3">
-					<p class="tex-lg font-bold my-2">
-			  		<span> {{post.user.first_name}} {{post.user.last_name}} </span> 
-			  		
+					<p class="font-bold my-2">
+			  		<span class="text-lg"> {{post.user.first_name}} {{post.user.last_name}} </span><br>
+			  		<span class="tex-xs"> {{post.posted_date}} </span><br><br>
+
 			  		<span class="float-right cursor-pointer mx-1" @click="initiateDelete(post)"
 			  			v-if="options.user && options.user.id == post.user_id"
 			  		>
@@ -137,6 +138,14 @@
 		  </div>
 		</div>
 
+
+		<VueBotUI
+		  :messages="messages"
+		  :options="botOptions"
+		  @msg-send="messageSendHandler"
+		/>
+
+
 	</div>
 
 </template>
@@ -146,13 +155,16 @@
 	import Nav from "../Layouts/Navigation";
 	import Login from "./Users/Login";
 	import Toggle from "../Components/Toggle";
+	import Chat from "../Components/Chat";
+	import { VueBotUI } from 'vue-bot-ui'
 
 	export default {
 		props: ['options'],
 		components: {
 		    Login,
 		    Nav,
-		    Toggle
+		    Toggle,
+		    VueBotUI
 		},
 		data() {
 			return {
@@ -170,7 +182,39 @@
 				formData: new FormData(),
 				editForm: new FormData(),
 				deleteId: null,
-				is_edit: false
+				is_edit: false,
+				showChat: false,
+				messages: [
+					// {
+					//   agent: 'bot',
+					//   type: 'button',
+					//   text: 'Select the option below',
+					//   disableInput: true,
+					//   options: [
+					//     {
+					//       text: 'Open Google',
+					//       value: 'https://google.com',
+					//       action: 'url'
+					//     },
+					//     {
+					//       text: 'Submit Support Ticket',
+					//       value: 'submit_ticket',
+					//       action: 'postback' // Request to API
+					//     },
+					//   ],
+					// }
+
+					{
+				    agent: 'bot', // Required. 'bot' or 'user'
+				    type: 'text', // Required. Bubble message component type: 'text' / 'button'
+				    text: 'What is your name ?', // Required. The message
+				    disableInput: false, // Disable message input or not
+				  },
+				],
+				botOptions: {
+
+				}
+
 			}
 		},
 
@@ -295,6 +339,40 @@
             	
             }
         });
+			},
+
+			messageSendHandler(e){
+				var data = null;
+
+				this.messages.push({agent: 'user', type: 'text', text: e.text})
+
+				if(this.messages.length == 2) {
+					data = {
+					  agent: 'bot',
+					  type: 'button',
+					  text: 'What is your concern ?',
+					  disableInput: true,
+					  options: [
+					  	{
+					      text: 'What is Covid 19 ?',
+					      value: 'https://www.who.int/health-topics/coronavirus#tab=tab_1',
+      					action: 'url'
+					    },
+					    {
+					      text: 'What is asymptomatic and symptomatic ?',
+					      value: 'https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200402-sitrep-73-Covid-19.pdf',
+      					action: 'url'
+					    },
+					    {
+					      text: 'How is it transmitted?',
+					      value: 'https://www.who.int/news-room/questions-and-answers/item/coronavirus-disease-covid-19-how-is-it-transmitted',
+      					action: 'url'
+					    }
+					  ],
+					}
+
+					this.messages.push(data)
+				}
 			}
 
 

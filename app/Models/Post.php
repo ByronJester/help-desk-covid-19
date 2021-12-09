@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -19,6 +20,10 @@ class Post extends Model
     	'images', 'user'
     ];
 
+    protected $appends = [
+        'posted_date'
+    ];
+
     public function images()
     {
     	return $this->hasMany(PostImage::class);
@@ -27,5 +32,12 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPostedDateAttribute()
+    {
+        $date = Carbon::parse($this->created_at);
+
+        return $date->isoFormat('LL');
     }
 }

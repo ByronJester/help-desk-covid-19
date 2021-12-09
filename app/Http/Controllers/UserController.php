@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\RegisterAccount;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -41,26 +42,34 @@ class UserController extends Controller
     { 
         $data = $request->toArray();
 
+        // return $request->user_type;
+
         if($request->password && $request->confirm_password)  {
             $data = $request->except(['confirm_password']);
 
             $data['password'] = bcrypt($data['password']);
         }
 
-    	// $create = User::forceCreate($data);
+        if($image = $request->identification_image) {
+            
+            $path = public_path().'/images/identifications';
+
+            $filename = time() . '_' . Str::random(8);
+
+            $extension = $image->getClientOriginalExtension();
+            
+            $uplaod = $image->move($path, $filename . '.' . $extension);
+
+            $data['identification_image'] = $filename . '.' . $extension;
+        }
 
         $save = User::updateOrCreate(
             ['id' => $request->id],
             $data
         );
-
-    	if($save) {
-            if(!!$save->is_active && $save->perspective == 3) {
-                Auth::login($user);
-            } 
-    	}
-
+        
         return redirect()->back()->with('errors');
+        
     }
 
     public function logout(Request $request)
@@ -83,7 +92,7 @@ class UserController extends Controller
 
         $search = $request->search ?? null;
 
-        $users = User::where('perspective', $user->perspective)->where('id', '!=', $user->id);
+        $users = User::where('id', '!=', $user->id);
 
         if(!!$search && $search != '') {
             $users = $users->where(function (Builder $query) use ($search) {
@@ -117,6 +126,24 @@ class UserController extends Controller
                 'options'    => [
                     'user'      => $user,
                     'auth'      => $auth
+                ]
+            ]
+        );
+    }
+
+    public function viewTerms()
+    {
+        $user = null;
+
+        if(Auth::user()) {
+            $user = Auth::user();
+        }
+
+
+        return Inertia::render('Users/TermsAndCondition',
+            [
+                'options'    => [
+                    'user'      => $user,
                 ]
             ]
         );
