@@ -31,7 +31,7 @@ class RegisterAccount extends FormRequest
             'middle_name' => "nullable",
             'last_name' => "required|string",
             'image' => "sometimes|nullable",
-            'phone' => "required|unique:users,phone|digits:11",
+            'phone' => "required|unique:users,phone",
             'email' => "required|unique:users,email|email:rfc,dns",
             'password' => "sometimes|required|min:8",
             'confirm_password' => "sometimes|required|same:password|min:8",

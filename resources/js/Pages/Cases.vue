@@ -119,7 +119,7 @@
 					place_id: this.options.place,
 					code: null,
 					age: null,
-					symptom: 'symptomatic',
+					symptom: 'assymotimatic',
 					gender: 'MALE',
 					date: null,
 					travel_history: null,
@@ -133,7 +133,6 @@
 		},
 
 		mounted() {
-			console.log(this.options)
 		},
 
 		watch : {
@@ -198,14 +197,18 @@
 				
 				this.form = {
 					id: null,
-					place_id: this.form.place_id,
+					place_id: this.options.place,
 					code: null,
 					age: null,
-					symptom: null,
+					symptom: 'assymotimatic',
 					gender: 'MALE',
 					date: null,
 					travel_history: null,
-					status: 'RECOVERED'
+					status: 'RECOVERED',
+					recovered_at: null,
+					death_at: null,
+					quarantine_at: null,
+					is_active: true
 				}
 			}
 		}

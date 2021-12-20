@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'identification_image',
+        'agree'
     ];
 
     /**
@@ -61,6 +62,8 @@ class User extends Authenticatable
 
     public function getIdentificationImageAttribute($value)
     {
+        if(!$value) return $value;
+        
         return '/images/identifications/' . $value;
     }
 }

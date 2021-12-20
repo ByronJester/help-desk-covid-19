@@ -4,7 +4,7 @@
 			<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
 			<div class="w-full px-1 md:px-10">
-				<button class="bg-green-500 border border-green-500 rounded py-2 md:py-5 px-3 font-bold text-white"
+				<button class="bg-green-500 border border-green-500 rounded py-2 md:py-5 px-4 font-bold text-white"
 					@click="newTracing"
 				>
 					New

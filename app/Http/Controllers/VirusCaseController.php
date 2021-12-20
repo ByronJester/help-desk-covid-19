@@ -10,6 +10,7 @@ use App\Models\Place;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\VirusCase as SaveCase;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class VirusCaseController extends Controller
 {
@@ -63,6 +64,21 @@ class VirusCaseController extends Controller
           ['id' => $request->id],
           $request->except(['id'])
       );
+
+      $id = null;
+      $case = null;
+
+      if(!$request->id) {
+        $id = $create->id;
+        $case = VirusCase::where('id', $create->id)->first();
+        $place = (object) $case->place;
+
+        Nexmo::message()->send([
+          'to'    => $place->contact,
+          'from'  => '639557347496',
+          'text'  => 'Your barangay has new covid case with patient code ' . $case->code
+        ]);
+      }
 
       return redirect()->back();
     }

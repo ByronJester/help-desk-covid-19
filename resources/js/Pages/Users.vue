@@ -3,6 +3,14 @@
 		<div class="--users">
 			<Nav :user.sync="options.user" :openModal.sync="openModal"/>
 
+			<div class="w-full mt-8 ml-10">
+				<button class="px-4 py-3 rounded bg-green-400"
+					@click="newUser()"
+				>
+					New
+				</button>
+			</div>
+
 			<Table class="px-1 md:px-10" :fields="fields" :keys="keys" :list="options.users.data" :title="table.title" 
 				:search.sync="table.search" :page.sync="table.page" :count="table.count" :selected.sync="table.selected"
 			>
@@ -79,6 +87,17 @@
 			}
 		},
 
+		methods: {
+			newUser(){
+				Inertia.get(
+          this.$root.route + '/users/' + 'add', {},
+          {
+            onSuccess: () => { },
+          },
+        );
+			}
+		},
+
 		watch : {
 			'table.selected': function (v) {
 				Inertia.get(
@@ -109,10 +128,6 @@
         );
 			}
 		},
-
-		methods : {
-			
-		}
 	}
 
 </script>

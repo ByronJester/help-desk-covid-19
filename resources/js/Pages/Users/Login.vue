@@ -38,19 +38,19 @@
 					<div class="w-full">
 		 				<div class="flex flex-col md:flex-row w-full mt-5">
 		 					<div class="w-full md:mx-2">
-								<label class="font-bold"> First Name</label><br><br>
+								<label class="font-bold"> <b class="text-red-500">*</b> First Name</label><br><br>
 								<input type="text" placeholder="First Name" class="w-full border border-green-200 h-12 text-center" v-model="register.first_name">
 								<span class="text-sm text-red-500">{{validationError('first_name', registerErrors)}} </span>
 							</div>
 
 							<div class="w-full md:mx-2">
 								<label class="font-bold"> Middle Name</label><br><br>
-								<input type="text" placeholder="Middle Name (optional)" class="w-full border border-green-200 h-12 text-center" v-model="register.middle_name">
+								<input type="text" placeholder="Middle Name" class="w-full border border-green-200 h-12 text-center" v-model="register.middle_name">
 								<span class="text-sm text-red-500">{{validationError('middle_name', registerErrors)}} </span>
 							</div>
 
 							<div class="w-full md:mx-2">
-								<label class="font-bold"> Last Name</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Last Name</label><br><br>
 								<input type="text" placeholder="Last Name" class="w-full border border-green-200 h-12 text-center" v-model="register.last_name">
 								<span class="text-sm text-red-500">{{validationError('last_name', registerErrors)}} </span>
 							</div>
@@ -58,41 +58,38 @@
 
 		 				<div class="flex flex-col md:flex-row w-full mt-5">
 		 					<div class="w-full md:mx-2">
-								<label class="font-bold"> Phone Number</label><br><br>
-								<input type="text" placeholder="09xxxxxxxxx" class="w-full border border-green-200 h-12 text-center" v-model="register.phone">
+								<label class="font-bold"><b class="text-red-500">*</b> Phone Number</label><br><br>
+								<input type="text" placeholder="639xxxxxxxxx" class="w-full border border-green-200 h-12 text-center" v-model="register.phone">
 								<span class="text-sm text-red-500">{{validationError('phone', registerErrors)}} </span>
 							</div>
 
 							<div class="w-full md:mx-2">
-								<label class="font-bold"> Email Address</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Email Address</label><br><br>
 								<input type="text" placeholder="email@example.com" class="w-full border border-green-200 h-12 text-center" v-model="register.email">
 								<span class="text-sm text-red-500">{{validationError('email', registerErrors)}} </span>
 							</div>
 
-							<div class="w-full md:mx-2"> 
+							<!-- <div class="w-full md:mx-2"> 
 								<label class="font-bold"> User Type</label><br><br>
 								<select class="w-full border border-green-200 h-12 px-2 uppercase" v-model="register.user_type">
 								  <option value="admin - lgu">LGU - Admin</option>
 								  <option value="employee - lgu">LGU - Employee</option>
-								  <option value="health-worker - lgu">LGU - Health Worker</option>
-								  <!-- <option value="admin - hospital">Hospital - Admin</option>
-								  <option value="employee - hospital">Hospital - Employee</option>
- -->								  
+								  <option value="health-worker - lgu">LGU - Health Worker</option>				  
  									<option value="citizen">Citizen</option>
 								</select>
 								<span class="text-sm text-red-500">{{validationError('user_type', registerErrors)}} </span>
-							</div>
+							</div> -->
 		 				</div>
 
 		 				<div class="flex flex-col md:flex-row w-full mt-5">
 		 					<div class="w-full md:mx-2">
-								<label class="font-bold"> Password</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Password</label><br><br>
 								<input type="password" placeholder="Password" class="w-full border border-green-200 h-12 text-center" v-model="register.password">
 								<span class="text-sm text-red-500">{{validationError('password', registerErrors)}} </span>
 							</div>
 
 							<div class="w-full md:mx-2">
-								<label class="font-bold"> Confirm Password</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Confirm Password</label><br><br>
 								<input type="password" placeholder="Confirm Password" class="w-full border border-green-200 h-12 text-center" v-model="register.confirm_password">
 								<span class="text-sm text-red-500">{{validationError('confirm_password', registerErrors)}} </span>
 							</div>
@@ -100,7 +97,7 @@
 
 		 				<div class="flex flex-col md:flex-row w-full mt-5">
 		 					<div class="w-full md:mx-2">
-								<label class="font-bold"> Valid ID</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Valid ID</label><br><br>
 								<span class="text-sm text-red-500">
 									{{validationError('identification_image', registerErrors)}} 
 								</span>
@@ -137,7 +134,7 @@
 
 		 				<div class="flex flex-col md:flex-row w-full mt-5" v-if="viewTerms">
 		 					<div class="w-full md:mx-2">
-		 						At Online Help Desk Information System For COVID-19, we take privacy seriously and we respect the concerns of our community of users, in this policy we describe our privacy practices with regard to information we collect through help-desk-covid-19. The help-desk-covid-19 helps you to make informed decisions about how you share information when you visit or use the site.
+		 						At COVID-19 Help Desk, we take privacy seriously and we respect the concerns of our community of users, in this policy we describe our privacy practices with regard to information we collect through COVID-19 Help Desk. The COVID-19 Help Desk helps you to make informed decisions about how you share information when you visit or use the site. If you do not supply such Personal Data to COVID19 Help Desk, it may result in us being unable to open or continue your COVID19 , to provide services under the Terms and Conditions or to comply with any laws or guidelines issued by regulatory or other authorities.
 		 					</div>
 		 				</div>
 
@@ -188,8 +185,8 @@
 					email: '',
 					password: '',
 					confirm_password: '',
-					user_type: 'admin - lgu',
-					perspective: '',
+					user_type: 'citizen',
+					perspective: 3,
 					is_active: false,
 					identification_image: '/images/identifications/default.png',
 					agree: false
@@ -229,8 +226,8 @@
                 this.register.email = ''
                 this.register.password = ''
                 this.register.confirm_password = ''
-                this.register.user_type = 'admin - lgu'
-                this.register.perspective = ''
+                this.register.user_type = 'citizen'
+                this.register.perspective = 3
                 this.register.identification_image = '/images/identifications/default.png'
               	this.register.agree = false
 
@@ -244,54 +241,29 @@
 			},
 
 			registerAcc() {
-				// switch(this.register.user_type) {
-				//   case 'admin - lgu':
-				//     this.register.perspective = 1
+				// if(this.register.user_type == 'admin - lgu') {
+				// 		this.register.perspective = 1
 				//     this.register.user_type = 'admin'
 				//     this.register.is_active = false
-				//     break;
-
-				//   case 'employee - lgu':
-				//     this.register.perspective = 1
-				//     this.register.user_type = 'employee'
-				//     this.register.is_active = false
-				//     break;
-
-				//   case 'health-worker - lgu':
-				//     this.register.perspective = 1
-				//     this.register.user_type = 'health-worker'
-				//     this.register.is_active = false
-
-				//   case 'citizen':
-				//     this.register.perspective = 3
-				//     this.register.user_type = 'citizen'
-				//     this.register.is_active = false
-				//     break;
 				// }
 
-				if(this.register.user_type == 'admin - lgu') {
-						this.register.perspective = 1
-				    this.register.user_type = 'admin'
-				    this.register.is_active = false
-				}
+				// if(this.register.user_type == 'employee - lgu') {
+				// 		this.register.perspective = 1
+				//     this.register.user_type = 'employee'
+				//     this.register.is_active = false
+				// }
 
-				if(this.register.user_type == 'employee - lgu') {
-						this.register.perspective = 1
-				    this.register.user_type = 'employee'
-				    this.register.is_active = false
-				}
+				// if(this.register.user_type == 'health-worker - lgu') {
+				// 		this.register.perspective = 1
+				//     this.register.user_type = 'health-worker'
+				//     this.register.is_active = false
+				// }
 
-				if(this.register.user_type == 'health-worker - lgu') {
-						this.register.perspective = 1
-				    this.register.user_type = 'health-worker'
-				    this.register.is_active = false
-				}
-
-				if(this.register.user_type == 'citizen') {
-						this.register.perspective = 3
-				    this.register.user_type = 'citizen'
-				    this.register.is_active = false
-				}
+				// if(this.register.user_type == 'citizen') {
+				// 		this.register.perspective = 3
+				//     this.register.user_type = 'citizen'
+				//     this.register.is_active = false
+				// }
 
 				this.formData.append('id', this.register.id);
 				this.formData.append('first_name', this.register.first_name);
@@ -304,7 +276,13 @@
 				this.formData.append('user_type', this.register.user_type);
 				this.formData.append('perspective', this.register.perspective);
 				this.formData.append('is_active', this.register.is_active);
-				this.formData.append('agree', this.register.agree);
+				
+
+				if(this.register.agree) {
+					this.formData.append('agree', 1);
+				} else {
+					this.formData.append('agree', 0);
+				}
 
 				Inertia.post(this.$root.route + "/users/saveUser", this.formData,
           {
@@ -321,8 +299,8 @@
               this.register.email = ''
               this.register.password = ''
               this.register.confirm_password = ''
-              this.register.user_type = 'admin - lgu'
-              this.register.perspective = ''
+              this.register.user_type = 'citizen'
+              this.register.perspective = 3
               this.register.identification_image = '/images/identifications/default.png'
               this.register.agree = false
 
