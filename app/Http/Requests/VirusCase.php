@@ -30,7 +30,7 @@ class VirusCase extends FormRequest
             'place_id' => "required",
             'code' => "required|unique:virus_cases,code",
             'age' => "required|numeric",
-            'symptom' => "nullable",
+            'symptom' => "required",
             'gender' => "required",
             'date' => "required",
             'travel_history' => "nullable",

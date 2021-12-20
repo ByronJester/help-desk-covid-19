@@ -147,6 +147,14 @@
                   </a>
                 </li>
 
+                <!-- <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click="backUp()"
+                  >
+                    <span class="ml-2 cursor-pointer">Back Up</span>
+                  </a>
+                </li> -->
+
               </ul>
             </div>
           </li>
@@ -164,9 +172,9 @@
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
-                <li class="">
+                <!-- <li class="">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Profile</a>
-                </li>
+                </li> -->
 
                 <li class="">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" @click="logout()">Logout</a>
@@ -304,6 +312,14 @@
                   </a>
                 </li>
 
+                <!-- <li>
+                  <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                    @click="backUp()"
+                  >
+                    <span class="ml-2 cursor-pointer">Back Up</span>
+                  </a>
+                </li> -->
+
               </ul>
             </div>
           </li>
@@ -321,9 +337,9 @@
               </a>
 
               <ul class="dropdown-menu absolute hidden pt-1">
-                <li class="">
+                <!-- <li class="">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer">Profile</a>
-                </li>
+                </li> -->
 
                 <li class="">
                   <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer" @click="logout()">Logout</a>
@@ -343,6 +359,7 @@
 
 <script>
   import { Inertia } from "@inertiajs/inertia";
+  import axios from "axios";
 
   export default {
     props:['user', 'openModal'],
@@ -407,6 +424,12 @@
           }
         });
       },
+
+      backUp(){
+        axios.get(this.$root.route + "/back-up").then(resp => {
+            
+        });
+      }
     },
 
 

@@ -48,20 +48,21 @@
 
 								<button class="rounded text-white border border-green-400 bg-green-600 px-3 py-3 font-bold float-right"
 									@click="sendVaccineForm"
+									v-if="options.user"
 								>
-									Request
+									Submit
 								</button>
 							</div>
 
 							<div class="w-full flex flex-row px-3">
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Name</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b> Name</label><br><br>
 									<input type="text" v-model="form.name" class="w-full border border-green-200 h-12 text-center">
 									<span class="text-sm text-red-500">{{validationError('name', saveError)}} </span>
 								</div>
 
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Age</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b> Age</label><br><br>
 									<input type="number" v-model="form.age" class="w-full border border-green-200 h-12 text-center">
 									<span class="text-sm text-red-500">{{validationError('age', saveError)}} </span>
 								</div>
@@ -69,13 +70,13 @@
 
 							<div class="w-full flex flex-row px-3">
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Birthdate</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b> Birthdate</label><br><br>
 									<input type="date" v-model="form.birth_date" class="w-full border border-green-200 h-12 text-center">
 									<span class="text-sm text-red-500">{{validationError('birth_date', saveError)}} </span>
 								</div>
 
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Barangay</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b> Barangay</label><br><br>
 									<select v-model="form.place_id" class="w-full border border-green-200 h-12 text-center">
 									  <option v-for="place in options.places":value="place.id" class="uppercase">
 									  	{{place.name}}
@@ -87,13 +88,13 @@
 
 							<div class="w-full flex flex-row px-3">
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Contact No.</label><br><br>
-									<input type="number" v-model="form.phone" class="w-full border border-green-200 h-12 text-center">
+									<label class="font-bold"><b class="text-red-500">*</b> Contact No.</label><br><br>
+									<input type="number" v-model="form.phone" placeholder="639xxxxxxxxx" class="w-full border border-green-200 h-12 text-center">
 									<span class="text-sm text-red-500">{{validationError('phone', saveError)}} </span>
 								</div>
 
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2">
-									<label class="font-bold"> Gender</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b> Gender</label><br><br>
 									<select v-model="form.gender" class="w-full border border-green-200 h-12 text-center">
 										<option value="MALE">Male</option>
 									  <option value="FEMALE">Female</option>
@@ -114,7 +115,7 @@
 								</div> -->
 
 								<div class="w-full py-2 mt-2 md:mt-3 mx-2 pb-5">
-									<label class="font-bold">Classification</label><br><br>
+									<label class="font-bold"><b class="text-red-500">*</b>Classification</label><br><br>
 									<select v-model="form.classification" class="w-full border border-green-200 h-12">
 									  <option value="A1">A1 - Workers in frontline healt services</option>
 									  <option value="A2">A2 - All senior citizens</option>

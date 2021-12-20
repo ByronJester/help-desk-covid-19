@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\SaveVaccination;
 use Illuminate\Support\Facades\Route;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class VaccinationController extends Controller
 {
@@ -86,6 +87,16 @@ class VaccinationController extends Controller
             $update = Vaccination::where('id', $request->id)->update(['is_active' => true]);
         } else {
             $update = Vaccination::where('id', $request->id)->update(['status' => $request->status]);
+
+            if($request->status == 'approve'){
+                $vaccination = Vaccination::where('id', $request->id)->first();
+
+                Nexmo::message()->send([
+                    'to'    => $vaccination->phone,
+                    'from'  => '639557347496',
+                    'text'  => $vaccination->name . " your vaccination request is approved. Please coordinate to your Barangay Health Workers for more information." 
+                ]);
+            }
         }
         
         return redirect()->back();

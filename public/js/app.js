@@ -2312,6 +2312,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2655,6 +2657,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user', 'openModal'],
@@ -2707,6 +2726,9 @@ __webpack_require__.r(__webpack_exports__);
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/users/logout", {}, {
         onSuccess: function onSuccess() {}
       });
+    },
+    backUp: function backUp() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get(this.$root.route + "/back-up").then(function (resp) {});
     }
   }
 });
@@ -2829,7 +2851,7 @@ __webpack_require__.r(__webpack_exports__);
         place_id: this.options.place,
         code: null,
         age: null,
-        symptom: 'symptomatic',
+        symptom: 'assymotimatic',
         gender: 'MALE',
         date: null,
         travel_history: null,
@@ -2841,9 +2863,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  mounted: function mounted() {
-    console.log(this.options);
-  },
+  mounted: function mounted() {},
   watch: {
     'table.selected': function tableSelected(v) {
       if (!!v) this.viewCase = true;
@@ -2901,14 +2921,18 @@ __webpack_require__.r(__webpack_exports__);
       this.viewCase = true;
       this.form = {
         id: null,
-        place_id: this.form.place_id,
+        place_id: this.options.place,
         code: null,
         age: null,
-        symptom: null,
+        symptom: 'assymotimatic',
         gender: 'MALE',
         date: null,
         travel_history: null,
-        status: 'RECOVERED'
+        status: 'RECOVERED',
+        recovered_at: null,
+        death_at: null,
+        quarantine_at: null,
+        is_active: true
       };
     }
   }
@@ -3132,13 +3156,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['viewCase', 'form'],
   data: function data() {
     return {
-      errors: null
+      errors: null,
+      date: null
     };
   },
   methods: {
@@ -3164,10 +3197,35 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {});
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    if (this.form.status == 'RECOVERED') {
+      this.date = 'recovered_at';
+    }
+
+    if (this.form.status == 'DEATH') {
+      this.date = 'death_at';
+    }
+
+    if (this.form.status == 'QUARANTINE') {
+      this.date = 'quarantine_at';
+    }
+  },
   watch: {
     viewCase: function viewCase(v) {
       if (!v) this.errors = null;
+    },
+    'form.status': function formStatus(arg) {
+      if (this.form.status == 'RECOVERED') {
+        this.date = 'recovered_at';
+      }
+
+      if (this.form.status == 'DEATH') {
+        this.date = 'death_at';
+      }
+
+      if (this.form.status == 'QUARANTINE') {
+        this.date = 'quarantine_at';
+      }
     }
   }
 });
@@ -4478,6 +4536,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4984,6 +5043,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5034,6 +5101,13 @@ __webpack_require__.r(__webpack_exports__);
       this.openModal = false;
     }
   },
+  methods: {
+    newUser: function newUser() {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.get(this.$root.route + '/users/' + 'add', {}, {
+        onSuccess: function onSuccess() {}
+      });
+    }
+  },
   watch: {
     'table.selected': function tableSelected(v) {
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.get(this.$root.route + '/users/' + v.id, {}, {
@@ -5057,8 +5131,7 @@ __webpack_require__.r(__webpack_exports__);
         onSuccess: function onSuccess() {}
       });
     }
-  },
-  methods: {}
+  }
 });
 
 /***/ }),
@@ -5076,9 +5149,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
 /* harmony import */ var _Components_Toggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Components/Toggle */ "./resources/js/Components/Toggle.vue");
-//
-//
-//
 //
 //
 //
@@ -5264,8 +5334,8 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         password: '',
         confirm_password: '',
-        user_type: 'admin - lgu',
-        perspective: '',
+        user_type: 'citizen',
+        perspective: 3,
         is_active: false,
         identification_image: '/images/identifications/default.png',
         agree: false
@@ -5302,8 +5372,8 @@ __webpack_require__.r(__webpack_exports__);
             _this.register.email = '';
             _this.register.password = '';
             _this.register.confirm_password = '';
-            _this.register.user_type = 'admin - lgu';
-            _this.register.perspective = '';
+            _this.register.user_type = 'citizen';
+            _this.register.perspective = 3;
             _this.register.identification_image = '/images/identifications/default.png';
             _this.register.agree = false;
             _this.openModal = false;
@@ -5317,51 +5387,26 @@ __webpack_require__.r(__webpack_exports__);
     registerAcc: function registerAcc() {
       var _this2 = this;
 
-      // switch(this.register.user_type) {
-      //   case 'admin - lgu':
-      //     this.register.perspective = 1
+      // if(this.register.user_type == 'admin - lgu') {
+      // 		this.register.perspective = 1
       //     this.register.user_type = 'admin'
       //     this.register.is_active = false
-      //     break;
-      //   case 'employee - lgu':
-      //     this.register.perspective = 1
+      // }
+      // if(this.register.user_type == 'employee - lgu') {
+      // 		this.register.perspective = 1
       //     this.register.user_type = 'employee'
       //     this.register.is_active = false
-      //     break;
-      //   case 'health-worker - lgu':
-      //     this.register.perspective = 1
+      // }
+      // if(this.register.user_type == 'health-worker - lgu') {
+      // 		this.register.perspective = 1
       //     this.register.user_type = 'health-worker'
       //     this.register.is_active = false
-      //   case 'citizen':
-      //     this.register.perspective = 3
+      // }
+      // if(this.register.user_type == 'citizen') {
+      // 		this.register.perspective = 3
       //     this.register.user_type = 'citizen'
       //     this.register.is_active = false
-      //     break;
       // }
-      if (this.register.user_type == 'admin - lgu') {
-        this.register.perspective = 1;
-        this.register.user_type = 'admin';
-        this.register.is_active = false;
-      }
-
-      if (this.register.user_type == 'employee - lgu') {
-        this.register.perspective = 1;
-        this.register.user_type = 'employee';
-        this.register.is_active = false;
-      }
-
-      if (this.register.user_type == 'health-worker - lgu') {
-        this.register.perspective = 1;
-        this.register.user_type = 'health-worker';
-        this.register.is_active = false;
-      }
-
-      if (this.register.user_type == 'citizen') {
-        this.register.perspective = 3;
-        this.register.user_type = 'citizen';
-        this.register.is_active = false;
-      }
-
       this.formData.append('id', this.register.id);
       this.formData.append('first_name', this.register.first_name);
       this.formData.append('middle_name', this.register.middle_name);
@@ -5373,7 +5418,13 @@ __webpack_require__.r(__webpack_exports__);
       this.formData.append('user_type', this.register.user_type);
       this.formData.append('perspective', this.register.perspective);
       this.formData.append('is_active', this.register.is_active);
-      this.formData.append('agree', this.register.agree);
+
+      if (this.register.agree) {
+        this.formData.append('agree', 1);
+      } else {
+        this.formData.append('agree', 0);
+      }
+
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/users/saveUser", this.formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -5389,8 +5440,8 @@ __webpack_require__.r(__webpack_exports__);
           _this2.register.email = '';
           _this2.register.password = '';
           _this2.register.confirm_password = '';
-          _this2.register.user_type = 'admin - lgu';
-          _this2.register.perspective = '';
+          _this2.register.user_type = 'citizen';
+          _this2.register.perspective = 3;
           _this2.register.identification_image = '/images/identifications/default.png';
           _this2.register.agree = false;
           _this2.openModal = false;
@@ -5510,6 +5561,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5528,24 +5591,31 @@ __webpack_require__.r(__webpack_exports__);
         middle_name: null,
         last_name: null,
         email: null,
+        user_type: null,
         phone: null,
-        is_active: null
+        is_active: 0,
+        agree: 1,
+        perspective: null
       },
       saveError: null
     };
   },
   mounted: function mounted() {
-    var current = {
-      id: this.options.user.id,
-      first_name: this.options.user.first_name,
-      middle_name: this.options.user.middle_name,
-      last_name: this.options.user.last_name,
-      email: this.options.user.email,
-      phone: this.options.user.phone,
-      is_active: this.options.user.is_active
-    };
-    this.user = Object.assign(this.user, current);
-    console.log(this.options);
+    if (this.options.user) {
+      var current = {
+        id: this.options.user.id,
+        first_name: this.options.user.first_name,
+        middle_name: this.options.user.middle_name,
+        last_name: this.options.user.last_name,
+        email: this.options.user.email,
+        phone: this.options.user.phone,
+        is_active: this.options.user.is_active,
+        user_type: this.options.user.user_type,
+        agree: this.options.user.agree,
+        perspective: this.options.user.perspective
+      };
+      this.user = Object.assign(this.user, current);
+    }
   },
   methods: {
     back: function back() {
@@ -5556,12 +5626,22 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this = this;
 
+      this.saveUser = null;
       _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__.Inertia.post(this.$root.route + "/users/saveUser", this.user, {
         onSuccess: function onSuccess(res) {},
         onError: function onError(err) {
           _this.saveError = err;
         }
       });
+    }
+  },
+  watch: {
+    'user.user_type': function userUser_type(type) {
+      this.user.perspective = 1;
+
+      if (type == 'citizen') {
+        this.user.perspective = 3;
+      }
     }
   }
 });
@@ -39299,6 +39379,40 @@ component.options.__file = "resources/js/Pages/Vaccinations/VaccinationCarousel.
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Vaccinations/VacinationModal.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/Pages/Vaccinations/VacinationModal.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__.default)(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/Pages/Vaccinations/VacinationModal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Components/Chat.vue?vue&type=script&lang=js&":
 /*!*******************************************************************!*\
   !*** ./resources/js/Components/Chat.vue?vue&type=script&lang=js& ***!
@@ -41060,8 +41174,6 @@ var render = function() {
                                         "dropdown-menu absolute hidden pt-1"
                                     },
                                     [
-                                      _vm._m(3),
-                                      _vm._v(" "),
                                       _c("li", {}, [
                                         _c(
                                           "a",
@@ -41178,7 +41290,7 @@ var render = function() {
                           "div",
                           { staticClass: "dropdown inline-block relative" },
                           [
-                            _vm._m(4),
+                            _vm._m(3),
                             _vm._v(" "),
                             _c(
                               "ul",
@@ -41257,7 +41369,7 @@ var render = function() {
                           "div",
                           { staticClass: "dropdown inline-block relative" },
                           [
-                            _vm._m(5),
+                            _vm._m(4),
                             _vm._v(" "),
                             _c(
                               "ul",
@@ -41341,7 +41453,7 @@ var render = function() {
                               "div",
                               { staticClass: "dropdown inline-block relative" },
                               [
-                                _vm._m(6),
+                                _vm._m(5),
                                 _vm._v(" "),
                                 _c(
                                   "ul",
@@ -41515,8 +41627,6 @@ var render = function() {
                                     "dropdown-menu absolute hidden pt-1"
                                 },
                                 [
-                                  _vm._m(7),
-                                  _vm._v(" "),
                                   _c("li", {}, [
                                     _c(
                                       "a",
@@ -41601,21 +41711,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", {}, [
-      _c(
-        "a",
-        {
-          staticClass:
-            "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-        },
-        [_vm._v("Profile")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "a",
       {
@@ -41659,21 +41754,6 @@ var staticRenderFns = [
         _c("span", { staticClass: "ml-2" }, [_vm._v("Maintenance")])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", {}, [
-      _c(
-        "a",
-        {
-          staticClass:
-            "rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap cursor-pointer"
-        },
-        [_vm._v("Profile")]
-      )
-    ])
   }
 ]
 render._withStripped = true
@@ -42086,9 +42166,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" Patient")
-                          ]),
+                          _vm._m(0),
                           _c("br"),
                           _c("br"),
                           _vm._v(" "),
@@ -42128,9 +42206,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" Age")
-                          ]),
+                          _vm._m(1),
                           _c("br"),
                           _c("br"),
                           _vm._v(" "),
@@ -42176,9 +42252,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v("Status")
-                          ]),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -42219,9 +42293,9 @@ var render = function() {
                                 "option",
                                 {
                                   staticClass: "uppercase",
-                                  attrs: { value: "asymotimatic" }
+                                  attrs: { value: "assymotimatic" }
                                 },
-                                [_vm._v("asymotimatic")]
+                                [_vm._v("Assymotimatic")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -42230,7 +42304,7 @@ var render = function() {
                                   staticClass: "uppercase",
                                   attrs: { value: "symptomatic" }
                                 },
-                                [_vm._v("symptomatic")]
+                                [_vm._v("Symptomatic")]
                               )
                             ]
                           ),
@@ -42238,7 +42312,7 @@ var render = function() {
                           _c("span", { staticClass: "text-sm text-red-500" }, [
                             _vm._v(
                               _vm._s(
-                                _vm.validationError("gender", _vm.errors)
+                                _vm.validationError("symptom", _vm.errors)
                               ) + " "
                             )
                           ])
@@ -42249,9 +42323,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v("Gender")
-                          ]),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -42318,9 +42390,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v("Status")
-                          ]),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -42334,7 +42404,7 @@ var render = function() {
                                 }
                               ],
                               staticClass:
-                                "w-full border border-green-200 px-2 py-2",
+                                "w-full border border-green-200 px-2 py-2 mt-4",
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -42381,149 +42451,59 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
-                        [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" RECOVERED Date")
+                      _c("div", { staticClass: "w-full py-2 md:px-20" }, [
+                        _c("label", { staticClass: "font-bold" }, [
+                          _c("b", { staticClass: "text-red-500" }, [
+                            _vm._v("*")
                           ]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.recovered_at,
-                                expression: "form.recovered_at"
-                              }
-                            ],
-                            staticClass:
-                              "w-full border border-green-200 h-10 text-center",
-                            attrs: { type: "date", placeholder: "Date" },
-                            domProps: { value: _vm.form.recovered_at },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "recovered_at",
-                                  $event.target.value
-                                )
-                              }
+                          _vm._v(
+                            " \n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(
+                                _vm.form.status == "RECOVERED"
+                                  ? "Recovered"
+                                  : _vm.form.status == "DEATH"
+                                  ? "Death"
+                                  : "Quarantine"
+                              ) +
+                              " \n\t\t\t\t\t\t\t\t\tDate\n\t\t\t\t\t\t\t\t"
+                          )
+                        ]),
+                        _c("br"),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form[_vm.date],
+                              expression: "form[date]"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-sm text-red-500" }, [
-                            _vm._v(
-                              _vm._s(_vm.validationError("date", _vm.errors)) +
-                                " "
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "flex flex-col md:flex-row w-full" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
-                        [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" Death Date")
-                          ]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.death_at,
-                                expression: "form.death_at"
+                          ],
+                          staticClass:
+                            "w-full border border-green-200 h-10 text-center",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.form[_vm.date] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            ],
-                            staticClass:
-                              "w-full border border-green-200 h-10 text-center",
-                            attrs: { type: "date", placeholder: "Date" },
-                            domProps: { value: _vm.form.death_at },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "death_at",
-                                  $event.target.value
-                                )
-                              }
+                              _vm.$set(_vm.form, _vm.date, $event.target.value)
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-sm text-red-500" }, [
-                            _vm._v(
-                              _vm._s(_vm.validationError("date", _vm.errors)) +
-                                " "
-                            )
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
-                        [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" Quarantine Date")
-                          ]),
-                          _c("br"),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.quarantine_at,
-                                expression: "form.quarantine_at"
-                              }
-                            ],
-                            staticClass:
-                              "w-full border border-green-200 h-10 text-center",
-                            attrs: { type: "date", placeholder: "Date" },
-                            domProps: { value: _vm.form.quarantine_at },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "quarantine_at",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-sm text-red-500" }, [
-                            _vm._v(
-                              _vm._s(_vm.validationError("date", _vm.errors)) +
-                                " "
-                            )
-                          ])
-                        ]
-                      )
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-sm text-red-500" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(
+                                _vm.validationError(_vm.date, _vm.errors)
+                              ) +
+                              " \n\t\t\t\t\t\t\t\t"
+                          )
+                        ])
+                      ])
                     ]
                   ),
                   _vm._v(" "),
@@ -42588,9 +42568,7 @@ var render = function() {
                         "div",
                         { staticClass: "w-full py-2 md:px-20 mt-2 md:mt-2" },
                         [
-                          _c("label", { staticClass: "font-bold" }, [
-                            _vm._v(" Positive Date")
-                          ]),
+                          _vm._m(5),
                           _c("br"),
                           _c("br"),
                           _vm._v(" "),
@@ -42660,21 +42638,28 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("div", { staticClass: "w-full md:px-20 mt-2" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "w-full py-2 px-3 bg-green-500 text-center font-bold text-white",
-                        on: {
-                          click: function($event) {
-                            return _vm.save()
+                  _c(
+                    "div",
+                    {
+                      staticClass: "w-full md:px-20 mt-2",
+                      class: { "mt-8": !_vm.form.id }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "w-full py-2 px-3 bg-green-500 text-center font-bold text-white",
+                          on: {
+                            click: function($event) {
+                              return _vm.save()
+                            }
                           }
-                        }
-                      },
-                      [_vm._v(" \n\t \t\t\t\t\t\t\tSave\n\t \t\t\t\t\t\t")]
-                    )
-                  ])
+                        },
+                        [_vm._v(" \n\t \t\t\t\t\t\t\tSave\n\t \t\t\t\t\t\t")]
+                      )
+                    ]
+                  )
                 ])
               ]
             )
@@ -42683,7 +42668,62 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Patient")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Age")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Symptoms")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v("Gender")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Status")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Date Tested")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -42731,7 +42771,7 @@ var render = function() {
             "button",
             {
               staticClass:
-                "bg-green-500 border border-green-500 rounded py-2 md:py-5 px-3 font-bold text-white",
+                "bg-green-500 border border-green-500 rounded py-2 md:py-5 px-4 font-bold text-white",
               on: { click: _vm.newTracing }
             },
             [_vm._v("\n\t\t\t\tNew\n\t\t\t")]
@@ -42929,7 +42969,7 @@ var render = function() {
             { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
             [
               _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-                _c("label", { staticClass: "font-bold" }, [_vm._v(" Name")]),
+                _vm._m(0),
                 _c("br"),
                 _c("br"),
                 _vm._v(" "),
@@ -42958,7 +42998,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-                _c("label", { staticClass: "font-bold" }, [_vm._v(" Phone")]),
+                _vm._m(1),
                 _c("br"),
                 _c("br"),
                 _vm._v(" "),
@@ -42993,9 +43033,7 @@ var render = function() {
             { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
             [
               _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-                _c("label", { staticClass: "font-bold" }, [
-                  _vm._v(" Birthdate")
-                ]),
+                _vm._m(2),
                 _c("br"),
                 _c("br"),
                 _vm._v(" "),
@@ -43024,9 +43062,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-                _c("label", { staticClass: "font-bold mt-2" }, [
-                  _vm._v("Gender")
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -43040,7 +43076,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "w-full border border-green-200 px-2 py-2 mt-6",
+                      "w-full border border-green-200 px-2 py-3 mt-6",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -43080,7 +43116,44 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Phone")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Birthdate")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold mt-2" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Gender")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -44472,19 +44545,21 @@ var render = function() {
                                       _vm._v("Vaccination Form")
                                     ]),
                                     _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "rounded text-white border border-green-400 bg-green-600 px-3 py-3 font-bold float-right",
-                                        on: { click: _vm.sendVaccineForm }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n\t\t\t\t\t\t\t\tRequest\n\t\t\t\t\t\t\t"
+                                    _vm.options.user
+                                      ? _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "rounded text-white border border-green-400 bg-green-600 px-3 py-3 font-bold float-right",
+                                            on: { click: _vm.sendVaccineForm }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t"
+                                            )
+                                          ]
                                         )
-                                      ]
-                                    )
+                                      : _vm._e()
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -44499,11 +44574,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Name")]
-                                        ),
+                                        _vm._m(0),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44560,11 +44631,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Age")]
-                                        ),
+                                        _vm._m(1),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44627,11 +44694,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Birthdate")]
-                                        ),
+                                        _vm._m(2),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44690,11 +44753,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Barangay")]
-                                        ),
+                                        _vm._m(3),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44790,11 +44849,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Contact No.")]
-                                        ),
+                                        _vm._m(4),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44809,7 +44864,10 @@ var render = function() {
                                           ],
                                           staticClass:
                                             "w-full border border-green-200 h-12 text-center",
-                                          attrs: { type: "number" },
+                                          attrs: {
+                                            type: "number",
+                                            placeholder: "639xxxxxxxxx"
+                                          },
                                           domProps: { value: _vm.form.phone },
                                           on: {
                                             input: function($event) {
@@ -44851,11 +44909,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v(" Gender")]
-                                        ),
+                                        _vm._m(5),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -44945,11 +44999,7 @@ var render = function() {
                                           "w-full py-2 mt-2 md:mt-3 mx-2 pb-5"
                                       },
                                       [
-                                        _c(
-                                          "label",
-                                          { staticClass: "font-bold" },
-                                          [_vm._v("Classification")]
-                                        ),
+                                        _vm._m(6),
                                         _c("br"),
                                         _c("br"),
                                         _vm._v(" "),
@@ -45162,7 +45212,7 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm._m(0)
+                                _vm._m(7)
                               ]
                             )
                           : _vm._e(),
@@ -45189,7 +45239,7 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm._m(1)
+                                _vm._m(8)
                               ]
                             )
                           : _vm._e()
@@ -45218,6 +45268,69 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Age")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Birthdate")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Barangay")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Contact No.")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Gender")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v("Classification")
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -45706,6 +45819,21 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _c("div", { staticClass: "w-full mt-8 ml-10" }, [
+          _c(
+            "button",
+            {
+              staticClass: "px-4 py-3 rounded bg-green-400",
+              on: {
+                click: function($event) {
+                  return _vm.newUser()
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\tNew\n\t\t\t")]
+          )
+        ]),
+        _vm._v(" "),
         _c("Table", {
           staticClass: "px-1 md:px-10",
           attrs: {
@@ -45973,9 +46101,7 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" First Name")
-                            ]),
+                            _vm._m(0),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46045,7 +46171,7 @@ var render = function() {
                                 "w-full border border-green-200 h-12 text-center",
                               attrs: {
                                 type: "text",
-                                placeholder: "Middle Name (optional)"
+                                placeholder: "Middle Name"
                               },
                               domProps: { value: _vm.register.middle_name },
                               on: {
@@ -46079,9 +46205,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Last Name")
-                            ]),
+                            _vm._m(1),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46137,9 +46261,7 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Phone Number")
-                            ]),
+                            _vm._m(2),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46156,7 +46278,7 @@ var render = function() {
                                 "w-full border border-green-200 h-12 text-center",
                               attrs: {
                                 type: "text",
-                                placeholder: "09xxxxxxxxx"
+                                placeholder: "639xxxxxxxxx"
                               },
                               domProps: { value: _vm.register.phone },
                               on: {
@@ -46190,9 +46312,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Email Address")
-                            ]),
+                            _vm._m(3),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46240,88 +46360,6 @@ var render = function() {
                                 )
                               ]
                             )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" User Type")
-                            ]),
-                            _c("br"),
-                            _c("br"),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.register.user_type,
-                                    expression: "register.user_type"
-                                  }
-                                ],
-                                staticClass:
-                                  "w-full border border-green-200 h-12 px-2 uppercase",
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.register,
-                                      "user_type",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { value: "admin - lgu" } },
-                                  [_vm._v("LGU - Admin")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "employee - lgu" } },
-                                  [_vm._v("LGU - Employee")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "health-worker - lgu" } },
-                                  [_vm._v("LGU - Health Worker")]
-                                ),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "citizen" } }, [
-                                  _vm._v("Citizen")
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              { staticClass: "text-sm text-red-500" },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.validationError(
-                                      "user_type",
-                                      _vm.registerErrors
-                                    )
-                                  ) + " "
-                                )
-                              ]
-                            )
                           ])
                         ]
                       ),
@@ -46333,9 +46371,7 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Password")
-                            ]),
+                            _vm._m(4),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46386,9 +46422,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Confirm Password")
-                            ]),
+                            _vm._m(5),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46449,9 +46483,7 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "w-full md:mx-2" }, [
-                            _c("label", { staticClass: "font-bold" }, [
-                              _vm._v(" Valid ID")
-                            ]),
+                            _vm._m(6),
                             _c("br"),
                             _c("br"),
                             _vm._v(" "),
@@ -46562,7 +46594,7 @@ var render = function() {
                             [
                               _c("div", { staticClass: "w-full md:mx-2" }, [
                                 _vm._v(
-                                  "\n\t\t \t\t\t\t\t\tAt Online Help Desk Information System For COVID-19, we take privacy seriously and we respect the concerns of our community of users, in this policy we describe our privacy practices with regard to information we collect through help-desk-covid-19. The help-desk-covid-19 helps you to make informed decisions about how you share information when you visit or use the site.\n\t\t \t\t\t\t\t"
+                                  "\n\t\t \t\t\t\t\t\tAt COVID-19 Help Desk, we take privacy seriously and we respect the concerns of our community of users, in this policy we describe our privacy practices with regard to information we collect through COVID-19 Help Desk. The COVID-19 Help Desk helps you to make informed decisions about how you share information when you visit or use the site. If you do not supply such Personal Data to COVID19 Help Desk, it may result in us being unable to open or continue your COVID19 , to provide services under the Terms and Conditions or to comply with any laws or guidelines issued by regulatory or other authorities.\n\t\t \t\t\t\t\t"
                                 )
                               ])
                             ]
@@ -46622,7 +46654,71 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" First Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Last Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Phone Number")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Email Address")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Password")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Confirm Password")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Valid ID")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -46675,7 +46771,9 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("span", { staticClass: "ml-3" }, [
-          _vm._v(_vm._s(_vm.options.user.name) + " ")
+          _vm._v(
+            _vm._s(_vm.options.user ? _vm.options.user.name : "New User") + " "
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -46727,9 +46825,7 @@ var render = function() {
           { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
           [
             _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-              _c("label", { staticClass: "font-bold" }, [
-                _vm._v(" First Name")
-              ]),
+              _vm._m(0),
               _c("br"),
               _c("br"),
               _vm._v(" "),
@@ -46800,7 +46896,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-              _c("label", { staticClass: "font-bold" }, [_vm._v(" Last Name")]),
+              _vm._m(1),
               _c("br"),
               _c("br"),
               _vm._v(" "),
@@ -46840,7 +46936,7 @@ var render = function() {
           { staticClass: "w-full flex flex-col md:flex-row py-3 md:py-20" },
           [
             _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-              _c("label", { staticClass: "font-bold" }, [_vm._v(" Email")]),
+              _vm._m(2),
               _c("br"),
               _c("br"),
               _vm._v(" "),
@@ -46874,7 +46970,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-              _c("label", { staticClass: "font-bold" }, [_vm._v(" Phone")]),
+              _vm._m(3),
               _c("br"),
               _c("br"),
               _vm._v(" "),
@@ -46908,15 +47004,86 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "w-full px-2 md:px-3" }, [
-              _c("label", { staticClass: "font-bold" }, [_vm._v(" Valid ID")]),
+              _vm._m(4),
               _c("br"),
               _c("br"),
               _vm._v(" "),
-              _c("img", {
-                staticStyle: { height: "300px", width: "100%" },
-                attrs: { src: _vm.options.user.identification_image, alt: "" }
-              })
-            ])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.user_type,
+                      expression: "user.user_type"
+                    }
+                  ],
+                  staticClass:
+                    "w-full border border-green-200 h-12 px-2 uppercase text-center",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.user,
+                        "user_type",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "admin" } }, [
+                    _vm._v("LGU - Admin")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "employee" } }, [
+                    _vm._v("LGU - Employee")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "health-worker" } }, [
+                    _vm._v("LGU - Health Worker")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "citizen" } }, [
+                    _vm._v("Citizen")
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-sm text-red-500" }, [
+                _vm._v(
+                  _vm._s(_vm.validationError("user_type", _vm.saveError)) + " "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.options.user && !!_vm.options.user.identification_image
+              ? _c("div", { staticClass: "w-full px-2 md:px-3" }, [
+                  _c("label", { staticClass: "font-bold" }, [
+                    _vm._v(" Valid ID")
+                  ]),
+                  _c("br"),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticStyle: { height: "200px", width: "100%" },
+                    attrs: {
+                      src: _vm.options.user.identification_image,
+                      alt: ""
+                    }
+                  })
+                ])
+              : _vm._e()
           ]
         )
       ])
@@ -46924,7 +47091,53 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" First Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Last Name")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Email")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" Phone")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "font-bold" }, [
+      _c("b", { staticClass: "text-red-500" }, [_vm._v("*")]),
+      _vm._v(" User Type")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -60161,7 +60374,9 @@ var map = {
 	"./Vaccinations": "./resources/js/Pages/Vaccinations.vue",
 	"./Vaccinations.vue": "./resources/js/Pages/Vaccinations.vue",
 	"./Vaccinations/VaccinationCarousel": "./resources/js/Pages/Vaccinations/VaccinationCarousel.vue",
-	"./Vaccinations/VaccinationCarousel.vue": "./resources/js/Pages/Vaccinations/VaccinationCarousel.vue"
+	"./Vaccinations/VaccinationCarousel.vue": "./resources/js/Pages/Vaccinations/VaccinationCarousel.vue",
+	"./Vaccinations/VacinationModal": "./resources/js/Pages/Vaccinations/VacinationModal.vue",
+	"./Vaccinations/VacinationModal.vue": "./resources/js/Pages/Vaccinations/VacinationModal.vue"
 };
 
 

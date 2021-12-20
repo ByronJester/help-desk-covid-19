@@ -26,13 +26,13 @@
 			<div class="w-full flex flex-col mt-20 md:px-32">
 				<div class="w-full flex flex-col md:flex-row py-3 md:py-20">
 					<div class="w-full px-2 md:px-3">
-						<label class="font-bold"> Name</label><br><br>
+						<label class="font-bold"><b class="text-red-500">*</b> Name</label><br><br>
 						<input type="text" class="w-full border border-green-200 h-12 text-center" v-model="form.name">
 						<!-- <span class="text-sm text-red-500">{{validationError('name', saveError)}} </span> -->
 					</div>
 
 					<div class="w-full px-2 md:px-3">
-						<label class="font-bold"> Phone</label><br><br>
+						<label class="font-bold"><b class="text-red-500">*</b> Phone</label><br><br>
 						<input type="text" class="w-full border border-green-200 h-12 text-center" v-model="form.phone">
 						<!-- <span class="text-sm text-red-500">{{validationError('phone', saveError)}} </span> -->
 					</div>
@@ -41,14 +41,14 @@
 
 				<div class="w-full flex flex-col md:flex-row py-3 md:py-20">
 					<div class="w-full px-2 md:px-3">
-						<label class="font-bold"> Birthdate</label><br><br>
+						<label class="font-bold"><b class="text-red-500">*</b> Birthdate</label><br><br>
 						<input type="date" class="w-full border border-green-200 h-12 text-center" v-model="form.birth_date">
 						<!-- <span class="text-sm text-red-500">{{validationError('birth_date', saveError)}} </span> -->
 					</div>
 
 					<div class="w-full px-2 md:px-3">
-						<label class="font-bold mt-2">Gender</label>
-						<select v-model="form.gender" class="w-full border border-green-200 px-2 py-2 mt-6">
+						<label class="font-bold mt-2"><b class="text-red-500">*</b> Gender</label>
+						<select v-model="form.gender" class="w-full border border-green-200 px-2 py-3 mt-6">
 						  <option value="MALE">MALE</option>
 						  <option value="FEMALE">FEMALE</option>
 						</select>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VirusCaseController;
 use App\Http\Controllers\VaccinationController;
 use App\Http\Controllers\ContactTracingController;
+use App\Http\Controllers\BackupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,4 +100,6 @@ Route::prefix('vaccinations')->group(function () {
     Route::post('/changeStatus', [VaccinationController::class, 'changeStatus'])->middleware('auth'); 
     Route::get('/', [VaccinationController::class, 'vaccinationList'])->middleware('auth');
 });
+
+Route::get('/back-up', [BackupController::class, 'backupDatabase'])->middleware('auth');
 

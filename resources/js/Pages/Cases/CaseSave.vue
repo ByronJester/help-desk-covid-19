@@ -8,13 +8,13 @@
 
 	 					<div class="flex flex-col md:flex-row w-full">
 	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Patient</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Patient</label><br><br>
 								<input type="text" v-model="form.code" placeholder="Patient" class="w-full border border-green-200 h-10 text-center">
 								<span class="text-sm text-red-500">{{validationError('code', errors)}} </span>
 							</div>
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Age</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Age</label><br><br>
 								<input type="number" v-model="form.age" placeholder="Age" class="w-full border border-green-200 h-10 text-center px-2">
 								<span class="text-sm text-red-500">{{validationError('age', errors)}} </span>
 							</div>
@@ -22,16 +22,16 @@
 
 	 					<div class="flex flex-col md:flex-row w-full">
 	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold">Status</label>
+								<label class="font-bold"><b class="text-red-500">*</b> Symptoms</label>
 								<select v-model="form.symptom" class="w-full border border-green-200 px-2 py-2">
-								  <option value="asymotimatic" class="uppercase">asymotimatic</option>
-								  <option value="symptomatic" class="uppercase">symptomatic</option>
+								  <option value="assymotimatic" class="uppercase">Assymotimatic</option>
+								  <option value="symptomatic" class="uppercase">Symptomatic</option>
 								</select>
-								<span class="text-sm text-red-500">{{validationError('gender', errors)}} </span>
+								<span class="text-sm text-red-500">{{validationError('symptom', errors)}} </span>
 							</div>
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold">Gender</label>
+								<label class="font-bold"><b class="text-red-500">*</b>Gender</label>
 								<select v-model="form.gender" class="w-full border border-green-200 px-2 py-2">
 								  <option value="MALE">MALE</option>
 								  <option value="FEMALE">FEMALE</option>
@@ -42,8 +42,8 @@
 
 	 					<div class="flex flex-col md:flex-row w-full">
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold">Status</label>
-								<select v-model="form.status" class="w-full border border-green-200 px-2 py-2">
+								<label class="font-bold"><b class="text-red-500">*</b> Status</label>
+								<select v-model="form.status" class="w-full border border-green-200 px-2 py-2 mt-4">
 								  <option value="RECOVERED">RECOVERED</option>
 								  <option value="DEATH">DEATH</option>
 								  <option value="QUARANTINE">QUARANTINE</option>
@@ -51,26 +51,34 @@
 								<span class="text-sm text-red-500">{{validationError('status', errors)}} </span>
 							</div>
 
-							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> RECOVERED Date</label><br><br>
-								<input type="date" v-model="form.recovered_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
-								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+							<div class="w-full py-2 md:px-20">
+								<label class="font-bold">
+									<b class="text-red-500">*</b> 
+									{{ form.status == 'RECOVERED' ? 'Recovered' : form.status == 'DEATH' ? 'Death' : 'Quarantine'  }} 
+									Date
+								</label><br><br>
+								<input type="date"  class="w-full border border-green-200 h-10 text-center" 
+								 v-model="form[date]"
+							  >
+								<span class="text-sm text-red-500">
+									{{validationError(date, errors)}} 
+								</span>
 							</div>
 	 					</div>
 
-	 					<div class="flex flex-col md:flex-row w-full">
+	 					<!-- <div class="flex flex-col md:flex-row w-full">
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Death Date</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Death Date</label><br><br>
 								<input type="date" v-model="form.death_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
-								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+								<span class="text-sm text-red-500">{{validationError('death_at', errors)}} </span>
 							</div>
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Quarantine Date</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Quarantine Date</label><br><br>
 								<input type="date" v-model="form.quarantine_at" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
-								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+								<span class="text-sm text-red-500">{{validationError('quarantine_at', errors)}} </span>
 							</div>
-	 					</div>
+	 					</div> -->
 
 	 					<div class="flex flex-col md:flex-row w-full">
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
@@ -80,7 +88,7 @@
 							</div>
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
-								<label class="font-bold"> Positive Date</label><br><br>
+								<label class="font-bold"><b class="text-red-500">*</b> Date Tested</label><br><br>
 								<input type="date" v-model="form.date" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
 								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
 							</div>
@@ -94,7 +102,7 @@
 	 						</button>
 	 					</div>
 
-	 					<div class="w-full md:px-20 mt-2">
+	 					<div class="w-full md:px-20 mt-2" :class="{'mt-8': !form.id}">
 	 						<button class="w-full py-2 px-3 bg-green-500 text-center font-bold text-white" @click="save()"> 
 	 							Save
 	 						</button>
@@ -119,7 +127,8 @@
 		props: ['viewCase', 'form'],
 		data() {
 			return {
-				errors: null
+				errors: null,
+				date: null
 			}
 		},
  
@@ -154,11 +163,36 @@
 		},
 
 		mounted(){
+			if(this.form.status == 'RECOVERED') {
+				this.date = 'recovered_at'
+			}
+
+			if(this.form.status == 'DEATH') {
+				this.date = 'death_at'
+			}
+
+			if(this.form.status == 'QUARANTINE') {
+				this.date = 'quarantine_at'
+			}
 		},
 
 		watch : {
 			viewCase: function (v) {
 				if(!v) this.errors = null;
+			},
+
+			'form.status': function (arg) {
+				if(this.form.status == 'RECOVERED') {
+					this.date = 'recovered_at'
+				}
+
+				if(this.form.status == 'DEATH') {
+					this.date = 'death_at'
+				}
+
+				if(this.form.status == 'QUARANTINE') {
+					this.date = 'quarantine_at'
+				}
 			}
 		}
 	}

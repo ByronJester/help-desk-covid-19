@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Http\Requests\RegisterAccount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use App\Mail\PasswordMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -41,13 +43,26 @@ class UserController extends Controller
     public function saveUser(RegisterAccount $request)
     { 
         $data = $request->toArray();
-
-        // return $request->user_type;
+        $id = $request->id;
+        $password = null;
 
         if($request->password && $request->confirm_password)  {
             $data = $request->except(['confirm_password']);
 
             $data['password'] = bcrypt($data['password']);
+        } else {
+            if(!$id) {
+                $password = Str::random(10);
+
+                $data['password'] = bcrypt($password);
+
+                $emailData = [
+                    "name" => $request->first_name . " " . $request->last_name,
+                    "password" => $password
+                ];
+
+                Mail::to($request->email)->send(new PasswordMail($emailData));
+            }
         }
 
         if($image = $request->identification_image) {
@@ -64,7 +79,7 @@ class UserController extends Controller
         }
 
         $save = User::updateOrCreate(
-            ['id' => $request->id],
+            ['id' => $id],
             $data
         );
         
@@ -92,7 +107,7 @@ class UserController extends Controller
 
         $search = $request->search ?? null;
 
-        $users = User::where('id', '!=', $user->id);
+        $users = User::where('id', '!=', $user->id)->orderBy('updated_at', 'desc');
 
         if(!!$search && $search != '') {
             $users = $users->where(function (Builder $query) use ($search) {
@@ -113,8 +128,13 @@ class UserController extends Controller
     }
 
     public function updateUser(Request $request, $id)
-    {
-        $user = User::where('id', $id)->first();
+    {   
+        $user = null;
+
+        if($id != 'add') {
+            $user = User::where('id', $id)->first(); 
+        }
+        
         $auth = null;
 
         if(Auth::user()) {

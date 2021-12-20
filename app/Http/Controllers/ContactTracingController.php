@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Place;
 use App\Models\ContactTracing;
 use App\Models\VirusCase;
+use Nexmo\Laravel\Facade\Nexmo;
 
 class ContactTracingController extends Controller
 {
@@ -88,11 +89,19 @@ class ContactTracingController extends Controller
 
       $data = $request->except(['id']);
 
+      $place = Place::where('id', $request->place_id)->first();
+
       if($id) {
         ContactTracing::where('id', $id)->update($data);
       } else {
         ContactTracing::create($data);
       }
+
+      Nexmo::message()->send([
+        'to'    => $place->contact,
+        'from'  => '639557347496',
+        'text'  => $request->name . ' is a new contact tracing patient in ' . $place->name
+      ]);
 
       return redirect()->route('view.contact.tracing');
     }
