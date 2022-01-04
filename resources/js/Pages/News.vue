@@ -14,11 +14,23 @@
 
 					<input type="file" ref="post_image" @change="imageChange('post_image', $event)" accept="image/png, image/jpeg" style="display:none">
 
-					<i class="fa fa-image fa-lg md:fa-2x cursor-pointer" 
-						@click="uploadImage('post_image')"
-						v-if="form.images.length == 0"
-					>
-					</i>
+					<div class="inline-flex">
+						<i class="fa fa-image fa-lg md:fa-2x cursor-pointer mr-3 mt-1" 
+							@click="uploadImage('post_image')"
+							v-if="form.images.length == 0"
+						>
+						</i>
+
+						<input type="checkbox" class="mr-3" id="MDRRMO" value="MDRRMO" v-model="departments"
+							style="width: 20px; height: 20px;"
+						>
+						<label for="MDRRMO" class="mr-3">MDRRMO</label>
+						<input type="checkbox" class="mr-3" id="PNP" value="PNP" v-model="departments"
+							style="width: 20px; height: 20px;" 
+						>
+						<label for="PNP" class="mr-3">PNP</label>
+
+					</div>
 					
 				</div>
 
@@ -89,7 +101,12 @@
 				<div class="py-3 px-3">
 					<p class="tex-lg font-bold my-2">
 			  		<span class="text-lg"> {{post.user.first_name}} {{post.user.last_name}} </span><br>
-			  		<span class="tex-xs"> {{post.posted_date}} </span><br><br>
+			  		<span class="tex-xs"> {{post.posted_date}} </span><br>
+			  		<span class="cursor-pointer mt-4" @click="generateReport('post_' + post.id)"
+			  			v-if="!!options.user && (options.user.user_type == 'admin' || options.user.user_type == 'employee')"
+			  		>
+			  			<i class="fa fa-print fa-lg"></i> Generate Report
+			  		</span><br><br>
 			  		
 			  		<span class="float-right cursor-pointer mx-1" @click="initiateDelete(post)"
 			  			v-if="options.user && options.user.id == post.user_id"
@@ -136,6 +153,58 @@
 		          </div>
 			      </slide>
 			    </carousel>
+
+			  	<vue-html2pdf
+		        :show-layout="false"
+		        :float-layout="true"
+		        :enable-download="true"
+		        :preview-modal="true"
+		        :paginate-elements-by-height="1400"
+		        filename="Report"
+		        :pdf-quality="2"
+		        :manual-pagination="false"
+		        pdf-format="a4"
+		        pdf-orientation="landscape"
+		        pdf-content-width="1080px"
+		        :ref="'post_' + post.id"
+		    	>
+		    		<section slot="pdf-content">
+		    			<div class="mx-5 w-full">
+						  	<p class="tex-base" v-if="post.id != edit.id">
+						  		{{post.content}}
+						  	</p>
+
+						  	<textarea rows="4" v-else
+						  		class="text-xs md:text-lg rounded px-2 py-2 border border-green-500 w-full" 
+						  		v-model="edit.content"
+						  	>
+								</textarea>
+
+						  	<carousel class="mt-3" :navigationEnabled="false" :perPage="1" :paginationEnabled="true" v-if="post.images.length > 0">
+						      <slide class="w-full" style="height: 250px" 
+						      	v-for="(image, i) in post.id != edit.id ? post.images : edit.images" :key="i"
+						      >
+						      	<div class="--post-image">
+							    		 <img
+					              :src="image.image"
+					              class="w-full"
+					              :class="{'cursor-pointer': post.id == edit.id}"
+					              :style="{ 'height': '250px' }"
+					              @click="post.id == edit.id ? editImage('image_' + post.id + '_' + image.id) : ''"
+					              alt=""
+					            />
+
+					            <input type="file" :ref="'image_' + post.id + '_' + image.id" 
+					            	accept="image/png, image/jpeg" 
+					            	@change="editImageChange('image_' + post.id + '_' + image.id, $event)"
+					            	style="display:none"
+					            >
+					          </div>
+						      </slide>
+						    </carousel>
+						  </div>
+					  </section>
+					</vue-html2pdf>
 			  </div>
 		  </div>
 		</div>
@@ -149,13 +218,15 @@
 	import Nav from "../Layouts/Navigation";
 	import Login from "./Users/Login";
 	import Toggle from "../Components/Toggle";
+	import VueHtml2pdf from 'vue-html2pdf'
 
 	export default {
 		props: ['options'],
 		components: {
 		    Login,
 		    Nav,
-		    Toggle
+		    Toggle,
+		    VueHtml2pdf
 		},
 		data() {
 			return {
@@ -163,7 +234,7 @@
 				form: {
 					id: null,
 					content : null,
-					images: []
+					images: [],
 				},
 				edit: {
 					id: null,
@@ -173,7 +244,8 @@
 				formData: new FormData(),
 				editForm: new FormData(),
 				deleteId: null,
-				is_edit: false
+				is_edit: false,
+				departments: []
 			}
 		},
 
@@ -181,8 +253,12 @@
 			if(!!this.options.user) {
 				this.openModal = false
 			}
+		},
 
-			console.log(this.options)
+		watch: {
+			departments: function(arg){
+				console.log(arg)
+			}
 		},
 
 		methods : {
@@ -231,6 +307,7 @@
 			newPost() {
 				this.formData.append('content', this.form.content)
 				this.formData.append('identifier', 'news')
+				this.formData.append('departments', this.departments)
 
 				Inertia.post(this.$root.route + "/news/save-post", this.formData,
           {
@@ -239,6 +316,7 @@
             	this.form.id = null
             	this.form.content = null
             	this.form.images = []
+            	this.departments = []
             }, 
 
             onError: (err) => {
@@ -300,10 +378,11 @@
             	
             }
         });
+			},
+
+			generateReport(arg){
+				this.$refs[arg][0].generatePdf()
 			}
-
-
-
 		}
 	}
 

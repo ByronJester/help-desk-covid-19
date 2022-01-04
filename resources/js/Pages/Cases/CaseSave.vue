@@ -24,7 +24,7 @@
 	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
 								<label class="font-bold"><b class="text-red-500">*</b> Symptoms</label>
 								<select v-model="form.symptom" class="w-full border border-green-200 px-2 py-2">
-								  <option value="assymotimatic" class="uppercase">Assymotimatic</option>
+								  <option value="asymptomatic" class="uppercase">Asymptomatic</option>
 								  <option value="symptomatic" class="uppercase">Symptomatic</option>
 								</select>
 								<span class="text-sm text-red-500">{{validationError('symptom', errors)}} </span>
@@ -81,16 +81,35 @@
 	 					</div> -->
 
 	 					<div class="flex flex-col md:flex-row w-full">
-							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+								<label class="font-bold">Travel History</label>
+								<select v-model="history" class="w-full border border-green-200 px-2 py-2 mt-4">
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+							</div>
+
+							<!-- <div class="w-full py-2 md:px-20 mt-2 md:mt-2">
 								<label class="font-bold"> Travel History</label><br><br>
 								<input type="text" v-model="form.travel_history" placeholder="Travel History" class="w-full border border-green-200 h-10 text-center">
 								<span class="text-sm text-red-500">{{validationError('travel_history', errors)}} </span>
-							</div>
+							</div> -->
 
 							<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
 								<label class="font-bold"><b class="text-red-500">*</b> Date Tested</label><br><br>
 								<input type="date" v-model="form.date" placeholder="Date" class="w-full border border-green-200 h-10 text-center">
 								<span class="text-sm text-red-500">{{validationError('date', errors)}} </span>
+							</div>
+	 					</div>
+
+	 					<div class="flex flex-col md:flex-row w-full" v-if="history == 'yes'">
+	 						<div class="w-full py-2 md:px-20 mt-2 md:mt-2">
+								<label class="font-bold">Travel History</label><br><br>
+								<textarea v-model="form.travel_history" rows="4" cols="50" 
+									class="w-full rounded border border-green-200"
+								>
+								</textarea>
+								<span class="text-sm text-red-500">{{validationError('travel_history', errors)}} </span>
 							</div>
 	 					</div>
 
@@ -128,7 +147,8 @@
 		data() {
 			return {
 				errors: null,
-				date: null
+				date: null,
+				history: 'no'
 			}
 		},
  

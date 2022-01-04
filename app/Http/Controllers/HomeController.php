@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\PostImage;
 use Illuminate\Support\Str;
+use App\Mail\NewsMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Department;
+use App\Models\PostDepartment;
 
 class HomeController extends Controller
 {
@@ -68,6 +72,8 @@ class HomeController extends Controller
         $post->identifier = $request->identifier;
         $post->save();
 
+        $postImage = null;
+
         if($post) {
             if($images = $request->images) {
                 foreach ($images as $image) {
@@ -81,12 +87,65 @@ class HomeController extends Controller
 
                     PostImage::where('post_id', $post->id)->delete();
                     
-                    PostImage::create([
+                    $postImage = PostImage::create([
                         'post_id' => $post->id,
                         'image'   => $filename . '.' . $extension
                     ]);
+
+                    if($request->identifier == 'news') {
+                        if($departments = $request->departments) {
+
+                            $departments = explode(",", $departments);
+
+                            foreach ($departments as $department) {
+                                $dep = Department::where('name', $department)->first();
+
+                                $emailData = [
+                                    "content" => $post->content,
+                                    "image"   => public_path() . '/' . $postImage->image,
+                                    "department" => $department
+                                ];
+
+                                if($dep) {
+                                    Mail::to($dep->email)->send(new NewsMail($emailData));
+
+                                    PostDepartment::create([
+                                        'post_id' => $post->id,
+                                        'department_id' => $dep->id
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if($request->identifier == 'news') {
+                    if($departments = $request->departments) {
+                        $departments = explode(",", $departments);
+
+                        foreach ($departments as $department) {
+                            $dep = Department::where('name', $department)->first();
+
+                            $emailData = [
+                                "content" => $post->content,
+                                "image"   => null,
+                                "department" => $department
+                            ];
+
+                            if($dep) {
+                                Mail::to($dep->email)->send(new NewsMail($emailData));
+
+                                PostDepartment::create([
+                                    'post_id' => $post->id,
+                                    'department_id' => $dep->id
+                                ]);
+
+                            }
+                        }
+                    }
                 }
             }
+            
         }
 
         return redirect()->back();

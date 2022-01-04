@@ -15,7 +15,7 @@ class CreateContactTracingsTable extends Migration
     {
         Schema::create('contact_tracings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('place_id')->unsigned()->comment('Foreign key from table places');;
+            $table->bigInteger('place_id')->unsigned()->comment('Foreign key from table places');
             $table->string('name');
             $table->date('birth_date');
             $table->string('phone');

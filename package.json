@@ -28,6 +28,7 @@
         "vue-bot-ui": "^0.2.8",
         "vue-carousel": "^0.18.0",
         "vue-graph": "^0.8.7",
+        "vue-html2pdf": "^1.8.0",
         "vuejs-dialog": "^1.4.2"
     }
 }

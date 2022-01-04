@@ -4,37 +4,48 @@
 			<div class="w-full">
 				<carousel :navigationEnabled="false" :perPage="perPage" :paginationEnabled="pagination" v-if="cases.length > 0">
 		      <slide v-for="c in cases" :key="c.id" class="w-full w-full md:px-1">
-		    		<div @click="isAuthorize('save_case', options.user) ? selectCase(c) : ''" class="bg-blue-200 text-left h-60 text-white py-2 px-2 text-2xl text-center pt-5" style="background-image: url('/images/cases_bg.jpg'); background-repeat: no-repeat; background-size: cover;">
+		    		<div @click="isAuthorize('save_case', options.user) ? selectCase(c) : ''" 
+		    			class="bg-blue-200 text-left text-white py-2 px-2 text-2xl pt-5 text-center" 
+		    			style="background-image: url('/images/cases_bg.jpg');
+		    			 background-repeat: no-repeat; background-size: cover; height: 370px;">
 		    			<div>
-		    				<span> {{ c.code }}, {{ c.age }} y/o, {{ c.gender }}</span>
+		    				<span> Patient Code: {{ c.code }}</span>
 		    			</div>
 
 		    			<div>
-		    				<span> Positive Date: {{ c.formatted_date }}</span>
+		    				<span>Age: {{ c.age }} y/o</span>
 		    			</div>
 
 		    			<div>
-		    				<span> {{ c.status }}</span>
+		    				<span> Gender: {{ c.gender }}</span>
 		    			</div>
 
-		    			<div v-if="c.status == 'RECOVERED'">
-		    				<span> Recovered Date: {{ c.recovered }}</span>
+		    			<div>
+		    				<span> Status: {{ c.status }}</span>
 		    			</div>
 
-		    			<div v-if="c.status == 'DEATH'">
-		    				<span> Death Date: {{ c.death }}</span>
+		    			<div v-if="c.status == 'RECOVERED' && c.recovered">
+		    				<span> Recovered Date: <br>{{ c.recovered }}</span>
 		    			</div>
 
-		    			<div v-if="c.status == 'QUARANTINE'">
-		    				<span> Quarantine Date: {{ c.quarantine }}</span>
+		    			<div v-if="c.status == 'DEATH' && c.death">
+		    				<span> Death Date: <br>{{ c.death }}</span>
+		    			</div>
+
+		    			<div v-if="c.status == 'QUARANTINE' && c.quarantine">
+		    				<span> Quarantine Date: <br>{{ c.quarantine }}</span>
+		    			</div>
+
+		    			<div>
+		    				<span> Date Tested: <br>{{ c.formatted_date }}</span>
 		    			</div>
 
 		    			<div v-if="c.symptom">
-		    				<span> {{ c.symptom }}</span>
+		    				<span> {{  c.symptom.charAt(0).toUpperCase() + c.symptom.slice(1) }}</span>
 		    			</div>
 
 		    			<div v-if="c.travel_history">
-		    				<span> {{ c.travel_history }}</span>
+		    				<span> Travel History: <br>{{ c.travel_history }}</span>
 		    			</div>
 		    			
 		    		</div>
