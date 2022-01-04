@@ -6,7 +6,7 @@
         <a class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white cursor-pointer" @click="changeActive('/home')">
           <span>
             <img
-              :src="'/images/logo.jpg'"
+              :src="'/images/logo.png'"
               class="h-16 w-20 md:h-24 md:w-32"
               style="border-radius: 50%;"
               alt="" 

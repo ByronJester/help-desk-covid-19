@@ -22,8 +22,9 @@ class UserSeeder extends Seeder
         	'email' => 'admin.lgu@email.com',
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'user_type'	=> 'admin',
+            'agree' => 1,
         	'perspective' => 1,
-            'is_active'   => true,
+            'is_active'   => 1,
         	'created_at' => Carbon::now(),
         	'updated_at' => Carbon::now(),
         ]);

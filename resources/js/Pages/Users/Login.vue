@@ -118,9 +118,9 @@
 		 				</div> 
 
 		 				<div class="flex flex-col md:flex-row w-full mt-5">
-		 					<div class="w-full md:mx-2">
+		 					<div class="w-full md:mx-2 inline-flex">
 								<Toggle v-model="register.agree"  class="mr-5 mt-2"/>
-								<label class="font-bold"> 
+								<label class="font-bold mt-3"> 
 									<p> I agree to 
 										<span class="underline text-blue-500 cursor-pointer"
 											@click="goTermsAndCondition"

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
         	UserSeeder::class,
             PlaceSeeder::class,
+            DepartmentSeeder::class,
             // VirusCaseSeeder::class,
             // VaccineSeeder::class,
             // ContactTracingSeeder::class,
