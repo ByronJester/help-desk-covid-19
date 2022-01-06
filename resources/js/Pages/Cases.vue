@@ -50,7 +50,7 @@
 		data() {
 			return {
 				openModal: false,
-				fields: ['Code', 'Age', 'Gender', 'Date', 'Status', 'Recovered', 'Death', 'Quarantine', 'Active'],
+				fields: ['Code', 'Age', 'Gender', 'Date', 'Status', 'Recovered', 'Death', 'Quarantine', 'Travel History', 'Active'],
 				table: {
 					title: 'Covid 19 Cases',
 					search: this.options.search,
@@ -103,6 +103,12 @@
 
 					{
 						label: 'quarantine',
+						slot: false,
+						slot_name: null
+					},
+
+					{
+						label: 'travel_history',
 						slot: false,
 						slot_name: null
 					},

@@ -73,11 +73,11 @@ class VirusCaseController extends Controller
         $case = VirusCase::where('id', $create->id)->first();
         $place = (object) $case->place;
 
-        Nexmo::message()->send([
-          'to'    => $place->contact,
-          'from'  => '639557347496',
-          'text'  => 'Your barangay has new covid case with patient code ' . $case->code
-        ]);
+        // Nexmo::message()->send([
+        //   'to'    => $place->contact,
+        //   'from'  => '639557347496',
+        //   'text'  => 'Your barangay has new covid case with patient code ' . $case->code
+        // ]);
       }
 
       return redirect()->back();

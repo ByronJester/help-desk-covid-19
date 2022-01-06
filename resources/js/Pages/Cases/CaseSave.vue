@@ -194,6 +194,10 @@
 			if(this.form.status == 'QUARANTINE') {
 				this.date = 'quarantine_at'
 			}
+
+			if(!!this.form.travel_history) {
+				this.history = 'yes'
+			}
 		},
 
 		watch : {

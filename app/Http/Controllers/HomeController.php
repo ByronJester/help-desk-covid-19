@@ -152,11 +152,13 @@ class HomeController extends Controller
         
     }
 
-    public function deletePost(Request $request)
+    public function deletePost(Request $request) 
     {
         $id = $request->id;
 
         $imageDelete = PostImage::where('post_id', $id)->delete();
+
+        $departmentDelete = PostDepartment::where('post_id', $id)->delete();
 
         $postDelete = Post::where('id', $id)->delete();
 
