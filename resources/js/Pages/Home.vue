@@ -185,25 +185,6 @@
 				is_edit: false,
 				showChat: false,
 				messages: [
-					// {
-					//   agent: 'bot',
-					//   type: 'button',
-					//   text: 'Select the option below',
-					//   disableInput: true,
-					//   options: [
-					//     {
-					//       text: 'Open Google',
-					//       value: 'https://google.com',
-					//       action: 'url'
-					//     },
-					//     {
-					//       text: 'Submit Support Ticket',
-					//       value: 'submit_ticket',
-					//       action: 'postback' // Request to API
-					//     },
-					//   ],
-					// }
-
 					{
 				    agent: 'bot', // Required. 'bot' or 'user'
 				    type: 'text', // Required. Bubble message component type: 'text' / 'button'
@@ -212,7 +193,7 @@
 				  },
 				],
 				botOptions: {
-
+					botTitle: "Covid Chatbot"
 				}
 
 			}
@@ -344,35 +325,76 @@
 			messageSendHandler(e){
 				var data = null;
 
-				this.messages.push({agent: 'user', type: 'text', text: e.text})
+				var text = e.text
+
+				this.messages.push({agent: 'user', type: 'text', text: text})
 
 				if(this.messages.length == 2) {
-					data = {
-					  agent: 'bot',
-					  type: 'button',
-					  text: 'What is your concern ?',
-					  disableInput: true,
-					  options: [
-					  	{
-					      text: 'What is Covid 19 ?',
-					      value: 'https://www.who.int/health-topics/coronavirus#tab=tab_1',
-      					action: 'url'
-					    },
-					    {
-					      text: 'What is asymptomatic and symptomatic ?',
-					      value: 'https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200402-sitrep-73-Covid-19.pdf',
-      					action: 'url'
-					    },
-					    {
-					      text: 'How is it transmitted?',
-					      value: 'https://www.who.int/news-room/questions-and-answers/item/coronavirus-disease-covid-19-how-is-it-transmitted',
-      					action: 'url'
-					    }
-					  ],
+					this.messages.push({agent: 'bot', type: 'text', text: 'Hi ' + text + '.'})
+
+					this.messages.push({agent: 'bot', type: 'text', text:  'Please choose your concern, type it and send it to me.'})
+
+					this.messages.push({agent: 'bot', type: 'text', text:  'What is Covid 19 ?'})
+
+					this.messages.push({agent: 'bot', type: 'text', text:  'How is it transmitted ?'})
+
+					this.messages.push({agent: 'bot', type: 'text', text:  'How to prevent it ?'})
+				}
+
+				if(text.includes('Covid 19') || text.includes('prevent') || text.includes('transmitted')) {
+					if(text.includes('Covid 19')){
+						this.messages.push({agent: 'bot', type: 'text', 
+							text:  'Coronavirus disease (COVID-19) is an infectious disease caused by the SARS-CoV-2 virus. Most people infected with the virus will experience mild to moderate respiratory illness and recover without requiring special treatment. However, some will become seriously ill and require medical attention. Older people and those with underlying medical conditions like cardiovascular disease, diabetes, chronic respiratory disease, or cancer are more likely to develop serious illness. Anyone can get sick with COVID-19 and become seriously ill or die at any age'
+						})
 					}
 
-					this.messages.push(data)
+					if(text.includes('transmitted')) {
+						this.messages.push({agent: 'bot', type: 'text', text:  'The virus can spread from an infected person’s mouth or nose in small liquid particles when they cough, sneeze, speak, sing or breathe. These particles range from larger respiratory droplets to smaller aerosols. It is important to practice respiratory etiquette, for example by coughing into a flexed elbow, and to stay home and self-isolate until you recover if you feel unwell.'})
+					}
+
+					if(text.includes('prevent')) {
+						this.messages.push({agent: 'bot', type: 'text', text:  'The best way to prevent and slow down transmission is to be well informed about the disease and how the virus spreads. Protect yourself and others from infection by staying at least 1 metre apart from others, wearing a properly fitted mask, and washing your hands or using an alcohol-based rub frequently. Get vaccinated when it’s your turn and follow local guidance.'})
+					}
+
+				} else {
+					if(this.messages.length > 7) {
+						this.messages.push({agent: 'bot', type: 'text', text:  'Please choose your concern and type it correctly.'})
+
+						this.messages.push({agent: 'bot', type: 'text', text:  'What is Covid 19 ?'})
+
+						this.messages.push({agent: 'bot', type: 'text', text:  'How is it transmitted ?'})
+
+						this.messages.push({agent: 'bot', type: 'text', text:  'How to prevent it ?'})
+					}
 				}
+
+				// if(this.messages.length == 2) {
+				// 	data = {
+				// 	  agent: 'bot',
+				// 	  type: 'button',
+				// 	  text: 'What is your concern ?',
+				// 	  disableInput: true,
+				// 	  options: [
+				// 	  	{
+				// 	      text: 'What is Covid 19?',
+				// 	      value: 'https://www.who.int/health-topics/coronavirus#tab=tab_1',
+    //   					action: 'url'
+				// 	    },
+				// 	    {
+				// 	      text: 'What is asymptomatic and symptomatic ?',
+				// 	      value: 'https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200402-sitrep-73-Covid-19.pdf',
+    //   					action: 'url'
+				// 	    },
+				// 	    {
+				// 	      text: 'How is it transmitted?',
+				// 	      value: 'https://www.who.int/news-room/questions-and-answers/item/coronavirus-disease-covid-19-how-is-it-transmitted',
+    //   					action: 'url'
+				// 	    }
+				// 	  ],
+				// 	}
+
+				// 	this.messages.push(data)
+				// }
 			}
 
 
